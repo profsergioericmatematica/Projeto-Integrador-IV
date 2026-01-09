@@ -1096,854 +1096,860 @@
         const theoryContent = document.getElementById('theoryContent');
         
         // Dados das 25 habilidades - com linguagem mais simples para crianças
-        const skillsData = [
+// Dados das 25 habilidades - REVISADAS PARA EVITAR AMBIGUIDADES
+const skillsData = [
+    {
+        code: "Desafio 01",
+        title: "Números Grandes",
+        description: "Ler e escrever números até centenas de milhar",
+        icon: "fas fa-sort-numeric-down",
+        category: "Números",
+        theory: `
+            <div class="theory-item">
+                <h3 class="theory-topic-title">Teoria: Números Grandes</h3>
+                <p class="theory-explanation">Números grandes são números com muitos algarismos. No 5º ano, aprendemos a ler e escrever números até centenas de milhar (até 999.999).</p>
+                
+                <div class="theory-example">
+                    <div class="theory-example-title">Como funciona:</div>
+                    <p>Os números são organizados em classes e ordens:</p>
+                    <ul>
+                        <li><strong>Unidades:</strong> unidades, dezenas, centenas</li>
+                        <li><strong>Milhares:</strong> unidades de milhar, dezenas de milhar, centenas de milhar</li>
+                    </ul>
+                    <p><strong>Exemplo:</strong> 345.678 = 3 centenas de milhar + 4 dezenas de milhar + 5 unidades de milhar + 6 centenas + 7 dezenas + 8 unidades</p>
+                </div>
+                
+                <div class="theory-key-points">
+                    <div class="theory-key-points-title">Pontos importantes:</div>
+                    <ul>
+                        <li>Use ponto para separar as classes (milhares)</li>
+                        <li>Leia primeiro as centenas de milhar</li>
+                        <li>Não use "e" entre as classes</li>
+                        <li>345.678 = trezentos e quarenta e cinco mil, seiscentos e setenta e oito</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        questions: [
             {
-                code: "Desafio 01",
-                title: "Números Grandes",
-                description: "Ler e escrever números até centenas de milhar",
-                icon: "fas fa-sort-numeric-down",
-                category: "Números",
-                theory: `
-                    <div class="theory-item">
-                        <h3 class="theory-topic-title">Teoria: Números Grandes</h3>
-                        <p class="theory-explanation">Números grandes são números com muitos algarismos. No 5º ano, aprendemos a ler e escrever números até centenas de milhar (até 999.999).</p>
-                        
-                        <div class="theory-example">
-                            <div class="theory-example-title">Como funciona:</div>
-                            <p>Os números são organizados em classes e ordens:</p>
-                            <ul>
-                                <li><strong>Unidades:</strong> unidades, dezenas, centenas</li>
-                                <li><strong>Milhares:</strong> unidades de milhar, dezenas de milhar, centenas de milhar</li>
-                            </ul>
-                            <p><strong>Exemplo:</strong> 345.678 = 3 centenas de milhar + 4 dezenas de milhar + 5 unidades de milhar + 6 centenas + 7 dezenas + 8 unidades</p>
-                        </div>
-                        
-                        <div class="theory-key-points">
-                            <div class="theory-key-points-title">Pontos importantes:</div>
-                            <ul>
-                                <li>Use ponto para separar as classes (milhares)</li>
-                                <li>Leia primeiro as centenas de milhar</li>
-                                <li>Não use "e" entre as classes</li>
-                                <li>345.678 = trezentos e quarenta e cinco mil, seiscentos e setenta e oito</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                questions: [
-                    {
-                        question: "Como se lê o número 345.678?",
-                        options: ["Trinta e quatro mil, quinhentos e sessenta e oito", "Trezentos e quarenta e cinco mil, seiscentos e setenta e oito", "Três milhões, quarenta e cinco mil, seiscentos e setenta e oito", "Trezentos e quarenta e cinco mil e setecentos e oitenta"],
-                        correct: 1,
-                        explanation: "345.678 se lê: Trezentos e quarenta e cinco mil, seiscentos e setenta e oito."
-                    },
-                    {
-                        question: "Qual número é maior: 125.430 ou 125.403?",
-                        options: ["125.430", "125.403", "São iguais", "Não dá para saber"],
-                        correct: 0,
-                        explanation: "125.430 é maior porque na casa das dezenas tem 30, enquanto 125.403 tem apenas 03."
-                    },
-                    {
-                        question: "Escreva por extenso: 78.905",
-                        options: ["Setenta e oito mil e novecentos e cinco", "Sete mil, oitocentos e noventa e cinco", "Setenta e oito mil, novecentos e cinco", "Sete milhões, oitocentos e noventa e cinco"],
-                        correct: 2,
-                        explanation: "78.905 se escreve: Setenta e oito mil, novecentos e cinco."
-                    }
-                ]
+                question: "Como se lê o número 345.678?",
+                options: ["Trinta e quatro mil, quinhentos e sessenta e oito", "Trezentos e quarenta e cinco mil, seiscentos e setenta e oito", "Três milhões, quarenta e cinco mil, seiscentos e setenta e oito", "Trezentos e quarenta e cinco mil e setecentos e oitenta"],
+                correct: 1,
+                explanation: "345.678 se lê: Trezentos e quarenta e cinco mil, seiscentos e setenta e oito."
             },
             {
-                code: "Desafio 02",
-                title: "Números Decimais",
-                description: "Trabalhar com números que têm vírgula",
-                icon: "fas fa-decimal",
-                category: "Números",
-                theory: `
-                    <div class="theory-item">
-                        <h3 class="theory-topic-title">Teoria: Números Decimais</h3>
-                        <p class="theory-explanation">Números decimais são números que têm parte inteira e parte decimal, separadas por vírgula. Eles representam quantidades que não são inteiras.</p>
-                        
-                        <div class="theory-example">
-                            <div class="theory-example-title">Partes de um número decimal:</div>
-                            <p><strong>3,45</strong> tem:</p>
-                            <ul>
-                                <li><strong>Parte inteira:</strong> 3 (antes da vírgula)</li>
-                                <li><strong>Parte decimal:</strong> 45 (depois da vírgula)</li>
-                                <li><strong>Lê-se:</strong> "três inteiros e quarenta e cinco centésimos"</li>
-                            </ul>
-                            <p>Os números decimais podem representar: dinheiro (R$ 3,45), medidas (1,5 metros), pesos (2,3 kg), etc.</p>
-                        </div>
-                        
-                        <div class="theory-key-points">
-                            <div class="theory-key-points-title">Comparando números decimais:</div>
-                            <ul>
-                                <li>Compare primeiro a parte inteira</li>
-                                <li>Se as partes inteiras forem iguais, compare os décimos</li>
-                                <li>Se os décimos forem iguais, compare os centésimos</li>
-                                <li><strong>Exemplo:</strong> 2,3 é maior que 2,03 porque 3 décimos > 0 décimos</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                questions: [
-                    {
-                        question: "Como se lê o número 3,45?",
-                        options: ["Três vírgula quarenta e cinco", "Três inteiros e quarenta e cinco centésimos", "Trezentos e quarenta e cinco", "Três e quarenta e cinco"],
-                        correct: 1,
-                        explanation: "3,45 se lê: Três inteiros e quarenta e cinco centésimos."
-                    },
-                    {
-                        question: "Qual número é menor: 2,3; 2,03 ou 2,33?",
-                        options: ["2,3", "2,03", "2,33", "Todos são iguais"],
-                        correct: 1,
-                        explanation: "2,03 é o menor porque depois da vírgula tem 03, que é menor que 30 (2,3) e 33 (2,33)."
-                    },
-                    {
-                        question: "Qual é a forma decimal de sete inteiros e oito décimos?",
-                        options: ["7,8", "7,08", "0,78", "78,0"],
-                        correct: 0,
-                        explanation: "Sete inteiros e oito décimos é representado por 7,8."
-                    }
-                ]
+                question: "Qual número é maior: 125.430 ou 125.403?",
+                options: ["125.430", "125.403", "São iguais", "Não dá para saber"],
+                correct: 0,
+                explanation: "125.430 é maior porque na casa das dezenas tem 30, enquanto 125.403 tem apenas 03."
             },
             {
-                code: "Desafio 03",
-                title: "Frações",
-                description: "Entender partes de um todo",
-                icon: "fas fa-pizza-slice",
-                category: "Números",
-                theory: `
-                    <div class="theory-item">
-                        <h3 class="theory-topic-title">Teoria: Frações</h3>
-                        <p class="theory-explanation">Frações representam partes de um todo. Elas são escritas como dois números separados por uma linha: o numerador (partes que temos) e o denominador (partes totais).</p>
-                        
-                        <div class="theory-example">
-                            <div class="theory-example-title">Exemplo prático:</div>
-                            <p>Uma pizza dividida em 8 pedaços:</p>
-                            <ul>
-                                <li><strong>3/8</strong> = comi 3 pedaços de 8</li>
-                                <li><strong>5/8</strong> = sobram 5 pedaços de 8</li>
-                                <li><strong>8/8</strong> = pizza inteira</li>
-                            </ul>
-                            <p><strong>Tipos de frações:</strong></p>
-                            <ul>
-                                <li><strong>Própria:</strong> numerador menor que denominador (3/8)</li>
-                                <li><strong>Imprópria:</strong> numerador maior que denominador (7/6)</li>
-                                <li><strong>Aparente:</strong> numerador múltiplo do denominador (8/8 = 1)</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="theory-key-points">
-                            <div class="theory-key-points-title">Conceitos importantes:</div>
-                            <ul>
-                                <li>Denominador mostra em quantas partes o todo foi dividido</li>
-                                <li>Numerador mostra quantas partes estamos considerando</li>
-                                <li>Uma fração pode representar mais que um inteiro (7/6 = 1 inteiro e 1/6)</li>
-                                <li>Frações podem representar: partes de objetos, divisão de quantidades, probabilidades</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                questions: [
-                    {
-                        question: "Em uma pizza dividida em 8 pedaços, comi 3. Qual fração representa o que comi?",
-                        options: ["3/8", "5/8", "8/3", "1/3"],
-                        correct: 0,
-                        explanation: "3 pedaços de 8 é representado pela fração 3/8."
-                    },
-                    {
-                        question: "Qual destas frações é maior que um inteiro?",
-                        options: ["3/4", "5/5", "7/6", "2/3"],
-                        correct: 2,
-                        explanation: "7/6 é maior que 1 porque 7 é maior que 6."
-                    },
-                    {
-                        question: "Se divido uma barra de chocolate em 12 partes e como 5, qual fração representa o que comi?",
-                        options: ["5/12", "7/12", "12/5", "5/7"],
-                        correct: 0,
-                        explanation: "5 partes de 12 é representado pela fração 5/12."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 04",
-                title: "Frações Equivalentes",
-                description: "Encontrar frações que valem o mesmo",
-                icon: "fas fa-balance-scale",
-                category: "Números",
-                theory: `
-                    <div class="theory-item">
-                        <h3 class="theory-topic-title">Teoria: Frações Equivalentes</h3>
-                        <p class="theory-explanation">Frações equivalentes são frações diferentes que representam a mesma quantidade. Elas são obtidas multiplicando ou dividindo o numerador e o denominador pelo mesmo número.</p>
-                        
-                        <div class="theory-example">
-                            <div class="theory-example-title">Como encontrar frações equivalentes:</div>
-                            <p><strong>Multiplicando:</strong> 1/2 × 2/2 = 2/4 × 2/2 = 4/8</p>
-                            <p>Todas representam a metade!</p>
-                            <p><strong>Dividindo:</strong> 4/8 ÷ 4/4 = 1/2</p>
-                            <p><strong>Regra:</strong> Se multiplicarmos ou dividirmos o numerador e o denominador pelo mesmo número (diferente de zero), obtemos frações equivalentes.</p>
-                        </div>
-                        
-                        <div class="theory-key-points">
-                            <div class="theory-key-points-title">Simplificação de frações:</div>
-                            <p>A fração mais simples (irredutível) é aquela em que não podemos mais dividir numerador e denominador por um mesmo número.</p>
-                            <ul>
-                                <li><strong>Exemplo:</strong> 4/8 pode ser simplificada dividindo por 4: 4÷4=1, 8÷4=2 → 1/2</li>
-                                <li><strong>Outro exemplo:</strong> 9/15 pode ser simplificada dividindo por 3: 9÷3=3, 15÷3=5 → 3/5</li>
-                                <li>Frações equivalentes têm o mesmo valor decimal (1/2 = 2/4 = 0,5)</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                questions: [
-                    {
-                        question: "Qual fração é igual a 1/2?",
-                        options: ["2/4", "1/3", "3/4", "2/3"],
-                        correct: 0,
-                        explanation: "2/4 é igual a 1/2 porque ambas representam a metade."
-                    },
-                    {
-                        question: "Qual é a fração igual a 3/5 com denominador 15?",
-                        options: ["9/15", "12/15", "6/15", "3/15"],
-                        correct: 0,
-                        explanation: "3/5 = 9/15, porque 3×3=9 e 5×3=15."
-                    },
-                    {
-                        question: "Qual destas NÃO é igual a 1/2?",
-                        options: ["2/4", "3/6", "4/8", "3/8"],
-                        correct: 3,
-                        explanation: "3/8 não é igual a 1/2, pois 1/2 seria igual a 4/8."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 05",
-                title: "Comparar Números",
-                description: "Comparar decimais e frações",
-                icon: "fas fa-not-equal",
-                category: "Números",
-                theory: `
-                    <div class="theory-item">
-                        <h3 class="theory-topic-title">Teoria: Comparando Números Decimais e Frações</h3>
-                        <p class="theory-explanation">Para comparar números decimais e frações, podemos converter frações em números decimais ou vice-versa.</p>
-                        
-                        <div class="theory-example">
-                            <div class="theory-example-title">Convertendo frações em decimais:</div>
-                            <p>Para converter uma fração em decimal, dividimos o numerador pelo denominador:</p>
-                            <ul>
-                                <li>1/2 = 1 ÷ 2 = 0,5</li>
-                                <li>3/4 = 3 ÷ 4 = 0,75</li>
-                                <li>1/3 = 1 ÷ 3 = 0,333...</li>
-                            </ul>
-                            <p><strong>Comparando:</strong></p>
-                            <ul>
-                                <li>0,5 (1/2) é menor que 0,75 (3/4)</li>
-                                <li>0,3 é menor que 0,333... (1/3)</li>
-                                <li>0,75 (3/4) é igual a 0,75</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="theory-key-points">
-                            <div class="theory-key-points-title">Dicas para comparação:</div>
-                            <ul>
-                                <li>Converta todos para decimais (dividindo numerador por denominador)</li>
-                                <li>Ou converta todos para frações com mesmo denominador</li>
-                                <li>Para números decimais: compare casa por casa (décimos, centésimos...)</li>
-                                <li>Lembre-se: 0,1 = 1/10, 0,01 = 1/100, 0,001 = 1/1000</li>
-                            </ul>
-                        </div>
-                    </div>
-                `,
-                questions: [
-                    {
-                        question: "Qual número é maior: 0,75 ou 3/4?",
-                        options: ["0,75", "3/4", "São iguais", "Não sei"],
-                        correct: 2,
-                        explanation: "0,75 é igual a 3/4, pois 3 dividido por 4 é 0,75."
-                    },
-                    {
-                        question: "Qual é maior: 0,3 ou 1/3?",
-                        options: ["0,3", "1/3", "São iguais", "Depende"],
-                        correct: 1,
-                        explanation: "1/3 é aproximadamente 0,333..., que é maior que 0,3."
-                    },
-                    {
-                        question: "Ordene do menor para o maior: 1/2; 0,6; 3/5",
-                        options: ["1/2; 3/5; 0,6", "0,6; 3/5; 1/2", "1/2; 0,6; 3/5", "3/5; 0,6; 1/2"],
-                        correct: 0,
-                        explanation: "1/2 = 0,5; 3/5 = 0,6; então a ordem é: 0,5 (1/2); 0,6 (3/5); 0,6."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 06",
-                title: "Porcentagens",
-                description: "Calcular porcentagens como em descontos",
-                icon: "fas fa-percentage",
-                category: "Números",
-                theory: `
-                    <div class="theory-item">
-                        <h3 class="theory-topic-title">Teoria: Porcentagens</h3>
-                        <p class="theory-explanation">Porcentagem significa "por cem". O símbolo % representa uma fração com denominador 100. É muito usada em descontos, aumentos, pesquisas e probabilidades.</p>
-                        
-                        <div class="theory-example">
-                            <div class="theory-example-title">Convertendo porcentagens:</div>
-                            <ul>
-                                <li>25% = 25/100 = 1/4 = 0,25</li>
-                                <li>50% = 50/100 = 1/2 = 0,5</li>
-                                <li>75% = 75/100 = 3/4 = 0,75</li>
-                                <li>100% = 100/100 = 1 = inteiro</li>
-                            </ul>
-                            <p><strong>Calculando porcentagens:</strong></p>
-                            <p>Para calcular x% de uma quantidade, multiplique a quantidade por x/100.</p>
-                            <p><strong>Exemplo:</strong> 20% de 80 = 80 × 20/100 = 80 × 0,2 = 16</p>
-                        </div>
-                        
-                        <div class="theory-key-points">
-                            <div class="theory-key-points-title">Aplicações no dia a dia:</div>
-                            <ul>
-                                <li><strong>Descontos em compras:</strong> 30% de desconto = pagar 70% do preço</li>
-                                <li><strong>Taxas de juros:</strong> 5% ao mês</li>
-                                <li><strong>Resultados de pesquisas:</strong> 60% das pessoas preferem chocolate</li>
-                                <li><strong>Probabilidades:</strong> 25% de chance de chover</li>
-                            </ul>
-                            <p><strong>Dica:</strong> 10% é fácil de calcular - basta dividir por 10!</p>
-                        </div>
-                    </div>
-                `,
-                questions: [
-                    {
-                        question: "25% corresponde a qual fração?",
-                        options: ["1/4", "1/2", "3/4", "1/10"],
-                        correct: 0,
-                        explanation: "25% = 25/100 = 1/4."
-                    },
-                    {
-                        question: "Qual é 50% de 80?",
-                        options: ["20", "30", "40", "50"],
-                        correct: 2,
-                        explanation: "50% é a metade, então 50% de 80 é 40."
-                    },
-                    {
-                        question: "Se 10% é 1/10, quanto é 75%?",
-                        options: ["1/4", "1/2", "3/4", "4/5"],
-                        correct: 2,
-                        explanation: "75% = 75/100 = 3/4."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 07",
-                title: "Soma e Subtração",
-                description: "Resolver problemas com + e -",
-                icon: "fas fa-plus-minus",
-                category: "Números",
-                questions: [
-                    {
-                        question: "João tinha R$ 45,50 e ganhou R$ 12,75. Com quanto ficou?",
-                        options: ["R$ 57,25", "R$ 58,25", "R$ 57,50", "R$ 58,50"],
-                        correct: 1,
-                        explanation: "45,50 + 12,75 = 58,25."
-                    },
-                    {
-                        question: "Uma corda de 3,75m foi cortada. Um pedaço tem 1,5m. Quanto mede o outro?",
-                        options: ["2,15m", "2,25m", "2,35m", "2,45m"],
-                        correct: 1,
-                        explanation: "3,75 - 1,5 = 2,25m."
-                    },
-                    {
-                        question: "Em uma escola há 345 alunos. Se 127 são meninas, quantos são meninos?",
-                        options: ["208", "218", "228", "238"],
-                        correct: 1,
-                        explanation: "345 - 127 = 218 meninos."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 08",
-                title: "Multiplicação e Divisão",
-                description: "Resolver problemas com × e ÷",
-                icon: "fas fa-times-divide",
-                category: "Números",
-                questions: [
-                    {
-                        question: "Se 1kg de maçã custa R$ 4,80, quanto custam 2,5kg?",
-                        options: ["R$ 10,00", "R$ 11,00", "R$ 12,00", "R$ 12,50"],
-                        correct: 2,
-                        explanation: "4,80 × 2,5 = 12,00."
-                    },
-                    {
-                        question: "Divida 8,4 por 2.",
-                        options: ["4,0", "4,1", "4,2", "4,4"],
-                        correct: 2,
-                        explanation: "8,4 ÷ 2 = 4,2."
-                    },
-                    {
-                        question: "Uma caixa tem 24 chocolates para 6 crianças. Quantos cada uma recebe?",
-                        options: ["3", "4", "5", "6"],
-                        correct: 1,
-                        explanation: "24 ÷ 6 = 4 chocolates por criança."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 09",
-                title: "Contagem",
-                description: "Fazer contagens diferentes",
-                icon: "fas fa-calculator",
-                category: "Números",
-                questions: [
-                    {
-                        question: "Tenho 3 camisetas e 2 calças. Quantas combinações diferentes posso fazer?",
-                        options: ["5", "6", "8", "9"],
-                        correct: 1,
-                        explanation: "3 × 2 = 6 combinações diferentes."
-                    },
-                    {
-                        question: "Num restaurante há 4 pratos principais e 3 sobremesas. Quantas combinações são possíveis?",
-                        options: ["7", "12", "16", "24"],
-                        correct: 1,
-                        explanation: "4 × 3 = 12 combinações possíveis."
-                    },
-                    {
-                        question: "Quantos números de 2 algarismos posso formar com 1, 2, 3 (podendo repetir)?",
-                        options: ["6", "9", "12", "15"],
-                        correct: 1,
-                        explanation: "3 opções para o primeiro algarismo × 3 para o segundo = 9 números."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 10",
-                title: "Igualdades",
-                description: "Compreender quando coisas são iguais",
-                icon: "fas fa-equals",
-                category: "Álgebra",
-                questions: [
-                    {
-                        question: "Se a = b, então a + 5 = ?",
-                        options: ["b", "b + 5", "5", "a + b"],
-                        correct: 1,
-                        explanation: "Se a = b, então a + 5 = b + 5."
-                    },
-                    {
-                        question: "Se 2x = 10, quanto vale x?",
-                        options: ["2", "4", "5", "10"],
-                        correct: 2,
-                        explanation: "2x = 10 → x = 10 ÷ 2 = 5."
-                    },
-                    {
-                        question: "Se a = 7, qual é o valor de a + 3?",
-                        options: ["7", "10", "21", "73"],
-                        correct: 1,
-                        explanation: "a + 3 = 7 + 3 = 10."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 11",
-                title: "Números Desconhecidos",
-                description: "Descobrir números escondidos",
-                icon: "fas fa-search",
-                category: "Álgebra",
-                questions: [
-                    {
-                        question: "Pensei em um número, somei 8 e obtive 15. Em que número pensei?",
-                        options: ["5", "6", "7", "8"],
-                        correct: 2,
-                        explanation: "x + 8 = 15 → x = 15 - 8 = 7."
-                    },
-                    {
-                        question: "O triplo de um número é 21. Qual é esse número?",
-                        options: ["5", "6", "7", "8"],
-                        correct: 2,
-                        explanation: "3x = 21 → x = 21 ÷ 3 = 7."
-                    },
-                    {
-                        question: "Se subtraio 12 de um número, obtenho 25. Qual é o número?",
-                        options: ["13", "27", "37", "47"],
-                        correct: 2,
-                        explanation: "x - 12 = 25 → x = 25 + 12 = 37."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 12",
-                title: "Proporções",
-                description: "Trabalhar com relações entre quantidades",
-                icon: "fas fa-exchange-alt",
-                category: "Álgebra",
-                questions: [
-                    {
-                        question: "Se 1kg de arroz custa R$ 5,00, quanto custam 3kg?",
-                        options: ["R$ 10,00", "R$ 12,00", "R$ 15,00", "R$ 18,00"],
-                        correct: 2,
-                        explanation: "1kg → R$5, 3kg → 3 × R$5 = R$15."
-                    },
-                    {
-                        question: "Um carro percorre 60km com 5 litros. Quantos km percorrerá com 15 litros?",
-                        options: ["120km", "150km", "180km", "200km"],
-                        correct: 2,
-                        explanation: "5L → 60km, 15L → 3 × 60km = 180km."
-                    },
-                    {
-                        question: "Se 3 metros de tecido custam R$ 24, quanto custam 5 metros?",
-                        options: ["R$ 30", "R$ 35", "R$ 40", "R$ 45"],
-                        correct: 2,
-                        explanation: "1m custa R$24 ÷ 3 = R$8. 5m custam 5 × R$8 = R$40."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 13",
-                title: "Divisão Justa",
-                description: "Dividir coisas de forma desigual mas justa",
-                icon: "fas fa-share-alt",
-                category: "Álgebra",
-                questions: [
-                    {
-                        question: "Divida 60 em duas partes onde uma é o dobro da outra.",
-                        options: ["20 e 40", "15 e 45", "25 e 35", "10 e 50"],
-                        correct: 0,
-                        explanation: "20 + 40 = 60 e 40 é o dobro de 20."
-                    },
-                    {
-                        question: "Tenho R$ 90 para dois filhos. O mais velho recebe o triplo do mais novo. Quanto cada um recebe?",
-                        options: ["R$ 20 e R$ 70", "R$ 22,50 e R$ 67,50", "R$ 25 e R$ 65", "R$ 30 e R$ 60"],
-                        correct: 1,
-                        explanation: "Mais novo: x, mais velho: 3x. Total: x + 3x = 4x = 90 → x = 22,50."
-                    },
-                    {
-                        question: "Divida 48 em duas partes na razão de 3 para 5.",
-                        options: ["18 e 30", "16 e 32", "20 e 28", "15 e 33"],
-                        correct: 0,
-                        explanation: "Partes: 3k e 5k. Total: 3k + 5k = 8k = 48 → k = 6. Partes: 18 e 30."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 14",
-                title: "Localização",
-                description: "Localizar objetos no plano",
-                icon: "fas fa-map-marker-alt",
-                category: "Geometria",
-                questions: [
-                    {
-                        question: "No plano cartesiano, (4, 2) significa:",
-                        options: ["4 direita e 2 cima", "4 esquerda e 2 cima", "2 direita e 4 cima", "4 direita e 2 baixo"],
-                        correct: 0,
-                        explanation: "Primeiro número: direita/esquerda, segundo: cima/baixo."
-                    },
-                    {
-                        question: "Em uma planilha, a célula B3 está:",
-                        options: ["Coluna B, linha 3", "Coluna 3, linha B", "Na interseção B e 3", "Opções 1 e 3"],
-                        correct: 3,
-                        explanation: "B3 está na coluna B (segunda) e linha 3 (terceira)."
-                    },
-                    {
-                        question: "O ponto (3, 1) está:",
-                        options: ["3 direita e 1 cima", "3 cima e 1 direita", "3 esquerda e 1 baixo", "3 baixo e 1 esquerda"],
-                        correct: 0,
-                        explanation: "(3, 1) = 3 unidades para a direita e 1 para cima."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 15",
-                title: "Coordenadas",
-                description: "Usar coordenadas no plano cartesiano",
-                icon: "fas fa-map",
-                category: "Geometria",
-                questions: [
-                    {
-                        question: "Um ponto sai de (2, 3) e vai 2 direita e 1 baixo. Onde para?",
-                        options: ["(4, 2)", "(4, 4)", "(2, 4)", "(0, 2)"],
-                        correct: 0,
-                        explanation: "De (2, 3): direita aumenta x: 2+2=4; baixo diminui y: 3-1=2. Nova posição: (4, 2)."
-                    },
-                    {
-                        question: "Qual ponto está no primeiro quadrante?",
-                        options: ["(-2, 3)", "(2, -3)", "(2, 3)", "(-2, -3)"],
-                        correct: 2,
-                        explanation: "No primeiro quadrante, x e y são positivos: (2, 3)."
-                    },
-                    {
-                        question: "De (5, 1) para (2, 4), o objeto foi:",
-                        options: ["3 esquerda e 3 cima", "3 direita e 3 cima", "3 esquerda e 3 baixo", "3 direita e 3 baixo"],
-                        correct: 0,
-                        explanation: "x diminuiu 3 (esquerda), y aumentou 3 (cima)."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 16",
-                title: "Formas Espaciais",
-                description: "Reconhecer formas 3D",
-                icon: "fas fa-cube",
-                category: "Geometria",
-                questions: [
-                    {
-                        question: "Qual sólido tem 2 triângulos e 3 retângulos na planificação?",
-                        options: ["Prisma triangular", "Pirâmide triangular", "Prisma retangular", "Cilindro"],
-                        correct: 0,
-                        explanation: "Prisma triangular tem 2 bases triangulares e 3 faces retangulares."
-                    },
-                    {
-                        question: "Quantas faces tem um cubo?",
-                        options: ["4", "6", "8", "12"],
-                        correct: 1,
-                        explanation: "Um cubo tem 6 faces quadradas."
-                    },
-                    {
-                        question: "Qual NÃO é uma planificação de cubo?",
-                        options: ["4 quadrados em linha", "6 quadrados em cruz", "6 quadrados em T", "Todas são"],
-                        correct: 0,
-                        explanation: "4 quadrados em linha não fecha um cubo, faltam 2 faces."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 17",
-                title: "Polígonos",
-                description: "Identificar formas planas",
-                icon: "fas fa-shapes",
-                category: "Geometria",
-                questions: [
-                    {
-                        question: "Qual polígono tem 5 lados?",
-                        options: ["Triângulo", "Quadrilátero", "Pentágono", "Hexágono"],
-                        correct: 2,
-                        explanation: "Polígono com 5 lados = pentágono."
-                    },
-                    {
-                        question: "Quantos vértices tem um hexágono?",
-                        options: ["4", "5", "6", "7"],
-                        correct: 2,
-                        explanation: "Hexágono tem 6 lados e 6 vértices."
-                    },
-                    {
-                        question: "Qual forma NÃO é polígono?",
-                        options: ["Triângulo", "Círculo", "Quadrado", "Pentágono"],
-                        correct: 1,
-                        explanation: "Círculo não tem lados retos, então não é polígono."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 18",
-                title: "Ampliar e Reduzir",
-                description: "Mudar tamanho de figuras",
-                icon: "fas fa-expand-alt",
-                category: "Geometria",
-                questions: [
-                    {
-                        question: "Quando ampliamos um quadrado, seus lados:",
-                        options: ["Diminuem", "Aumentam proporcionalmente", "Não mudam", "Ficam desproporcionais"],
-                        correct: 1,
-                        explanation: "Na ampliação, os lados aumentam proporcionalmente."
-                    },
-                    {
-                        question: "O que não muda quando reduzimos uma figura?",
-                        options: ["Tamanho dos lados", "Forma", "Área", "Perímetro"],
-                        correct: 1,
-                        explanation: "A forma se mantém, só o tamanho muda."
-                    },
-                    {
-                        question: "Um triângulo com lados 3, 4, 5 é ampliado para 6, 8, 10. Isso é:",
-                        options: ["Proporcional", "Não proporcional", "Só alguns aumentaram", "Nenhuma"],
-                        correct: 0,
-                        explanation: "Todos os lados dobraram (×2), então é ampliação proporcional."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 19",
-                title: "Medidas",
-                description: "Trabalhar com diferentes medidas",
-                icon: "fas fa-ruler-combined",
-                category: "Grandezas e Medidas",
-                questions: [
-                    {
-                        question: "Quantos centímetros tem 1 metro?",
-                        options: ["10", "100", "1000", "10000"],
-                        correct: 1,
-                        explanation: "1 metro = 100 centímetros."
-                    },
-                    {
-                        question: "Quantos minutos têm 2 horas e meia?",
-                        options: ["120", "150", "180", "210"],
-                        correct: 1,
-                        explanation: "2 horas = 120 minutos, meia hora = 30 minutos. Total: 150."
-                    },
-                    {
-                        question: "Uma sala de 6m por 4m tem área:",
-                        options: ["10 m²", "20 m²", "24 m²", "36 m²"],
-                        correct: 2,
-                        explanation: "Área = comprimento × largura = 6 × 4 = 24 m²."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 20",
-                title: "Perímetro e Área",
-                description: "Comparar perímetros e áreas",
-                icon: "fas fa-border-all",
-                category: "Grandezas e Medidas",
-                questions: [
-                    {
-                        question: "Um quadrado de lado 4cm tem perímetro 16cm e área 16cm². Um retângulo 2cm×6cm tem:",
-                        options: ["Mesmo perímetro e área", "Mesmo perímetro, área diferente", "Perímetro diferente, mesma área", "Tudo diferente"],
-                        correct: 1,
-                        explanation: "Retângulo: perímetro = 2+2+6+6 = 16cm (igual), área = 2×6 = 12cm² (diferente)."
-                    },
-                    {
-                        question: "Qual tem maior área: quadrado lado 5cm ou retângulo 4cm×6cm?",
-                        options: ["Quadrado", "Retângulo", "Iguais", "Não sei"],
-                        correct: 0,
-                        explanation: "Quadrado: 5×5 = 25cm². Retângulo: 4×6 = 24cm². Quadrado maior."
-                    },
-                    {
-                        question: "Figuras com mesmo perímetro sempre têm mesma área?",
-                        options: ["Sim", "Não", "Depende", "Às vezes"],
-                        correct: 1,
-                        explanation: "Não, figuras com mesmo perímetro podem ter áreas diferentes."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 21",
-                title: "Volume",
-                description: "Calcular espaço que ocupa",
-                icon: "fas fa-cubes",
-                category: "Grandezas e Medidas",
-                questions: [
-                    {
-                        question: "Um cubo de lado 2cm tem volume:",
-                        options: ["4 cm³", "6 cm³", "8 cm³", "12 cm³"],
-                        correct: 2,
-                        explanation: "Volume = lado × lado × lado = 2×2×2 = 8 cm³."
-                    },
-                    {
-                        question: "Quantos cubinhos de 1cm³ cabem em uma caixa 3cm×4cm×5cm?",
-                        options: ["12", "30", "60", "120"],
-                        correct: 2,
-                        explanation: "Volume da caixa = 3×4×5 = 60 cm³, então cabem 60 cubinhos."
-                    },
-                    {
-                        question: "Volume mede:",
-                        options: ["Comprimento", "Área", "Espaço ocupado", "Peso"],
-                        correct: 2,
-                        explanation: "Volume mede o espaço que um objeto ocupa."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 22",
-                title: "Chances",
-                description: "Analisar probabilidades",
-                icon: "fas fa-dice",
-                category: "Probabilidade e Estatística",
-                questions: [
-                    {
-                        question: "Ao lançar uma moeda, quais os resultados possíveis?",
-                        options: ["{cara}", "{coroa}", "{cara, coroa}", "{nenhum}"],
-                        correct: 2,
-                        explanation: "Os resultados possíveis são cara ou coroa."
-                    },
-                    {
-                        question: "Ao lançar um dado comum, quantos resultados possíveis?",
-                        options: ["4", "6", "8", "12"],
-                        correct: 1,
-                        explanation: "Um dado tem 6 faces: 1, 2, 3, 4, 5, 6."
-                    },
-                    {
-                        question: "Lançando uma moeda e um dado, quantos resultados possíveis?",
-                        options: ["8", "10", "12", "14"],
-                        correct: 2,
-                        explanation: "Moeda: 2 resultados, Dado: 6 resultados. Total: 2×6 = 12."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 23",
-                title: "Probabilidade",
-                description: "Calcular chances de eventos",
-                icon: "fas fa-chart-pie",
-                category: "Probabilidade e Estatística",
-                questions: [
-                    {
-                        question: "Qual a chance de sair cara ao lançar uma moeda?",
-                        options: ["1/4", "1/3", "1/2", "3/4"],
-                        correct: 2,
-                        explanation: "Moeda tem 2 lados igualmente prováveis. Chance de cara = 1/2."
-                    },
-                    {
-                        question: "Em um dado, qual a probabilidade de sair número par?",
-                        options: ["1/6", "1/3", "1/2", "2/3"],
-                        correct: 2,
-                        explanation: "Números pares: 2, 4, 6 (3 números). Probabilidade = 3/6 = 1/2."
-                    },
-                    {
-                        question: "Qual a probabilidade de sair o número 3 em um dado?",
-                        options: ["1/6", "1/3", "1/2", "1"],
-                        correct: 0,
-                        explanation: "Dado tem 6 faces igualmente prováveis. Probabilidade de sair 3 = 1/6."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 24",
-                title: "Gráficos e Tabelas",
-                description: "Interpretar informações visuais",
-                icon: "fas fa-chart-bar",
-                category: "Probabilidade e Estatística",
-                questions: [
-                    {
-                        question: "Em um gráfico de barras, o comprimento da barra mostra:",
-                        options: ["Cor dos dados", "Quantidade ou frequência", "Tempo de coleta", "Local"],
-                        correct: 1,
-                        explanation: "O comprimento da barra mostra a quantidade ou frequência."
-                    },
-                    {
-                        question: "Em uma pesquisa, 20 de 50 pessoas preferem chocolate. Qual a porcentagem?",
-                        options: ["20%", "30%", "40%", "50%"],
-                        correct: 2,
-                        explanation: "20 de 50 = 20/50 = 0,4 = 40%."
-                    },
-                    {
-                        question: "Para mostrar mudanças ao longo do tempo, melhor gráfico:",
-                        options: ["Barras", "Linhas", "Setores", "Pictórico"],
-                        correct: 1,
-                        explanation: "Gráfico de linhas é melhor para mostrar tendências no tempo."
-                    }
-                ]
-            },
-            {
-                code: "Desafio 25",
-                title: "Organizar Dados",
-                description: "Organizar informações de pesquisa",
-                icon: "fas fa-poll",
-                category: "Probabilidade e Estatística",
-                questions: [
-                    {
-                        question: "Primeiro passo em uma pesquisa:",
-                        options: ["Coletar dados", "Definir tema e objetivo", "Analisar dados", "Apresentar"],
-                        correct: 1,
-                        explanation: "Primeiro definir claramente o tema e objetivos."
-                    },
-                    {
-                        question: "Exemplo de variável categórica:",
-                        options: ["Idade", "Altura", "Cor favorita", "Peso"],
-                        correct: 2,
-                        explanation: "Cor favorita é variável categórica (qualitativa)."
-                    },
-                    {
-                        question: "Após coletar dados:",
-                        options: ["Organizar e analisar", "Esquecer pesquisa", "Coletar mais sem analisar", "Publicar"],
-                        correct: 0,
-                        explanation: "Após coleta, organizar e analisar dados para conclusões."
-                    }
-                ]
+                question: "Escreva por extenso: 78.905",
+                options: ["Setenta e oito mil e novecentos e cinco", "Sete mil, oitocentos e noventa e cinco", "Setenta e oito mil, novecentos e cinco", "Sete milhões, oitocentos e noventa e cinco"],
+                correct: 2,
+                explanation: "78.905 se escreve: Setenta e oito mil, novecentos e cinco."
             }
-        ];
+        ]
+    },
+    {
+        code: "Desafio 02",
+        title: "Números Decimais",
+        description: "Trabalhar com números que têm vírgula",
+        icon: "fas fa-decimal",
+        category: "Números",
+        theory: `
+            <div class="theory-item">
+                <h3 class="theory-topic-title">Teoria: Números Decimais</h3>
+                <p class="theory-explanation">Números decimais são números que têm parte inteira e parte decimal, separadas por vírgula. Eles representam quantidades que não são inteiras.</p>
+                
+                <div class="theory-example">
+                    <div class="theory-example-title">Partes de um número decimal:</div>
+                    <p><strong>3,45</strong> tem:</p>
+                    <ul>
+                        <li><strong>Parte inteira:</strong> 3 (antes da vírgula)</li>
+                        <li><strong>Parte decimal:</strong> 45 (depois da vírgula)</li>
+                        <li><strong>Lê-se:</strong> "três inteiros e quarenta e cinco centésimos"</li>
+                    </ul>
+                    <p>Os números decimais podem representar: dinheiro (R$ 3,45), medidas (1,5 metros), pesos (2,3 kg), etc.</p>
+                </div>
+                
+                <div class="theory-key-points">
+                    <div class="theory-key-points-title">Comparando números decimais:</div>
+                    <ul>
+                        <li>Compare primeiro a parte inteira</li>
+                        <li>Se as partes inteiras forem iguais, compare os décimos</li>
+                        <li>Se os décimos forem iguais, compare os centésimos</li>
+                        <li><strong>Exemplo:</strong> 2,3 é maior que 2,03 porque 3 décimos > 0 décimos</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        questions: [
+            {
+                question: "Como se lê o número 3,45?",
+                options: ["Três vírgula quarenta e cinco", "Três inteiros e quarenta e cinco centésimos", "Trezentos e quarenta e cinco", "Três e quarenta e cinco"],
+                correct: 1,
+                explanation: "3,45 se lê: Três inteiros e quarenta e cinco centésimos."
+            },
+            {
+                question: "Qual número é menor: 2,3; 2,03 ou 2,33?",
+                options: ["2,3", "2,03", "2,33", "Todos são iguais"],
+                correct: 1,
+                explanation: "2,03 é o menor porque depois da vírgula tem 03, que é menor que 30 (2,3) e 33 (2,33)."
+            },
+            {
+                question: "Qual é a forma decimal de sete inteiros e oito décimos?",
+                options: ["7,8", "7,08", "0,78", "78,0"],
+                correct: 0,
+                explanation: "Sete inteiros e oito décimos é representado por 7,8."
+            }
+        ]
+    },
+    {
+        code: "Desafio 03",
+        title: "Frações",
+        description: "Entender partes de um todo",
+        icon: "fas fa-pizza-slice",
+        category: "Números",
+        theory: `
+            <div class="theory-item">
+                <h3 class="theory-topic-title">Teoria: Frações</h3>
+                <p class="theory-explanation">Frações representam partes de um todo. Elas são escritas como dois números separados por uma linha: o numerador (partes que temos) e o denominador (partes totais).</p>
+                
+                <div class="theory-example">
+                    <div class="theory-example-title">Exemplo prático:</div>
+                    <p>Uma pizza dividida em 8 pedaços:</p>
+                    <ul>
+                        <li><strong>3/8</strong> = comi 3 pedaços de 8</li>
+                        <li><strong>5/8</strong> = sobram 5 pedaços de 8</li>
+                        <li><strong>8/8</strong> = pizza inteira</li>
+                    </ul>
+                    <p><strong>Tipos de frações:</strong></p>
+                    <ul>
+                        <li><strong>Própria:</strong> numerador menor que denominador (3/8)</li>
+                        <li><strong>Imprópria:</strong> numerador maior que denominador (7/6)</li>
+                        <li><strong>Aparente:</strong> numerador múltiplo do denominador (8/8 = 1)</li>
+                    </ul>
+                </div>
+                
+                <div class="theory-key-points">
+                    <div class="theory-key-points-title">Conceitos importantes:</div>
+                    <ul>
+                        <li>Denominador mostra em quantas partes o todo foi dividido</li>
+                        <li>Numerador mostra quantas partes estamos considerando</li>
+                        <li>Uma fração pode representar mais que um inteiro (7/6 = 1 inteiro e 1/6)</li>
+                        <li>Frações podem representar: partes de objetos, divisão de quantidades, probabilidades</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        questions: [
+            {
+                question: "Em uma pizza dividida em 8 pedaços, comi 3. Qual fração representa o que comi?",
+                options: ["3/8", "5/8", "8/3", "1/3"],
+                correct: 0,
+                explanation: "3 pedaços de 8 é representado pela fração 3/8."
+            },
+            {
+                question: "Qual destas frações é maior que um inteiro?",
+                options: ["3/4", "5/5", "7/6", "2/3"],
+                correct: 2,
+                explanation: "7/6 é maior que 1 porque 7 é maior que 6."
+            },
+            {
+                question: "Se divido uma barra de chocolate em 12 partes e como 5, qual fração representa o que comi?",
+                options: ["5/12", "7/12", "12/5", "5/7"],
+                correct: 0,
+                explanation: "5 partes de 12 é representado pela fração 5/12."
+            }
+        ]
+    },
+    {
+        code: "Desafio 04",
+        title: "Frações Equivalentes",
+        description: "Encontrar frações que valem o mesmo",
+        icon: "fas fa-balance-scale",
+        category: "Números",
+        theory: `
+            <div class="theory-item">
+                <h3 class="theory-topic-title">Teoria: Frações Equivalentes</h3>
+                <p class="theory-explanation">Frações equivalentes são frações diferentes que representam a mesma quantidade. Elas são obtidas multiplicando ou dividindo o numerador e o denominador pelo mesmo número.</p>
+                
+                <div class="theory-example">
+                    <div class="theory-example-title">Como encontrar frações equivalentes:</div>
+                    <p><strong>Multiplicando:</strong> 1/2 × 2/2 = 2/4 × 2/2 = 4/8</p>
+                    <p>Todas representam a metade!</p>
+                    <p><strong>Dividindo:</strong> 4/8 ÷ 4/4 = 1/2</p>
+                    <p><strong>Regra:</strong> Se multiplicarmos ou dividirmos o numerador e o denominador pelo mesmo número (diferente de zero), obtemos frações equivalentes.</p>
+                </div>
+                
+                <div class="theory-key-points">
+                    <div class="theory-key-points-title">Simplificação de frações:</div>
+                    <p>A fração mais simples (irredutível) é aquela em que não podemos mais dividir numerador e denominador por um mesmo número.</p>
+                    <ul>
+                        <li><strong>Exemplo:</strong> 4/8 pode ser simplificada dividindo por 4: 4÷4=1, 8÷4=2 → 1/2</li>
+                        <li><strong>Outro exemplo:</strong> 9/15 pode ser simplificada dividindo por 3: 9÷3=3, 15÷3=5 → 3/5</li>
+                        <li>Frações equivalentes têm o mesmo valor decimal (1/2 = 2/4 = 0,5)</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        questions: [
+            {
+                question: "Qual fração é igual a 1/2?",
+                options: ["2/4", "1/3", "3/4", "2/3"],
+                correct: 0,
+                explanation: "2/4 é igual a 1/2 porque ambas representam a metade."
+            },
+            {
+                question: "Qual é a fração igual a 3/5 com denominador 15?",
+                options: ["9/15", "12/15", "6/15", "3/15"],
+                correct: 0,
+                explanation: "3/5 = 9/15, porque 3×3=9 e 5×3=15."
+            },
+            {
+                question: "Qual destas NÃO é igual a 1/2?",
+                options: ["2/4", "3/6", "4/8", "3/8"],
+                correct: 3,
+                explanation: "3/8 não é igual a 1/2, pois 1/2 seria igual a 4/8."
+            }
+        ]
+    },
+    {
+        code: "Desafio 05",
+        title: "Comparar Números",
+        description: "Comparar decimais e frações",
+        icon: "fas fa-not-equal",
+        category: "Números",
+        theory: `
+            <div class="theory-item">
+                <h3 class="theory-topic-title">Teoria: Comparando Números Decimais e Frações</h3>
+                <p class="theory-explanation">Para comparar números decimais e frações, podemos converter frações em números decimais ou vice-versa.</p>
+                
+                <div class="theory-example">
+                    <div class="theory-example-title">Convertendo frações em decimais:</div>
+                    <p>Para converter uma fração em decimal, dividimos o numerador pelo denominador:</p>
+                    <ul>
+                        <li>1/2 = 1 ÷ 2 = 0,5</li>
+                        <li>3/4 = 3 ÷ 4 = 0,75</li>
+                        <li>2/3 = 2 ÷ 3 = 0,666...</li>
+                    </ul>
+                    <p><strong>Comparando:</strong></p>
+                    <ul>
+                        <li>0,5 (1/2) é menor que 0,65</li>
+                        <li>0,65 é menor que 0,666... (2/3)</li>
+                        <li>0,75 (3/4) é maior que 0,666... (2/3)</li>
+                    </ul>
+                </div>
+                
+                <div class="theory-key-points">
+                    <div class="theory-key-points-title">Dicas para comparação:</div>
+                    <ul>
+                        <li>Converta todos para decimais (dividindo numerador por denominador)</li>
+                        <li>Ou converta todos para frações com mesmo denominador</li>
+                        <li>Para números decimais: compare casa por casa (décimos, centésimos...)</li>
+                        <li>Lembre-se: 0,1 = 1/10, 0,01 = 1/100, 0,001 = 1/1000</li>
+                    </ul>
+                </div>
+            </div>
+        `,
+        questions: [
+            {
+                question: "Qual número é maior: 0,75 ou 3/4?",
+                options: ["0,75", "3/4", "São iguais", "Não sei"],
+                correct: 2,
+                explanation: "0,75 é igual a 3/4, pois 3 dividido por 4 é 0,75."
+            },
+            {
+                question: "Qual é maior: 0,3 ou 1/3?",
+                options: ["0,3", "1/3", "São iguais", "Depende"],
+                correct: 1,
+                explanation: "1/3 é aproximadamente 0,333..., que é maior que 0,3."
+            },
+            {
+                question: "Ordene do menor para o maior: 1/2; 0,65; 2/3",
+                options: ["1/2; 0,65; 2/3", "0,65; 2/3; 1/2", "1/2; 2/3; 0,65", "2/3; 0,65; 1/2"],
+                correct: 0,
+                explanation: "1/2 = 0,5; 0,65 = 0,65; 2/3 ≈ 0,666... Então a ordem é: 0,5 (1/2); 0,65; 0,666... (2/3)."
+            }
+        ]
+    },
+    {
+        code: "Desafio 06",
+        title: "Porcentagens",
+        description: "Calcular porcentagens como em descontos",
+        icon: "fas fa-percentage",
+        category: "Números",
+        theory: `
+            <div class="theory-item">
+                <h3 class="theory-topic-title">Teoria: Porcentagens</h3>
+                <p class="theory-explanation">Porcentagem significa "por cem". O símbolo % representa uma fração com denominador 100. É muito usada em descontos, aumentos, pesquisas e probabilidades.</p>
+                
+                <div class="theory-example">
+                    <div class="theory-example-title">Convertendo porcentagens:</div>
+                    <ul>
+                        <li>25% = 25/100 = 1/4 = 0,25</li>
+                        <li>50% = 50/100 = 1/2 = 0,5</li>
+                        <li>75% = 75/100 = 3/4 = 0,75</li>
+                        <li>100% = 100/100 = 1 = inteiro</li>
+                    </ul>
+                    <p><strong>Calculando porcentagens:</strong></p>
+                    <p>Para calcular x% de uma quantidade, multiplique a quantidade por x/100.</p>
+                    <p><strong>Exemplo:</strong> 20% de 80 = 80 × 20/100 = 80 × 0,2 = 16</p>
+                </div>
+                
+                <div class="theory-key-points">
+                    <div class="theory-key-points-title">Aplicações no dia a dia:</div>
+                    <ul>
+                        <li><strong>Descontos em compras:</strong> 30% de desconto = pagar 70% do preço</li>
+                        <li><strong>Taxas de juros:</strong> 5% ao mês</li>
+                        <li><strong>Resultados de pesquisas:</strong> 60% das pessoas preferem chocolate</li>
+                        <li><strong>Probabilidades:</strong> 25% de chance de chover</li>
+                    </ul>
+                    <p><strong>Dica:</strong> 10% é fácil de calcular - basta dividir por 10!</p>
+                </div>
+            </div>
+        `,
+        questions: [
+            {
+                question: "25% corresponde a qual fração?",
+                options: ["1/4", "1/2", "3/4", "1/10"],
+                correct: 0,
+                explanation: "25% = 25/100 = 1/4."
+            },
+            {
+                question: "Qual é 50% de 80?",
+                options: ["20", "30", "40", "50"],
+                correct: 2,
+                explanation: "50% é a metade, então 50% de 80 é 40."
+            },
+            {
+                question: "Se 10% é 1/10, quanto é 75%?",
+                options: ["1/4", "1/2", "3/4", "4/5"],
+                correct: 2,
+                explanation: "75% = 75/100 = 3/4."
+            }
+        ]
+    },
+    {
+        code: "Desafio 07",
+        title: "Soma e Subtração",
+        description: "Resolver problemas com + e -",
+        icon: "fas fa-plus-minus",
+        category: "Números",
+        questions: [
+            {
+                question: "João tinha R$ 45,50 e ganhou R$ 12,75. Com quanto ficou?",
+                options: ["R$ 57,25", "R$ 58,25", "R$ 57,50", "R$ 58,50"],
+                correct: 1,
+                explanation: "45,50 + 12,75 = 58,25."
+            },
+            {
+                question: "Uma corda de 3,75m foi cortada. Um pedaço tem 1,5m. Quanto mede o outro?",
+                options: ["2,15m", "2,25m", "2,35m", "2,45m"],
+                correct: 1,
+                explanation: "3,75 - 1,5 = 2,25m."
+            },
+            {
+                question: "Em uma escola há 348 alunos. Se 127 são meninas, quantos são meninos?",
+                options: ["221", "218", "228", "238"],
+                correct: 0,
+                explanation: "348 - 127 = 221 meninos."
+            }
+        ]
+    },
+    {
+        code: "Desafio 08",
+        title: "Multiplicação e Divisão",
+        description: "Resolver problemas com × e ÷",
+        icon: "fas fa-times-divide",
+        category: "Números",
+        questions: [
+            {
+                question: "Se 1kg de maçã custa R$ 4,80, quanto custam 2,5kg?",
+                options: ["R$ 10,00", "R$ 11,00", "R$ 12,00", "R$ 12,50"],
+                correct: 2,
+                explanation: "4,80 × 2,5 = 12,00."
+            },
+            {
+                question: "Divida 8,4 por 2.",
+                options: ["4,0", "4,1", "4,2", "4,4"],
+                correct: 2,
+                explanation: "8,4 ÷ 2 = 4,2."
+            },
+            {
+                question: "Uma caixa tem 24 chocolates para 6 crianças. Quantos cada uma recebe?",
+                options: ["3", "4", "5", "6"],
+                correct: 1,
+                explanation: "24 ÷ 6 = 4 chocolates por criança."
+            }
+        ]
+    },
+    {
+        code: "Desafio 09",
+        title: "Contagem",
+        description: "Fazer contagens diferentes",
+        icon: "fas fa-calculator",
+        category: "Números",
+        questions: [
+            {
+                question: "Tenho 3 camisetas e 2 calças. Quantas combinações diferentes posso fazer?",
+                options: ["5", "6", "8", "9"],
+                correct: 1,
+                explanation: "3 × 2 = 6 combinações diferentes."
+            },
+            {
+                question: "Num restaurante há 4 pratos principais e 3 sobremesas. Quantas combinações são possíveis?",
+                options: ["7", "12", "16", "24"],
+                correct: 1,
+                explanation: "4 × 3 = 12 combinações possíveis."
+            },
+            {
+                question: "Quantos números de 2 algarismos posso formar com 1, 2, 3 (podendo repetir)?",
+                options: ["6", "9", "12", "15"],
+                correct: 1,
+                explanation: "3 opções para o primeiro algarismo × 3 para o segundo = 9 números."
+            }
+        ]
+    },
+    {
+        code: "Desafio 10",
+        title: "Igualdades",
+        description: "Compreender quando coisas são iguais",
+        icon: "fas fa-equals",
+        category: "Álgebra",
+        questions: [
+            {
+                question: "Se a = b, então a + 5 = ?",
+                options: ["b", "b + 5", "5", "a + b"],
+                correct: 1,
+                explanation: "Se a = b, então a + 5 = b + 5."
+            },
+            {
+                question: "Se 2x = 10, quanto vale x?",
+                options: ["2", "4", "5", "10"],
+                correct: 2,
+                explanation: "2x = 10 → x = 10 ÷ 2 = 5."
+            },
+            {
+                question: "Se a = 7, qual é o valor de a + 3?",
+                options: ["7", "10", "21", "73"],
+                correct: 1,
+                explanation: "a + 3 = 7 + 3 = 10."
+            }
+        ]
+    },
+    {
+        code: "Desafio 11",
+        title: "Números Desconhecidos",
+        description: "Descobrir números escondidos",
+        icon: "fas fa-search",
+        category: "Álgebra",
+        questions: [
+            {
+                question: "Pensei em um número, somei 8 e obtive 15. Em que número pensei?",
+                options: ["5", "6", "7", "8"],
+                correct: 2,
+                explanation: "x + 8 = 15 → x = 15 - 8 = 7."
+            },
+            {
+                question: "O triplo de um número é 21. Qual é esse número?",
+                options: ["5", "6", "7", "8"],
+                correct: 2,
+                explanation: "3x = 21 → x = 21 ÷ 3 = 7."
+            },
+            {
+                question: "Se subtraio 12 de um número, obtenho 25. Qual é o número?",
+                options: ["13", "27", "37", "47"],
+                correct: 2,
+                explanation: "x - 12 = 25 → x = 25 + 12 = 37."
+            }
+        ]
+    },
+    {
+        code: "Desafio 12",
+        title: "Proporções",
+        description: "Trabalhar com relações entre quantidades",
+        icon: "fas fa-exchange-alt",
+        category: "Álgebra",
+        questions: [
+            {
+                question: "Se 1kg de arroz custa R$ 5,00, quanto custam 3kg?",
+                options: ["R$ 10,00", "R$ 12,00", "R$ 15,00", "R$ 18,00"],
+                correct: 2,
+                explanation: "1kg → R$5, 3kg → 3 × R$5 = R$15."
+            },
+            {
+                question: "Um carro percorre 60km com 5 litros. Quantos km percorrerá com 15 litros?",
+                options: ["120km", "150km", "180km", "200km"],
+                correct: 2,
+                explanation: "5L → 60km, 15L → 3 × 60km = 180km."
+            },
+            {
+                question: "Se 3 metros de tecido custam R$ 24, quanto custam 5 metros?",
+                options: ["R$ 30", "R$ 35", "R$ 40", "R$ 45"],
+                correct: 2,
+                explanation: "1m custa R$24 ÷ 3 = R$8. 5m custam 5 × R$8 = R$40."
+            }
+        ]
+    },
+    {
+        code: "Desafio 13",
+        title: "Divisão Justa",
+        description: "Dividir coisas de forma desigual mas justa",
+        icon: "fas fa-share-alt",
+        category: "Álgebra",
+        questions: [
+            {
+                question: "Divida 60 em duas partes onde uma é o dobro da outra.",
+                options: ["20 e 40", "15 e 45", "25 e 35", "10 e 50"],
+                correct: 0,
+                explanation: "20 + 40 = 60 e 40 é o dobro de 20."
+            },
+            {
+                question: "Tenho R$ 90 para dois filhos. O mais velho recebe o triplo do mais novo. Quanto cada um recebe?",
+                options: ["R$ 20 e R$ 70", "R$ 22,50 e R$ 67,50", "R$ 25 e R$ 65", "R$ 30 e R$ 60"],
+                correct: 1,
+                explanation: "Mais novo: x, mais velho: 3x. Total: x + 3x = 4x = 90 → x = 22,50."
+            },
+            {
+                question: "Divida 48 em duas partes na razão de 3 para 5.",
+                options: ["18 e 30", "16 e 32", "20 e 28", "15 e 33"],
+                correct: 0,
+                explanation: "Partes: 3k e 5k. Total: 3k + 5k = 8k = 48 → k = 6. Partes: 18 e 30."
+            }
+        ]
+    },
+    {
+        code: "Desafio 14",
+        title: "Localização",
+        description: "Localizar objetos no plano",
+        icon: "fas fa-map-marker-alt",
+        category: "Geometria",
+        questions: [
+            {
+                question: "No plano cartesiano, (4, 2) significa:",
+                options: ["4 direita e 2 cima", "4 esquerda e 2 cima", "2 direita e 4 cima", "4 direita e 2 baixo"],
+                correct: 0,
+                explanation: "Primeiro número: direita/esquerda, segundo: cima/baixo."
+            },
+            {
+                question: "Em uma planilha, a célula B3 está:",
+                options: ["Coluna B, linha 3", "Coluna 3, linha B", "Na interseção B e 3", "Todas as anteriores estão corretas"],
+                correct: 3,
+                explanation: "B3 está na coluna B (segunda) e linha 3 (terceira), que é a interseção da coluna B com a linha 3."
+            },
+            {
+                question: "O ponto (3, 1) está:",
+                options: ["3 direita e 1 cima", "3 cima e 1 direita", "3 esquerda e 1 baixo", "3 baixo e 1 esquerda"],
+                correct: 0,
+                explanation: "(3, 1) = 3 unidades para a direita e 1 para cima."
+            }
+        ]
+    },
+    {
+        code: "Desafio 15",
+        title: "Coordenadas",
+        description: "Usar coordenadas no plano cartesiano",
+        icon: "fas fa-map",
+        category: "Geometria",
+        questions: [
+            {
+                question: "Um ponto sai de (2, 3) e vai 2 direita e 1 baixo. Onde para?",
+                options: ["(4, 2)", "(4, 4)", "(2, 4)", "(0, 2)"],
+                correct: 0,
+                explanation: "De (2, 3): direita aumenta x: 2+2=4; baixo diminui y: 3-1=2. Nova posição: (4, 2)."
+            },
+            {
+                question: "Qual ponto está no primeiro quadrante?",
+                options: ["(-2, 3)", "(2, -3)", "(2, 3)", "(-2, -3)"],
+                correct: 2,
+                explanation: "No primeiro quadrante, x e y são positivos: (2, 3)."
+            },
+            {
+                question: "Do ponto (5, 1) para o ponto (2, 4), o movimento foi:",
+                options: ["3 esquerda e 3 cima", "3 direita e 3 cima", "3 esquerda e 3 baixo", "3 direita e 3 baixo"],
+                correct: 0,
+                explanation: "x diminuiu 3 (esquerda), y aumentou 3 (cima)."
+            }
+        ]
+    },
+    {
+        code: "Desafio 16",
+        title: "Formas Espaciais",
+        description: "Reconhecer formas 3D",
+        icon: "fas fa-cube",
+        category: "Geometria",
+        questions: [
+            {
+                question: "Qual sólido tem 2 triângulos e 3 retângulos na planificação?",
+                options: ["Prisma triangular", "Pirâmide triangular", "Prisma retangular", "Cilindro"],
+                correct: 0,
+                explanation: "Prisma triangular tem 2 bases triangulares e 3 faces retangulares."
+            },
+            {
+                question: "Quantas faces tem um cubo?",
+                options: ["4", "6", "8", "12"],
+                correct: 1,
+                explanation: "Um cubo tem 6 faces quadradas."
+            },
+            {
+                question: "Qual NÃO é uma planificação de cubo?",
+                options: ["4 quadrados em linha", "6 quadrados em cruz", "6 quadrados em T", "Todas são"],
+                correct: 0,
+                explanation: "4 quadrados em linha não fecha um cubo, faltam 2 faces."
+            }
+        ]
+    },
+    {
+        code: "Desafio 17",
+        title: "Polígonos",
+        description: "Identificar formas planas",
+        icon: "fas fa-shapes",
+        category: "Geometria",
+        questions: [
+            {
+                question: "Qual polígono tem 5 lados?",
+                options: ["Triângulo", "Quadrilátero", "Pentágono", "Hexágono"],
+                correct: 2,
+                explanation: "Polígono com 5 lados = pentágono."
+            },
+            {
+                question: "Quantos vértices tem um hexágono?",
+                options: ["4", "5", "6", "7"],
+                correct: 2,
+                explanation: "Hexágono tem 6 lados e 6 vértices."
+            },
+            {
+                question: "Qual forma NÃO é polígono?",
+                options: ["Triângulo", "Círculo", "Quadrado", "Pentágono"],
+                correct: 1,
+                explanation: "Círculo não tem lados retos, então não é polígono."
+            }
+        ]
+    },
+    {
+        code: "Desafio 18",
+        title: "Ampliar e Reduzir",
+        description: "Mudar tamanho de figuras",
+        icon: "fas fa-expand-alt",
+        category: "Geometria",
+        questions: [
+            {
+                question: "Quando ampliamos um quadrado, seus lados:",
+                options: ["Diminuem", "Aumentam proporcionalmente", "Não mudam", "Ficam desproporcionais"],
+                correct: 1,
+                explanation: "Na ampliação, os lados aumentam proporcionalmente."
+            },
+            {
+                question: "O que não muda quando reduzimos uma figura?",
+                options: ["Tamanho dos lados", "Forma", "Área", "Perímetro"],
+                correct: 1,
+                explanation: "A forma se mantém, só o tamanho muda."
+            },
+            {
+                question: "Um triângulo com lados 3, 4, 5 é ampliado para 6, 8, 10. Isso é:",
+                options: ["Proporcional", "Não proporcional", "Só alguns aumentaram", "Nenhuma"],
+                correct: 0,
+                explanation: "Todos os lados dobraram (×2), então é ampliação proporcional."
+            }
+        ]
+    },
+    {
+        code: "Desafio 19",
+        title: "Medidas",
+        description: "Trabalhar com diferentes medidas",
+        icon: "fas fa-ruler-combined",
+        category: "Grandezas e Medidas",
+        questions: [
+            {
+                question: "Quantos centímetros tem 1 metro?",
+                options: ["10", "100", "1000", "10000"],
+                correct: 1,
+                explanation: "1 metro = 100 centímetros."
+            },
+            {
+                question: "Quantos minutos têm 2 horas e meia?",
+                options: ["120", "150", "180", "210"],
+                correct: 1,
+                explanation: "2 horas = 120 minutos, meia hora = 30 minutos. Total: 150."
+            },
+            {
+                question: "Uma sala de 6m por 4m tem área:",
+                options: ["10 m²", "20 m²", "24 m²", "36 m²"],
+                correct: 2,
+                explanation: "Área = comprimento × largura = 6 × 4 = 24 m²."
+            }
+        ]
+    },
+    {
+        code: "Desafio 20",
+        title: "Perímetro e Área",
+        description: "Comparar perímetros e áreas",
+        icon: "fas fa-border-all",
+        category: "Grandezas e Medidas",
+        questions: [
+            {
+                question: "Um quadrado de lado 4cm tem perímetro 16cm e área 16cm². Um retângulo 2cm×6cm tem:",
+                options: ["Mesmo perímetro e área", "Mesmo perímetro, área diferente", "Perímetro diferente, mesma área", "Tudo diferente"],
+                correct: 1,
+                explanation: "Retângulo: perímetro = 2+2+6+6 = 16cm (igual), área = 2×6 = 12cm² (diferente)."
+            },
+            {
+                question: "Qual tem maior área: quadrado lado 5cm ou retângulo 4cm×6cm?",
+                options: ["Quadrado", "Retângulo", "Iguais", "Não sei"],
+                correct: 0,
+                explanation: "Quadrado: 5×5 = 25cm². Retângulo: 4×6 = 24cm². Quadrado maior."
+            },
+            {
+                question: "Figuras com mesmo perímetro podem ter áreas diferentes?",
+                options: ["Sim", "Não", "Depende", "Às vezes"],
+                correct: 0,
+                explanation: "Sim, figuras com mesmo perímetro podem ter áreas diferentes."
+            }
+        ]
+    },
+    {
+        code: "Desafio 21",
+        title: "Volume",
+        description: "Calcular espaço que ocupa",
+        icon: "fas fa-cubes",
+        category: "Grandezas e Medidas",
+        questions: [
+            {
+                question: "Um cubo de lado 2cm tem volume:",
+                options: ["4 cm³", "6 cm³", "8 cm³", "12 cm³"],
+                correct: 2,
+                explanation: "Volume = lado × lado × lado = 2×2×2 = 8 cm³."
+            },
+            {
+                question: "Quantos cubinhos de 1cm³ cabem em uma caixa 3cm×4cm×5cm?",
+                options: ["12", "30", "60", "120"],
+                correct: 2,
+                explanation: "Volume da caixa = 3×4×5 = 60 cm³, então cabem 60 cubinhos."
+            },
+            {
+                question: "Volume mede:",
+                options: ["Comprimento", "Área", "Espaço ocupado", "Peso"],
+                correct: 2,
+                explanation: "Volume mede o espaço que um objeto ocupa."
+            }
+        ]
+    },
+    {
+        code: "Desafio 22",
+        title: "Chances",
+        description: "Analisar probabilidades",
+        icon: "fas fa-dice",
+        category: "Probabilidade e Estatística",
+        questions: [
+            {
+                question: "Ao lançar uma moeda, quais os resultados possíveis?",
+                options: ["{cara}", "{coroa}", "{cara, coroa}", "{nenhum}"],
+                correct: 2,
+                explanation: "Os resultados possíveis são cara ou coroa."
+            },
+            {
+                question: "Ao lançar um dado comum, quantos resultados possíveis?",
+                options: ["4", "6", "8", "12"],
+                correct: 1,
+                explanation: "Um dado tem 6 faces: 1, 2, 3, 4, 5, 6."
+            },
+            {
+                question: "Lançando uma moeda e um dado, quantos resultados possíveis?",
+                options: ["8", "10", "12", "14"],
+                correct: 2,
+                explanation: "Moeda: 2 resultados, Dado: 6 resultados. Total: 2×6 = 12."
+            }
+        ]
+    },
+    {
+        code: "Desafio 23",
+        title: "Probabilidade",
+        description: "Calcular chances de eventos",
+        icon: "fas fa-chart-pie",
+        category: "Probabilidade e Estatística",
+        questions: [
+            {
+                question: "Qual a chance de sair cara ao lançar uma moeda?",
+                options: ["1/4", "1/3", "1/2", "3/4"],
+                correct: 2,
+                explanation: "Moeda tem 2 lados igualmente prováveis. Chance de cara = 1/2."
+            },
+            {
+                question: "Em um dado, qual a probabilidade de sair número par?",
+                options: ["1/6", "1/3", "1/2", "2/3"],
+                correct: 2,
+                explanation: "Números pares: 2, 4, 6 (3 números). Probabilidade = 3/6 = 1/2."
+            },
+            {
+                question: "Qual a probabilidade de sair o número 3 em um dado?",
+                options: ["1/6", "1/3", "1/2", "1"],
+                correct: 0,
+                explanation: "Dado tem 6 faces igualmente prováveis. Probabilidade de sair 3 = 1/6."
+            }
+        ]
+    },
+    {
+        code: "Desafio 24",
+        title: "Gráficos e Tabelas",
+        description: "Interpretar informações visuais",
+        icon: "fas fa-chart-bar",
+        category: "Probabilidade e Estatística",
+        questions: [
+            {
+                question: "Em um gráfico de barras, o comprimento da barra mostra:",
+                options: ["Cor dos dados", "Quantidade ou frequência", "Tempo de coleta", "Local"],
+                correct: 1,
+                explanation: "O comprimento da barra mostra a quantidade ou frequência."
+            },
+            {
+                question: "Em uma pesquisa, 20 de 50 pessoas preferem chocolate. Qual a porcentagem?",
+                options: ["20%", "30%", "40%", "50%"],
+                correct: 2,
+                explanation: "20 de 50 = 20/50 = 0,4 = 40%."
+            },
+            {
+                question: "Para mostrar mudanças ao longo do tempo, melhor gráfico:",
+                options: ["Barras", "Linhas", "Setores", "Pictórico"],
+                correct: 1,
+                explanation: "Gráfico de linhas é melhor para mostrar tendências no tempo."
+            }
+        ]
+    },
+    {
+        code: "Desafio 25",
+        title: "Organizar Dados",
+        description: "Organizar informações de pesquisa",
+        icon: "fas fa-poll",
+        category: "Probabilidade e Estatística",
+        questions: [
+            {
+                question: "Primeiro passo em uma pesquisa:",
+                options: ["Coletar dados", "Definir tema e objetivo", "Analisar dados", "Apresentar"],
+                correct: 1,
+                explanation: "Primeiro definir claramente o tema e objetivos."
+            },
+            {
+                question: "Exemplo de variável categórica:",
+                options: ["Idade", "Altura", "Cor favorita", "Peso"],
+                correct: 2,
+                explanation: "Cor favorita é variável categórica (qualitativa)."
+            },
+            {
+                question: "Após coletar dados:",
+                options: ["Organizar e analisar", "Esquecer pesquisa", "Coletar mais sem analisar", "Publicar"],
+                correct: 0,
+                explanation: "Após coleta, organizar e analisar dados para conclusões."
+            }
+        ]
+    }
+];
+
+
+
+
+
 
         // Adicionar teoria aos desafios que não têm (para simplificar, vou adicionar apenas aos primeiros 6 como exemplo)
         // Nos desafios 7-25, adicionarei uma teoria básica
