@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC da Matemática - 5º Ano</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #4a6bff 0%, #ff6b9d 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 15px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: white;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 3px dashed white;
+        }
+        
+        h1 {
+            font-size: 2.3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            color: #ffeb3b;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            max-width: 900px;
+            margin: 0 auto 10px;
+            color: white;
+        }
+        
+        .highlight {
+            background-color: rgba(255, 255, 255, 0.3);
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 10px;
+            border: 2px solid #ffeb3b;
+        }
+        
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .game-section {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 5px solid #4a6bff;
+        }
+        
+        .controls-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .info-btn {
+            background-color: #ff6b9d;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+        
+        .info-btn:hover {
+            background-color: #ff4081;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .info-btn:active {
+            transform: translateY(0) scale(1);
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+            margin-top: 15px;
+        }
+        
+        .game-title {
+            color: #4a6bff;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        
+        .skill-card {
+            background-color: #f0f7ff;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 160px;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border-color: #4a6bff;
+        }
+        
+        .skill-card.completed {
+            border-color: #4caf50;
+            background-color: #e8f5e9;
+        }
+        
+        .skill-card.in-progress {
+            border-color: #ff9800;
+            background-color: #fff3e0;
+        }
+        
+        .skill-code {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background-color: #4a6bff;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #4a6bff;
+        }
+        
+        .skill-card.completed .card-icon {
+            color: #4caf50;
+        }
+        
+        .skill-card.in-progress .card-icon {
+            color: #ff9800;
+        }
+        
+        .card-title {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .card-desc {
+            font-size: 0.8rem;
+            color: #666;
+            line-height: 1.2;
+        }
+        
+        .progress-indicator {
+            position: absolute;
+            bottom: 5px;
+            right: 8px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+        
+        .progress-container {
+            width: 100%;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #4a6bff;
+            margin-bottom: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.3) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .progress-text {
+            font-size: 1rem;
+            color: #4a6bff;
+            font-weight: bold;
+        }
+        
+        .score-board {
+            background-color: #e8eaf6;
+            padding: 15px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 700px;
+            margin-top: 15px;
+            border: 3px solid #ff6b9d;
+        }
+        
+        .score-item {
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .score-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #4a6bff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .score-label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: bold;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border: 5px solid #ff6b9d;
+            z-index: 1001;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            color: #4a6bff;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #4a6bff;
+        }
+        
+        .close-modal:hover {
+            color: #ff4081;
+            background-color: #f0f7ff;
+        }
+        
+        .modal-title {
+            color: #4a6bff;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px dashed #e8eaf6;
+        }
+        
+        .modal-text {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .skills-list {
+            list-style-type: none;
+            margin-left: 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .skills-list li {
+            margin-bottom: 12px;
+            padding: 12px;
+            border-left: 4px solid #4a6bff;
+            background-color: #f9f9f9;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s;
+        }
+        
+        .skills-list li:hover {
+            background-color: #e8eaf6;
+            transform: translateX(5px);
+        }
+        
+        .skill-code-modal {
+            display: inline-block;
+            background-color: #4a6bff;
+            color: white;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-radius: 15px;
+            margin-right: 10px;
+            min-width: 100px;
+        }
+        
+        .unit-theme {
+            background-color: #e8eaf6;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #4a6bff;
+        }
+        
+        .unit-title {
+            color: #4a6bff;
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Estilos específicos para o jogo */
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            padding: 15px;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .option-btn:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+        }
+        
+        .option-btn.selected {
+            border-color: #4a6bff;
+            background-color: #e8eaf6;
+            font-weight: bold;
+            transform: scale(1.02);
+        }
+        
+        .option-btn.correct {
+            border-color: #4caf50;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .option-btn.incorrect {
+            border-color: #f44336;
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        
+        .respond-btn {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .respond-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #388e3c, #689f38);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .respond-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .next-btn {
+            background: linear-gradient(135deg, #4a6bff, #6b8cff);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+            transition: all 0.3s;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .next-btn:hover {
+            background: linear-gradient(135deg, #3a5bdf, #5b7cff);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .feedback-box {
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+            border: 3px solid transparent;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .feedback-correct {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .feedback-incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        /* Estilo para o botão de reiniciar jogo */
+        .reset-btn {
+            background: linear-gradient(135deg, #ff6b9d, #ff4081);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Animações divertidas */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .bounce-animation {
+            animation: bounce 0.5s ease;
+        }
+        
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .celebrate-animation {
+            animation: celebrate 0.5s ease;
+        }
+        
+        /* Confete canvas - garante que fique acima do modal */
+        canvas {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            pointer-events: none !important;
+            z-index: 9999 !important;
+        }
+        
+        /* Estilos para o modal de Revisão Teórica */
+        .theory-selector {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #4a6bff;
+            background-color: white;
+            color: #333;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .theory-selector:hover {
+            border-color: #ff6b9d;
+            transform: translateY(-2px);
+        }
+        
+        .theory-selector:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.3);
+        }
+        
+        .theory-content-container {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 15px;
+            border: 2px solid #e8eaf6;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .theory-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #e0e0e0;
+        }
+        
+        .theory-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .theory-topic-title {
+            color: #4a6bff;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e8eaf6;
+        }
+        
+        .theory-explanation {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .theory-example {
+            background-color: #e8eaf6;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ff6b9d;
+        }
+        
+        .theory-example-title {
+            color: #ff6b9d;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .theory-key-points {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+        
+        .theory-key-points-title {
+            color: #4caf50;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 1200px) {
+            .game-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .game-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .skill-card {
+                height: 170px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .game-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skill-card {
+                height: 140px;
+            }
+            
+            .controls-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .info-btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .score-value {
+                font-size: 1.8rem;
+            }
+            
+            .skill-code-modal {
+                display: block;
+                margin-bottom: 5px;
+                width: fit-content;
+            }
+            
+            .option-btn {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            
+            .theory-selector {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+            
+            .theory-content-container {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎮ABC da Matemática - 5º Ano do Ensino Fundamental Anos Iniciais🎮</h1>
+            <p class="subtitle">Aprenda matemática brincando! Descubra 25 habilidades divertidas</p>
+            <h2>Jogo criado por alunos de Licenciatura em Matemática da Universidade Virtual do Estado de São Paulo - UNIVESP, para alunos do 5º ano do Ensino Fundamental Anos Iniciais aprenderem matemática brincando</h2>
+            
+            <div class="highlight">
+                <p><i class="fas fa-gamepad"></i> <strong>25 Desafios Matemáticos - 5º Ano do Ensino Fundamental Anos Iniciais</strong></p>
+            </div>
+        </header>
+        
+        <div class="content-area">
+            <section class="game-section">
+                <div class="controls-section">
+                    <button class="info-btn" id="projectBtn">
+                        <i class="fas fa-info-circle"></i> Sobre o Jogo
+                    </button>
+                    <button class="info-btn" id="skillsBtn">
+                        <i class="fas fa-star"></i> Desafios
+                    </button>
+                    <button class="info-btn" id="reviewBtn">
+                        <i class="fas fa-book"></i> Conteúdos
+                    </button>
+                    <button class="info-btn" id="theoryBtn">
+                        <i class="fas fa-brain"></i> Revisão Teórica
+                    </button>
+                    <button class="info-btn" id="rulesBtn">
+                        <i class="fas fa-play-circle"></i> Como Jogar
+                    </button>
+                    <button class="info-btn" id="moreBtn">
+                        <i class="fas fa-lightbulb"></i> Dicas
+                    </button>
+                    <button class="info-btn" id="resetBtn">
+                        <i class="fas fa-redo"></i> Reiniciar Jogo
+                    </button>
+                </div>
+                
+                <h2 class="game-title">Escolha um desafio para começar!</h2>
+                <p style="text-align: center; margin-bottom: 20px; color: #666; font-size: 1.1rem;">Clique em um dos cartões abaixo para jogar</p>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="globalProgress" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text"><span id="completedCount">0</span> de 25 desafios completados</p>
+                </div>
+                
+                <div class="game-container">
+                    <div class="game-grid" id="skillsGrid">
+                        <!-- As 25 habilidades serão inseridas aqui via JavaScript -->
+                    </div>
+                    
+                    <div class="score-board">
+                        <div class="score-item">
+                            <div class="score-value" id="correctCount">0</div>
+                            <div class="score-label">Acertos</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value" id="attemptCount">0</div>
+                            <div class="score-label">Tentativas</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value" id="percentage">0%</div>
+                            <div class="score-label">Taxa de Acerto</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value" id="level">🌟</div>
+                            <div class="score-label">Nível</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <footer>
+            <p>Projeto Integrador IV - Univesp | Aprendendo Matemática com Diversão</p>
+            <p>Desenvolvido para estudantes do 5º Ano do Ensino Fundamental Anos Iniciais</p>
+        </footer>
+    </div>
+    
+    <!-- Modal Sobre o Jogo -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeProject">&times;</span>
+            <h2 class="modal-title">🎮 Sobre o Jogo</h2>
+            <p class="modal-text">Este jogo foi criado por alunos de Licenciatura em Matemática da Universidade Virtual do Estado de São Paulo - UNIVESP, especialmente para <strong>alunos do 5º ano</strong> aprenderem matemática de forma divertida!</p>
+            
+            <div class="unit-theme">
+                <p><strong>Objetivo:</strong> Aprender matemática brincando! Cada desafio ensina um conteúdo importante do 5º ano.</p>
+            </div>
+            
+            <p class="modal-text"><strong>Para quem é:</strong> Para crianças que querem aprender matemática de um jeito legal e interativo.</p>
+            
+            <p class="modal-text"><strong>Como funciona:</strong> Você escolhe um desafio, responde perguntas e ganha pontos! Quanto mais desafios completar, mais estrelas você ganha!</p>
+            
+            <p class="modal-text"><strong>O que você vai aprender:</strong> Números, frações, geometria, medidas e muito mais!</p>
+            
+            <div class="unit-theme" style="background-color: #fff3e0; border-left-color: #ff9800;">
+                <p><strong>Dica do professor:</strong> "A matemática está em tudo! Brincar com números ajuda a entender melhor o mundo ao nosso redor."</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Desafios -->
+    <div class="modal" id="skillsModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeSkills">&times;</span>
+            <h2 class="modal-title">🎯 25 Desafios Matemáticos</h2>
+            <p class="modal-text">Complete todos os desafios para virar um mestre da matemática!</p>
+            
+            <ul class="skills-list">
+                <li><span class="skill-code-modal">Desafio 01</span> Ler e escrever números grandes</li>
+                <li><span class="skill-code-modal">Desafio 02</span> Trabalhar com números decimais</li>
+                <li><span class="skill-code-modal">Desafio 03</span> Entender frações</li>
+                <li><span class="skill-code-modal">Desafio 04</span> Encontrar frações iguais</li>
+                <li><span class="skill-code-modal">Desafio 05</span> Comparar números decimais e frações</li>
+                <li><span class="skill-code-modal">Desafio 06</span> Calcular porcentagens</li>
+                <li><span class="skill-code-modal">Desafio 07</span> Resolver problemas de soma e subtração</li>
+                <li><span class="skill-code-modal">Desafio 08</span> Resolver problemas de multiplicação e divisão</li>
+                <li><span class="skill-code-modal">Desafio 09</span> Fazer contagens diferentes</li>
+                <li><span class="skill-code-modal">Desafio 10</span> Compreender igualdades matemáticas</li>
+                <li><span class="skill-code-modal">Desafio 11</span> Descobrir números desconhecidos</li>
+                <li><span class="skill-code-modal">Desafio 12</span> Trabalhar com proporções</li>
+                <li><span class="skill-code-modal">Desafio 13</span> Dividir quantidades de forma justa</li>
+                <li><span class="skill-code-modal">Desafio 14</span> Localizar objetos no plano</li>
+                <li><span class="skill-code-modal">Desafio 15</span> Usar coordenadas no plano cartesiano</li>
+                <li><span class="skill-code-modal">Desafio 16</span> Reconhecer formas espaciais</li>
+                <li><span class="skill-code-modal">Desafio 17</span> Identificar polígonos</li>
+                <li><span class="skill-code-modal">Desafio 18</span> Ampliar e reduzir figuras</li>
+                <li><span class="skill-code-modal">Desafio 19</span> Trabalhar com medidas</li>
+                <li><span class="skill-code-modal">Desafio 20</span> Comparar perímetros e áreas</li>
+                <li><span class="skill-code-modal">Desafio 21</span> Calcular volumes</li>
+                <li><span class="skill-code-modal">Desafio 22</span> Analisar chances e probabilidades</li>
+                <li><span class="skill-code-modal">Desafio 23</span> Calcular probabilidades</li>
+                <li><span class="skill-code-modal">Desafio 24</span> Interpretar gráficos e tabelas</li>
+                <li><span class="skill-code-modal">Desafio 25</span> Organizar dados de pesquisa</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Modal Conteúdos -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeReview">&times;</span>
+            <h2 class="modal-title">📚 Conteúdos do 5º Ano</h2>
+            
+            <div class="unit-theme">
+                <div class="unit-title">🔢 Números</div>
+                <p><strong>O que você vai aprender:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Números grandes (até centenas de milhar)</li>
+                    <li>Números decimais (com vírgula)</li>
+                    <li>Frações (partes de um todo)</li>
+                    <li>Porcentagens (%, como em descontos)</li>
+                    <li>Operações (soma, subtração, multiplicação, divisão)</li>
+                </ul>
+            </div>
+            
+            <div class="unit-theme">
+                <div class="unit-title">⚖️ Álgebra</div>
+                <p><strong>O que você vai aprender:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Igualdades (quando duas coisas são iguais)</li>
+                    <li>Proporções (relações entre quantidades)</li>
+                    <li>Divisão em partes diferentes</li>
+                </ul>
+            </div>
+            
+            <div class="unit-theme">
+                <div class="unit-title">🔺 Geometria</div>
+                <p><strong>O que você vai aprender:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Plano cartesiano (coordenadas)</li>
+                    <li>Formas espaciais (cubo, pirâmide, etc.)</li>
+                    <li>Polígonos (triângulo, quadrado, etc.)</li>
+                    <li>Ampliação e redução de figuras</li>
+                </ul>
+            </div>
+            
+            <div class="unit-theme">
+                <div class="unit-title">📏 Medidas</div>
+                <p><strong>O que você vai aprender:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Comprimento, área, massa, tempo</li>
+                    <li>Perímetros e áreas de figuras</li>
+                    <li>Volume (espaço que ocupa)</li>
+                </ul>
+            </div>
+            
+            <div class="unit-theme">
+                <div class="unit-title">📊 Probabilidade e Estatística</div>
+                <p><strong>O que você vai aprender:</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Chances (probabilidade)</li>
+                    <li>Gráficos e tabelas</li>
+                    <li>Organização de dados</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Revisão Teórica -->
+    <div class="modal" id="theoryModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeTheory">&times;</span>
+            <h2 class="modal-title">🧠 Revisão Teórica</h2>
+            <p class="modal-text">Entenda os conceitos por trás de cada desafio:</p>
+            
+            <select id="theorySelector" class="theory-selector">
+                <option value="-1">Selecione um desafio para ver a teoria</option>
+                <!-- Opções serão preenchidas via JavaScript -->
+            </select>
+            
+            <div id="theoryContent" class="theory-content-container">
+                <div style="text-align: center; padding: 40px 20px; color: #666;">
+                    <i class="fas fa-lightbulb" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
+                    <p>Selecione um desafio acima para aprender a teoria por trás dele!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Como Jogar -->
+    <div class="modal" id="rulesModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeRules">&times;</span>
+            <h2 class="modal-title">🎲 Como Jogar</h2>
+            
+            <p class="modal-text">Bem-vindo ao ABC da Matemática! Siga estes passos para começar a diversão:</p>
+            
+            <div class="unit-theme">
+                <h3 style="color: #4a6bff; margin-bottom: 10px;">Passo a Passo:</h3>
+                <ol style="margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Escolha um desafio</strong> clicando em um dos cartões coloridos</li>
+                    <li><strong>Leia a pergunta</strong> com atenção</li>
+                    <li><strong>Clique na resposta</strong> que você acha correta</li>
+                    <li><strong>Confirme sua resposta</strong> clicando no botão "Responder"</li>
+                    <li><strong>Veja se acertou</strong> e leia a explicação</li>
+                    <li><strong>Passe para a próxima pergunta</strong> até completar o desafio!</li>
+                </ol>
+            </div>
+            
+            <p class="modal-text"><strong>Níveis de Jogador:</strong></p>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li><strong>🌟 Iniciante:</strong> 0-8 desafios completados</li>
+                <li><strong>🌟🌟 Intermediário:</strong> 9-16 desafios completados</li>
+                <li><strong>🌟🌟🌟 Avançado:</strong> 17-24 desafios completados</li>
+                <li><strong>🌟🌟🌟🌟 Mestre:</strong> 25 desafios completados</li>
+            </ul>
+            
+            <p class="modal-text"><strong>Dicas para jogar bem:</strong></p>
+            <ul class="skills-list">
+                <li>Leia cada pergunta com calma antes de responder</li>
+                <li>Use papel e lápis para fazer cálculos se precisar</li>
+                <li>Se errar, não desanime! Aprenda com o erro</li>
+                <li>Divirta-se! A matemática pode ser muito legal</li>
+            </ul>
+            
+            <div class="unit-theme" style="background-color: #e8f5e9; border-left-color: #4caf50;">
+                <p><strong>Lembre-se:</strong> Cada erro é uma oportunidade de aprender algo novo! Continue tentando!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Dicas -->
+    <div class="modal" id="moreModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeMore">&times;</span>
+            <h2 class="modal-title">💡 Dicas para Aprender Matemática</h2>
+            
+            <p class="modal-text">Aprender matemática pode ser divertido! Aqui estão algumas dicas:</p>
+            
+            <div class="unit-theme">
+                <h3 style="color: #4a6bff; margin-bottom: 10px;">Atividades Divertidas:</h3>
+                <ul style="margin-left: 20px; line-height: 1.6;">
+                    <li><strong>Jogos de tabuleiro</strong> como Banco Imobiliário (ensina cálculos)</li>
+                    <li><strong>Batalha naval</strong> (ensina coordenadas)</li>
+                    <li><strong>Jogos de memória</strong> com formas geométricas</li>
+                    <li><strong>Quebra-cabeças</strong> e tangram</li>
+                </ul>
+            </div>
+            
+            <p class="modal-text"><strong>Matemática no dia a dia:</strong></p>
+            <ul class="skills-list">
+                <li><strong>Nas compras:</strong> Calcular troco, comparar preços, calcular descontos</li>
+                <li><strong>Na cozinha:</strong> Medir ingredientes, dividir receitas</li>
+                <li><strong>No tempo:</strong> Calcular horas, minutos, planejar horários</li>
+                <li><strong>Nos esportes:</strong> Marcar pontos, calcular médias</li>
+            </ul>
+            
+            <div class="unit-theme" style="background-color: #fff3e0; border-left-color: #ff9800;">
+                <p><strong>Para pais e professores:</strong> Este jogo pode ser usado em sala de aula ou em casa para reforçar os conceitos aprendidos na escola. Incentive as crianças a explicarem como chegaram nas respostas!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal do Jogo (será preenchido dinamicamente) -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <span class="close-modal" id="closeGame">&times;</span>
+            <h2 class="modal-title" id="gameTopicTitle">Desafio Matemático</h2>
+            <p id="skillCodeDisplay" style="color: #666; margin-bottom: 15px; font-size: 1.1rem;"></p>
+            <p id="questionCounter" style="color: #4a6bff; font-weight: bold; margin-bottom: 20px; font-size: 1.2rem;"></p>
+            
+            <div id="gameContent">
+                <!-- Conteúdo do jogo será inserido aqui via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elementos dos modais
+        const projectModal = document.getElementById('projectModal');
+        const skillsModal = document.getElementById('skillsModal');
+        const reviewModal = document.getElementById('reviewModal');
+        const theoryModal = document.getElementById('theoryModal');
+        const rulesModal = document.getElementById('rulesModal');
+        const moreModal = document.getElementById('moreModal');
+        const gameModal = document.getElementById('gameModal');
+        
+        // Botões para abrir modais
+        const projectBtn = document.getElementById('projectBtn');
+        const skillsBtn = document.getElementById('skillsBtn');
+        const reviewBtn = document.getElementById('reviewBtn');
+        const theoryBtn = document.getElementById('theoryBtn');
+        const rulesBtn = document.getElementById('rulesBtn');
+        const moreBtn = document.getElementById('moreBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        // Botões para fechar modais
+        const closeProject = document.getElementById('closeProject');
+        const closeSkills = document.getElementById('closeSkills');
+        const closeReview = document.getElementById('closeReview');
+        const closeTheory = document.getElementById('closeTheory');
+        const closeRules = document.getElementById('closeRules');
+        const closeMore = document.getElementById('closeMore');
+        const closeGame = document.getElementById('closeGame');
+        
+        // Elementos do placar e progresso
+        const correctCount = document.getElementById('correctCount');
+        const attemptCount = document.getElementById('attemptCount');
+        const percentage = document.getElementById('percentage');
+        const level = document.getElementById('level');
+        const globalProgress = document.getElementById('globalProgress');
+        const completedCount = document.getElementById('completedCount');
+        const skillsGrid = document.getElementById('skillsGrid');
+        
+        // Elementos da Revisão Teórica
+        const theorySelector = document.getElementById('theorySelector');
+        const theoryContent = document.getElementById('theoryContent');
+        
+        // Dados das 25 habilidades - com linguagem mais simples para crianças
+        const skillsData = [
+            {
+                code: "Desafio 01",
+                title: "Números Grandes",
+                description: "Ler e escrever números até centenas de milhar",
+                icon: "fas fa-sort-numeric-down",
+                category: "Números",
+                theory: `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: Números Grandes</h3>
+                        <p class="theory-explanation">Números grandes são números com muitos algarismos. No 5º ano, aprendemos a ler e escrever números até centenas de milhar (até 999.999).</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Como funciona:</div>
+                            <p>Os números são organizados em classes e ordens:</p>
+                            <ul>
+                                <li><strong>Unidades:</strong> unidades, dezenas, centenas</li>
+                                <li><strong>Milhares:</strong> unidades de milhar, dezenas de milhar, centenas de milhar</li>
+                            </ul>
+                            <p><strong>Exemplo:</strong> 345.678 = 3 centenas de milhar + 4 dezenas de milhar + 5 unidades de milhar + 6 centenas + 7 dezenas + 8 unidades</p>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Pontos importantes:</div>
+                            <ul>
+                                <li>Use ponto para separar as classes (milhares)</li>
+                                <li>Leia primeiro as centenas de milhar</li>
+                                <li>Não use "e" entre as classes</li>
+                                <li>345.678 = trezentos e quarenta e cinco mil, seiscentos e setenta e oito</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        question: "Como se lê o número 345.678?",
+                        options: ["Trinta e quatro mil, quinhentos e sessenta e oito", "Trezentos e quarenta e cinco mil, seiscentos e setenta e oito", "Três milhões, quarenta e cinco mil, seiscentos e setenta e oito", "Trezentos e quarenta e cinco mil e setecentos e oitenta"],
+                        correct: 1,
+                        explanation: "345.678 se lê: Trezentos e quarenta e cinco mil, seiscentos e setenta e oito."
+                    },
+                    {
+                        question: "Qual número é maior: 125.430 ou 125.403?",
+                        options: ["125.430", "125.403", "São iguais", "Não dá para saber"],
+                        correct: 0,
+                        explanation: "125.430 é maior porque na casa das dezenas tem 30, enquanto 125.403 tem apenas 03."
+                    },
+                    {
+                        question: "Escreva por extenso: 78.905",
+                        options: ["Setenta e oito mil e novecentos e cinco", "Sete mil, oitocentos e noventa e cinco", "Setenta e oito mil, novecentos e cinco", "Sete milhões, oitocentos e noventa e cinco"],
+                        correct: 2,
+                        explanation: "78.905 se escreve: Setenta e oito mil, novecentos e cinco."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 02",
+                title: "Números Decimais",
+                description: "Trabalhar com números que têm vírgula",
+                icon: "fas fa-decimal",
+                category: "Números",
+                theory: `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: Números Decimais</h3>
+                        <p class="theory-explanation">Números decimais são números que têm parte inteira e parte decimal, separadas por vírgula. Eles representam quantidades que não são inteiras.</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Partes de um número decimal:</div>
+                            <p><strong>3,45</strong> tem:</p>
+                            <ul>
+                                <li><strong>Parte inteira:</strong> 3 (antes da vírgula)</li>
+                                <li><strong>Parte decimal:</strong> 45 (depois da vírgula)</li>
+                                <li><strong>Lê-se:</strong> "três inteiros e quarenta e cinco centésimos"</li>
+                            </ul>
+                            <p>Os números decimais podem representar: dinheiro (R$ 3,45), medidas (1,5 metros), pesos (2,3 kg), etc.</p>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Comparando números decimais:</div>
+                            <ul>
+                                <li>Compare primeiro a parte inteira</li>
+                                <li>Se as partes inteiras forem iguais, compare os décimos</li>
+                                <li>Se os décimos forem iguais, compare os centésimos</li>
+                                <li><strong>Exemplo:</strong> 2,3 é maior que 2,03 porque 3 décimos > 0 décimos</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        question: "Como se lê o número 3,45?",
+                        options: ["Três vírgula quarenta e cinco", "Três inteiros e quarenta e cinco centésimos", "Trezentos e quarenta e cinco", "Três e quarenta e cinco"],
+                        correct: 1,
+                        explanation: "3,45 se lê: Três inteiros e quarenta e cinco centésimos."
+                    },
+                    {
+                        question: "Qual número é menor: 2,3; 2,03 ou 2,33?",
+                        options: ["2,3", "2,03", "2,33", "Todos são iguais"],
+                        correct: 1,
+                        explanation: "2,03 é o menor porque depois da vírgula tem 03, que é menor que 30 (2,3) e 33 (2,33)."
+                    },
+                    {
+                        question: "Qual é a forma decimal de sete inteiros e oito décimos?",
+                        options: ["7,8", "7,08", "0,78", "78,0"],
+                        correct: 0,
+                        explanation: "Sete inteiros e oito décimos é representado por 7,8."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 03",
+                title: "Frações",
+                description: "Entender partes de um todo",
+                icon: "fas fa-pizza-slice",
+                category: "Números",
+                theory: `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: Frações</h3>
+                        <p class="theory-explanation">Frações representam partes de um todo. Elas são escritas como dois números separados por uma linha: o numerador (partes que temos) e o denominador (partes totais).</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Exemplo prático:</div>
+                            <p>Uma pizza dividida em 8 pedaços:</p>
+                            <ul>
+                                <li><strong>3/8</strong> = comi 3 pedaços de 8</li>
+                                <li><strong>5/8</strong> = sobram 5 pedaços de 8</li>
+                                <li><strong>8/8</strong> = pizza inteira</li>
+                            </ul>
+                            <p><strong>Tipos de frações:</strong></p>
+                            <ul>
+                                <li><strong>Própria:</strong> numerador menor que denominador (3/8)</li>
+                                <li><strong>Imprópria:</strong> numerador maior que denominador (7/6)</li>
+                                <li><strong>Aparente:</strong> numerador múltiplo do denominador (8/8 = 1)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Conceitos importantes:</div>
+                            <ul>
+                                <li>Denominador mostra em quantas partes o todo foi dividido</li>
+                                <li>Numerador mostra quantas partes estamos considerando</li>
+                                <li>Uma fração pode representar mais que um inteiro (7/6 = 1 inteiro e 1/6)</li>
+                                <li>Frações podem representar: partes de objetos, divisão de quantidades, probabilidades</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        question: "Em uma pizza dividida em 8 pedaços, comi 3. Qual fração representa o que comi?",
+                        options: ["3/8", "5/8", "8/3", "1/3"],
+                        correct: 0,
+                        explanation: "3 pedaços de 8 é representado pela fração 3/8."
+                    },
+                    {
+                        question: "Qual destas frações é maior que um inteiro?",
+                        options: ["3/4", "5/5", "7/6", "2/3"],
+                        correct: 2,
+                        explanation: "7/6 é maior que 1 porque 7 é maior que 6."
+                    },
+                    {
+                        question: "Se divido uma barra de chocolate em 12 partes e como 5, qual fração representa o que comi?",
+                        options: ["5/12", "7/12", "12/5", "5/7"],
+                        correct: 0,
+                        explanation: "5 partes de 12 é representado pela fração 5/12."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 04",
+                title: "Frações Equivalentes",
+                description: "Encontrar frações que valem o mesmo",
+                icon: "fas fa-balance-scale",
+                category: "Números",
+                theory: `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: Frações Equivalentes</h3>
+                        <p class="theory-explanation">Frações equivalentes são frações diferentes que representam a mesma quantidade. Elas são obtidas multiplicando ou dividindo o numerador e o denominador pelo mesmo número.</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Como encontrar frações equivalentes:</div>
+                            <p><strong>Multiplicando:</strong> 1/2 × 2/2 = 2/4 × 2/2 = 4/8</p>
+                            <p>Todas representam a metade!</p>
+                            <p><strong>Dividindo:</strong> 4/8 ÷ 4/4 = 1/2</p>
+                            <p><strong>Regra:</strong> Se multiplicarmos ou dividirmos o numerador e o denominador pelo mesmo número (diferente de zero), obtemos frações equivalentes.</p>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Simplificação de frações:</div>
+                            <p>A fração mais simples (irredutível) é aquela em que não podemos mais dividir numerador e denominador por um mesmo número.</p>
+                            <ul>
+                                <li><strong>Exemplo:</strong> 4/8 pode ser simplificada dividindo por 4: 4÷4=1, 8÷4=2 → 1/2</li>
+                                <li><strong>Outro exemplo:</strong> 9/15 pode ser simplificada dividindo por 3: 9÷3=3, 15÷3=5 → 3/5</li>
+                                <li>Frações equivalentes têm o mesmo valor decimal (1/2 = 2/4 = 0,5)</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        question: "Qual fração é igual a 1/2?",
+                        options: ["2/4", "1/3", "3/4", "2/3"],
+                        correct: 0,
+                        explanation: "2/4 é igual a 1/2 porque ambas representam a metade."
+                    },
+                    {
+                        question: "Qual é a fração igual a 3/5 com denominador 15?",
+                        options: ["9/15", "12/15", "6/15", "3/15"],
+                        correct: 0,
+                        explanation: "3/5 = 9/15, porque 3×3=9 e 5×3=15."
+                    },
+                    {
+                        question: "Qual destas NÃO é igual a 1/2?",
+                        options: ["2/4", "3/6", "4/8", "3/8"],
+                        correct: 3,
+                        explanation: "3/8 não é igual a 1/2, pois 1/2 seria igual a 4/8."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 05",
+                title: "Comparar Números",
+                description: "Comparar decimais e frações",
+                icon: "fas fa-not-equal",
+                category: "Números",
+                theory: `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: Comparando Números Decimais e Frações</h3>
+                        <p class="theory-explanation">Para comparar números decimais e frações, podemos converter frações em números decimais ou vice-versa.</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Convertendo frações em decimais:</div>
+                            <p>Para converter uma fração em decimal, dividimos o numerador pelo denominador:</p>
+                            <ul>
+                                <li>1/2 = 1 ÷ 2 = 0,5</li>
+                                <li>3/4 = 3 ÷ 4 = 0,75</li>
+                                <li>1/3 = 1 ÷ 3 = 0,333...</li>
+                            </ul>
+                            <p><strong>Comparando:</strong></p>
+                            <ul>
+                                <li>0,5 (1/2) é menor que 0,75 (3/4)</li>
+                                <li>0,3 é menor que 0,333... (1/3)</li>
+                                <li>0,75 (3/4) é igual a 0,75</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Dicas para comparação:</div>
+                            <ul>
+                                <li>Converta todos para decimais (dividindo numerador por denominador)</li>
+                                <li>Ou converta todos para frações com mesmo denominador</li>
+                                <li>Para números decimais: compare casa por casa (décimos, centésimos...)</li>
+                                <li>Lembre-se: 0,1 = 1/10, 0,01 = 1/100, 0,001 = 1/1000</li>
+                            </ul>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        question: "Qual número é maior: 0,75 ou 3/4?",
+                        options: ["0,75", "3/4", "São iguais", "Não sei"],
+                        correct: 2,
+                        explanation: "0,75 é igual a 3/4, pois 3 dividido por 4 é 0,75."
+                    },
+                    {
+                        question: "Qual é maior: 0,3 ou 1/3?",
+                        options: ["0,3", "1/3", "São iguais", "Depende"],
+                        correct: 1,
+                        explanation: "1/3 é aproximadamente 0,333..., que é maior que 0,3."
+                    },
+                    {
+                        question: "Ordene do menor para o maior: 1/2; 0,6; 3/5",
+                        options: ["1/2; 3/5; 0,6", "0,6; 3/5; 1/2", "1/2; 0,6; 3/5", "3/5; 0,6; 1/2"],
+                        correct: 0,
+                        explanation: "1/2 = 0,5; 3/5 = 0,6; então a ordem é: 0,5 (1/2); 0,6 (3/5); 0,6."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 06",
+                title: "Porcentagens",
+                description: "Calcular porcentagens como em descontos",
+                icon: "fas fa-percentage",
+                category: "Números",
+                theory: `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: Porcentagens</h3>
+                        <p class="theory-explanation">Porcentagem significa "por cem". O símbolo % representa uma fração com denominador 100. É muito usada em descontos, aumentos, pesquisas e probabilidades.</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Convertendo porcentagens:</div>
+                            <ul>
+                                <li>25% = 25/100 = 1/4 = 0,25</li>
+                                <li>50% = 50/100 = 1/2 = 0,5</li>
+                                <li>75% = 75/100 = 3/4 = 0,75</li>
+                                <li>100% = 100/100 = 1 = inteiro</li>
+                            </ul>
+                            <p><strong>Calculando porcentagens:</strong></p>
+                            <p>Para calcular x% de uma quantidade, multiplique a quantidade por x/100.</p>
+                            <p><strong>Exemplo:</strong> 20% de 80 = 80 × 20/100 = 80 × 0,2 = 16</p>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Aplicações no dia a dia:</div>
+                            <ul>
+                                <li><strong>Descontos em compras:</strong> 30% de desconto = pagar 70% do preço</li>
+                                <li><strong>Taxas de juros:</strong> 5% ao mês</li>
+                                <li><strong>Resultados de pesquisas:</strong> 60% das pessoas preferem chocolate</li>
+                                <li><strong>Probabilidades:</strong> 25% de chance de chover</li>
+                            </ul>
+                            <p><strong>Dica:</strong> 10% é fácil de calcular - basta dividir por 10!</p>
+                        </div>
+                    </div>
+                `,
+                questions: [
+                    {
+                        question: "25% corresponde a qual fração?",
+                        options: ["1/4", "1/2", "3/4", "1/10"],
+                        correct: 0,
+                        explanation: "25% = 25/100 = 1/4."
+                    },
+                    {
+                        question: "Qual é 50% de 80?",
+                        options: ["20", "30", "40", "50"],
+                        correct: 2,
+                        explanation: "50% é a metade, então 50% de 80 é 40."
+                    },
+                    {
+                        question: "Se 10% é 1/10, quanto é 75%?",
+                        options: ["1/4", "1/2", "3/4", "4/5"],
+                        correct: 2,
+                        explanation: "75% = 75/100 = 3/4."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 07",
+                title: "Soma e Subtração",
+                description: "Resolver problemas com + e -",
+                icon: "fas fa-plus-minus",
+                category: "Números",
+                questions: [
+                    {
+                        question: "João tinha R$ 45,50 e ganhou R$ 12,75. Com quanto ficou?",
+                        options: ["R$ 57,25", "R$ 58,25", "R$ 57,50", "R$ 58,50"],
+                        correct: 1,
+                        explanation: "45,50 + 12,75 = 58,25."
+                    },
+                    {
+                        question: "Uma corda de 3,75m foi cortada. Um pedaço tem 1,5m. Quanto mede o outro?",
+                        options: ["2,15m", "2,25m", "2,35m", "2,45m"],
+                        correct: 1,
+                        explanation: "3,75 - 1,5 = 2,25m."
+                    },
+                    {
+                        question: "Em uma escola há 345 alunos. Se 127 são meninas, quantos são meninos?",
+                        options: ["208", "218", "228", "238"],
+                        correct: 1,
+                        explanation: "345 - 127 = 218 meninos."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 08",
+                title: "Multiplicação e Divisão",
+                description: "Resolver problemas com × e ÷",
+                icon: "fas fa-times-divide",
+                category: "Números",
+                questions: [
+                    {
+                        question: "Se 1kg de maçã custa R$ 4,80, quanto custam 2,5kg?",
+                        options: ["R$ 10,00", "R$ 11,00", "R$ 12,00", "R$ 12,50"],
+                        correct: 2,
+                        explanation: "4,80 × 2,5 = 12,00."
+                    },
+                    {
+                        question: "Divida 8,4 por 2.",
+                        options: ["4,0", "4,1", "4,2", "4,4"],
+                        correct: 2,
+                        explanation: "8,4 ÷ 2 = 4,2."
+                    },
+                    {
+                        question: "Uma caixa tem 24 chocolates para 6 crianças. Quantos cada uma recebe?",
+                        options: ["3", "4", "5", "6"],
+                        correct: 1,
+                        explanation: "24 ÷ 6 = 4 chocolates por criança."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 09",
+                title: "Contagem",
+                description: "Fazer contagens diferentes",
+                icon: "fas fa-calculator",
+                category: "Números",
+                questions: [
+                    {
+                        question: "Tenho 3 camisetas e 2 calças. Quantas combinações diferentes posso fazer?",
+                        options: ["5", "6", "8", "9"],
+                        correct: 1,
+                        explanation: "3 × 2 = 6 combinações diferentes."
+                    },
+                    {
+                        question: "Num restaurante há 4 pratos principais e 3 sobremesas. Quantas combinações são possíveis?",
+                        options: ["7", "12", "16", "24"],
+                        correct: 1,
+                        explanation: "4 × 3 = 12 combinações possíveis."
+                    },
+                    {
+                        question: "Quantos números de 2 algarismos posso formar com 1, 2, 3 (podendo repetir)?",
+                        options: ["6", "9", "12", "15"],
+                        correct: 1,
+                        explanation: "3 opções para o primeiro algarismo × 3 para o segundo = 9 números."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 10",
+                title: "Igualdades",
+                description: "Compreender quando coisas são iguais",
+                icon: "fas fa-equals",
+                category: "Álgebra",
+                questions: [
+                    {
+                        question: "Se a = b, então a + 5 = ?",
+                        options: ["b", "b + 5", "5", "a + b"],
+                        correct: 1,
+                        explanation: "Se a = b, então a + 5 = b + 5."
+                    },
+                    {
+                        question: "Se 2x = 10, quanto vale x?",
+                        options: ["2", "4", "5", "10"],
+                        correct: 2,
+                        explanation: "2x = 10 → x = 10 ÷ 2 = 5."
+                    },
+                    {
+                        question: "Se a = 7, qual é o valor de a + 3?",
+                        options: ["7", "10", "21", "73"],
+                        correct: 1,
+                        explanation: "a + 3 = 7 + 3 = 10."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 11",
+                title: "Números Desconhecidos",
+                description: "Descobrir números escondidos",
+                icon: "fas fa-search",
+                category: "Álgebra",
+                questions: [
+                    {
+                        question: "Pensei em um número, somei 8 e obtive 15. Em que número pensei?",
+                        options: ["5", "6", "7", "8"],
+                        correct: 2,
+                        explanation: "x + 8 = 15 → x = 15 - 8 = 7."
+                    },
+                    {
+                        question: "O triplo de um número é 21. Qual é esse número?",
+                        options: ["5", "6", "7", "8"],
+                        correct: 2,
+                        explanation: "3x = 21 → x = 21 ÷ 3 = 7."
+                    },
+                    {
+                        question: "Se subtraio 12 de um número, obtenho 25. Qual é o número?",
+                        options: ["13", "27", "37", "47"],
+                        correct: 2,
+                        explanation: "x - 12 = 25 → x = 25 + 12 = 37."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 12",
+                title: "Proporções",
+                description: "Trabalhar com relações entre quantidades",
+                icon: "fas fa-exchange-alt",
+                category: "Álgebra",
+                questions: [
+                    {
+                        question: "Se 1kg de arroz custa R$ 5,00, quanto custam 3kg?",
+                        options: ["R$ 10,00", "R$ 12,00", "R$ 15,00", "R$ 18,00"],
+                        correct: 2,
+                        explanation: "1kg → R$5, 3kg → 3 × R$5 = R$15."
+                    },
+                    {
+                        question: "Um carro percorre 60km com 5 litros. Quantos km percorrerá com 15 litros?",
+                        options: ["120km", "150km", "180km", "200km"],
+                        correct: 2,
+                        explanation: "5L → 60km, 15L → 3 × 60km = 180km."
+                    },
+                    {
+                        question: "Se 3 metros de tecido custam R$ 24, quanto custam 5 metros?",
+                        options: ["R$ 30", "R$ 35", "R$ 40", "R$ 45"],
+                        correct: 2,
+                        explanation: "1m custa R$24 ÷ 3 = R$8. 5m custam 5 × R$8 = R$40."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 13",
+                title: "Divisão Justa",
+                description: "Dividir coisas de forma desigual mas justa",
+                icon: "fas fa-share-alt",
+                category: "Álgebra",
+                questions: [
+                    {
+                        question: "Divida 60 em duas partes onde uma é o dobro da outra.",
+                        options: ["20 e 40", "15 e 45", "25 e 35", "10 e 50"],
+                        correct: 0,
+                        explanation: "20 + 40 = 60 e 40 é o dobro de 20."
+                    },
+                    {
+                        question: "Tenho R$ 90 para dois filhos. O mais velho recebe o triplo do mais novo. Quanto cada um recebe?",
+                        options: ["R$ 20 e R$ 70", "R$ 22,50 e R$ 67,50", "R$ 25 e R$ 65", "R$ 30 e R$ 60"],
+                        correct: 1,
+                        explanation: "Mais novo: x, mais velho: 3x. Total: x + 3x = 4x = 90 → x = 22,50."
+                    },
+                    {
+                        question: "Divida 48 em duas partes na razão de 3 para 5.",
+                        options: ["18 e 30", "16 e 32", "20 e 28", "15 e 33"],
+                        correct: 0,
+                        explanation: "Partes: 3k e 5k. Total: 3k + 5k = 8k = 48 → k = 6. Partes: 18 e 30."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 14",
+                title: "Localização",
+                description: "Localizar objetos no plano",
+                icon: "fas fa-map-marker-alt",
+                category: "Geometria",
+                questions: [
+                    {
+                        question: "No plano cartesiano, (4, 2) significa:",
+                        options: ["4 direita e 2 cima", "4 esquerda e 2 cima", "2 direita e 4 cima", "4 direita e 2 baixo"],
+                        correct: 0,
+                        explanation: "Primeiro número: direita/esquerda, segundo: cima/baixo."
+                    },
+                    {
+                        question: "Em uma planilha, a célula B3 está:",
+                        options: ["Coluna B, linha 3", "Coluna 3, linha B", "Na interseção B e 3", "Opções 1 e 3"],
+                        correct: 3,
+                        explanation: "B3 está na coluna B (segunda) e linha 3 (terceira)."
+                    },
+                    {
+                        question: "O ponto (3, 1) está:",
+                        options: ["3 direita e 1 cima", "3 cima e 1 direita", "3 esquerda e 1 baixo", "3 baixo e 1 esquerda"],
+                        correct: 0,
+                        explanation: "(3, 1) = 3 unidades para a direita e 1 para cima."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 15",
+                title: "Coordenadas",
+                description: "Usar coordenadas no plano cartesiano",
+                icon: "fas fa-map",
+                category: "Geometria",
+                questions: [
+                    {
+                        question: "Um ponto sai de (2, 3) e vai 2 direita e 1 baixo. Onde para?",
+                        options: ["(4, 2)", "(4, 4)", "(2, 4)", "(0, 2)"],
+                        correct: 0,
+                        explanation: "De (2, 3): direita aumenta x: 2+2=4; baixo diminui y: 3-1=2. Nova posição: (4, 2)."
+                    },
+                    {
+                        question: "Qual ponto está no primeiro quadrante?",
+                        options: ["(-2, 3)", "(2, -3)", "(2, 3)", "(-2, -3)"],
+                        correct: 2,
+                        explanation: "No primeiro quadrante, x e y são positivos: (2, 3)."
+                    },
+                    {
+                        question: "De (5, 1) para (2, 4), o objeto foi:",
+                        options: ["3 esquerda e 3 cima", "3 direita e 3 cima", "3 esquerda e 3 baixo", "3 direita e 3 baixo"],
+                        correct: 0,
+                        explanation: "x diminuiu 3 (esquerda), y aumentou 3 (cima)."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 16",
+                title: "Formas Espaciais",
+                description: "Reconhecer formas 3D",
+                icon: "fas fa-cube",
+                category: "Geometria",
+                questions: [
+                    {
+                        question: "Qual sólido tem 2 triângulos e 3 retângulos na planificação?",
+                        options: ["Prisma triangular", "Pirâmide triangular", "Prisma retangular", "Cilindro"],
+                        correct: 0,
+                        explanation: "Prisma triangular tem 2 bases triangulares e 3 faces retangulares."
+                    },
+                    {
+                        question: "Quantas faces tem um cubo?",
+                        options: ["4", "6", "8", "12"],
+                        correct: 1,
+                        explanation: "Um cubo tem 6 faces quadradas."
+                    },
+                    {
+                        question: "Qual NÃO é uma planificação de cubo?",
+                        options: ["4 quadrados em linha", "6 quadrados em cruz", "6 quadrados em T", "Todas são"],
+                        correct: 0,
+                        explanation: "4 quadrados em linha não fecha um cubo, faltam 2 faces."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 17",
+                title: "Polígonos",
+                description: "Identificar formas planas",
+                icon: "fas fa-shapes",
+                category: "Geometria",
+                questions: [
+                    {
+                        question: "Qual polígono tem 5 lados?",
+                        options: ["Triângulo", "Quadrilátero", "Pentágono", "Hexágono"],
+                        correct: 2,
+                        explanation: "Polígono com 5 lados = pentágono."
+                    },
+                    {
+                        question: "Quantos vértices tem um hexágono?",
+                        options: ["4", "5", "6", "7"],
+                        correct: 2,
+                        explanation: "Hexágono tem 6 lados e 6 vértices."
+                    },
+                    {
+                        question: "Qual forma NÃO é polígono?",
+                        options: ["Triângulo", "Círculo", "Quadrado", "Pentágono"],
+                        correct: 1,
+                        explanation: "Círculo não tem lados retos, então não é polígono."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 18",
+                title: "Ampliar e Reduzir",
+                description: "Mudar tamanho de figuras",
+                icon: "fas fa-expand-alt",
+                category: "Geometria",
+                questions: [
+                    {
+                        question: "Quando ampliamos um quadrado, seus lados:",
+                        options: ["Diminuem", "Aumentam proporcionalmente", "Não mudam", "Ficam desproporcionais"],
+                        correct: 1,
+                        explanation: "Na ampliação, os lados aumentam proporcionalmente."
+                    },
+                    {
+                        question: "O que não muda quando reduzimos uma figura?",
+                        options: ["Tamanho dos lados", "Forma", "Área", "Perímetro"],
+                        correct: 1,
+                        explanation: "A forma se mantém, só o tamanho muda."
+                    },
+                    {
+                        question: "Um triângulo com lados 3, 4, 5 é ampliado para 6, 8, 10. Isso é:",
+                        options: ["Proporcional", "Não proporcional", "Só alguns aumentaram", "Nenhuma"],
+                        correct: 0,
+                        explanation: "Todos os lados dobraram (×2), então é ampliação proporcional."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 19",
+                title: "Medidas",
+                description: "Trabalhar com diferentes medidas",
+                icon: "fas fa-ruler-combined",
+                category: "Grandezas e Medidas",
+                questions: [
+                    {
+                        question: "Quantos centímetros tem 1 metro?",
+                        options: ["10", "100", "1000", "10000"],
+                        correct: 1,
+                        explanation: "1 metro = 100 centímetros."
+                    },
+                    {
+                        question: "Quantos minutos têm 2 horas e meia?",
+                        options: ["120", "150", "180", "210"],
+                        correct: 1,
+                        explanation: "2 horas = 120 minutos, meia hora = 30 minutos. Total: 150."
+                    },
+                    {
+                        question: "Uma sala de 6m por 4m tem área:",
+                        options: ["10 m²", "20 m²", "24 m²", "36 m²"],
+                        correct: 2,
+                        explanation: "Área = comprimento × largura = 6 × 4 = 24 m²."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 20",
+                title: "Perímetro e Área",
+                description: "Comparar perímetros e áreas",
+                icon: "fas fa-border-all",
+                category: "Grandezas e Medidas",
+                questions: [
+                    {
+                        question: "Um quadrado de lado 4cm tem perímetro 16cm e área 16cm². Um retângulo 2cm×6cm tem:",
+                        options: ["Mesmo perímetro e área", "Mesmo perímetro, área diferente", "Perímetro diferente, mesma área", "Tudo diferente"],
+                        correct: 1,
+                        explanation: "Retângulo: perímetro = 2+2+6+6 = 16cm (igual), área = 2×6 = 12cm² (diferente)."
+                    },
+                    {
+                        question: "Qual tem maior área: quadrado lado 5cm ou retângulo 4cm×6cm?",
+                        options: ["Quadrado", "Retângulo", "Iguais", "Não sei"],
+                        correct: 0,
+                        explanation: "Quadrado: 5×5 = 25cm². Retângulo: 4×6 = 24cm². Quadrado maior."
+                    },
+                    {
+                        question: "Figuras com mesmo perímetro sempre têm mesma área?",
+                        options: ["Sim", "Não", "Depende", "Às vezes"],
+                        correct: 1,
+                        explanation: "Não, figuras com mesmo perímetro podem ter áreas diferentes."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 21",
+                title: "Volume",
+                description: "Calcular espaço que ocupa",
+                icon: "fas fa-cubes",
+                category: "Grandezas e Medidas",
+                questions: [
+                    {
+                        question: "Um cubo de lado 2cm tem volume:",
+                        options: ["4 cm³", "6 cm³", "8 cm³", "12 cm³"],
+                        correct: 2,
+                        explanation: "Volume = lado × lado × lado = 2×2×2 = 8 cm³."
+                    },
+                    {
+                        question: "Quantos cubinhos de 1cm³ cabem em uma caixa 3cm×4cm×5cm?",
+                        options: ["12", "30", "60", "120"],
+                        correct: 2,
+                        explanation: "Volume da caixa = 3×4×5 = 60 cm³, então cabem 60 cubinhos."
+                    },
+                    {
+                        question: "Volume mede:",
+                        options: ["Comprimento", "Área", "Espaço ocupado", "Peso"],
+                        correct: 2,
+                        explanation: "Volume mede o espaço que um objeto ocupa."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 22",
+                title: "Chances",
+                description: "Analisar probabilidades",
+                icon: "fas fa-dice",
+                category: "Probabilidade e Estatística",
+                questions: [
+                    {
+                        question: "Ao lançar uma moeda, quais os resultados possíveis?",
+                        options: ["{cara}", "{coroa}", "{cara, coroa}", "{nenhum}"],
+                        correct: 2,
+                        explanation: "Os resultados possíveis são cara ou coroa."
+                    },
+                    {
+                        question: "Ao lançar um dado comum, quantos resultados possíveis?",
+                        options: ["4", "6", "8", "12"],
+                        correct: 1,
+                        explanation: "Um dado tem 6 faces: 1, 2, 3, 4, 5, 6."
+                    },
+                    {
+                        question: "Lançando uma moeda e um dado, quantos resultados possíveis?",
+                        options: ["8", "10", "12", "14"],
+                        correct: 2,
+                        explanation: "Moeda: 2 resultados, Dado: 6 resultados. Total: 2×6 = 12."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 23",
+                title: "Probabilidade",
+                description: "Calcular chances de eventos",
+                icon: "fas fa-chart-pie",
+                category: "Probabilidade e Estatística",
+                questions: [
+                    {
+                        question: "Qual a chance de sair cara ao lançar uma moeda?",
+                        options: ["1/4", "1/3", "1/2", "3/4"],
+                        correct: 2,
+                        explanation: "Moeda tem 2 lados igualmente prováveis. Chance de cara = 1/2."
+                    },
+                    {
+                        question: "Em um dado, qual a probabilidade de sair número par?",
+                        options: ["1/6", "1/3", "1/2", "2/3"],
+                        correct: 2,
+                        explanation: "Números pares: 2, 4, 6 (3 números). Probabilidade = 3/6 = 1/2."
+                    },
+                    {
+                        question: "Qual a probabilidade de sair o número 3 em um dado?",
+                        options: ["1/6", "1/3", "1/2", "1"],
+                        correct: 0,
+                        explanation: "Dado tem 6 faces igualmente prováveis. Probabilidade de sair 3 = 1/6."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 24",
+                title: "Gráficos e Tabelas",
+                description: "Interpretar informações visuais",
+                icon: "fas fa-chart-bar",
+                category: "Probabilidade e Estatística",
+                questions: [
+                    {
+                        question: "Em um gráfico de barras, o comprimento da barra mostra:",
+                        options: ["Cor dos dados", "Quantidade ou frequência", "Tempo de coleta", "Local"],
+                        correct: 1,
+                        explanation: "O comprimento da barra mostra a quantidade ou frequência."
+                    },
+                    {
+                        question: "Em uma pesquisa, 20 de 50 pessoas preferem chocolate. Qual a porcentagem?",
+                        options: ["20%", "30%", "40%", "50%"],
+                        correct: 2,
+                        explanation: "20 de 50 = 20/50 = 0,4 = 40%."
+                    },
+                    {
+                        question: "Para mostrar mudanças ao longo do tempo, melhor gráfico:",
+                        options: ["Barras", "Linhas", "Setores", "Pictórico"],
+                        correct: 1,
+                        explanation: "Gráfico de linhas é melhor para mostrar tendências no tempo."
+                    }
+                ]
+            },
+            {
+                code: "Desafio 25",
+                title: "Organizar Dados",
+                description: "Organizar informações de pesquisa",
+                icon: "fas fa-poll",
+                category: "Probabilidade e Estatística",
+                questions: [
+                    {
+                        question: "Primeiro passo em uma pesquisa:",
+                        options: ["Coletar dados", "Definir tema e objetivo", "Analisar dados", "Apresentar"],
+                        correct: 1,
+                        explanation: "Primeiro definir claramente o tema e objetivos."
+                    },
+                    {
+                        question: "Exemplo de variável categórica:",
+                        options: ["Idade", "Altura", "Cor favorita", "Peso"],
+                        correct: 2,
+                        explanation: "Cor favorita é variável categórica (qualitativa)."
+                    },
+                    {
+                        question: "Após coletar dados:",
+                        options: ["Organizar e analisar", "Esquecer pesquisa", "Coletar mais sem analisar", "Publicar"],
+                        correct: 0,
+                        explanation: "Após coleta, organizar e analisar dados para conclusões."
+                    }
+                ]
+            }
+        ];
+
+        // Adicionar teoria aos desafios que não têm (para simplificar, vou adicionar apenas aos primeiros 6 como exemplo)
+        // Nos desafios 7-25, adicionarei uma teoria básica
+        for (let i = 6; i < skillsData.length; i++) {
+            if (!skillsData[i].theory) {
+                skillsData[i].theory = `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">Teoria: ${skillsData[i].title}</h3>
+                        <p class="theory-explanation">Este desafio aborda o conteúdo de <strong>${skillsData[i].title.toLowerCase()}</strong>. Para resolvê-lo, você precisa entender os conceitos básicos de ${skillsData[i].category}.</p>
+                        
+                        <div class="theory-example">
+                            <div class="theory-example-title">Como estudar este conteúdo:</div>
+                            <p>1. Reveja as aulas sobre ${skillsData[i].title.toLowerCase()}</p>
+                            <p>2. Pratique com exercícios similares</p>
+                            <p>3. Peça ajuda ao professor se tiver dúvidas</p>
+                            <p>4. Tente aplicar o conhecimento em situações do dia a dia</p>
+                        </div>
+                        
+                        <div class="theory-key-points">
+                            <div class="theory-key-points-title">Dicas para este desafio:</div>
+                            <ul>
+                                <li>Leia cada pergunta com atenção</li>
+                                <li>Anote os dados importantes</li>
+                                <li>Faça cálculos em um papel separado</li>
+                                <li>Verifique sua resposta antes de confirmar</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Estado atual do jogo
+        let gameState = {
+            score: 0,
+            attempts: 0,
+            completedSkills: [],
+            currentSkillIndex: -1,
+            currentQuestion: 0,
+            skillProgress: Array(25).fill(0), // 0 = não iniciado, 1 = em progresso, 2 = completado
+            selectedAnswer: null,
+            answered: false
+        };
+
+        // Inicializar o jogo
+        function initGame() {
+            // Carregar estado salvo (se existir)
+            const savedState = localStorage.getItem('mathGameState');
+            if (savedState) {
+                gameState = JSON.parse(savedState);
+            }
+            
+            // Atualizar interface
+            updateScoreboard();
+            renderSkillsGrid();
+            updateProgressBar();
+            
+            // Adicionar event listeners aos botões
+            setupEventListeners();
+            
+            // Configurar seletor de teoria
+            setupTheorySelector();
+        }
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Botões de informação
+            projectBtn.addEventListener('click', () => openModal(projectModal));
+            skillsBtn.addEventListener('click', () => openModal(skillsModal));
+            reviewBtn.addEventListener('click', () => openModal(reviewModal));
+            theoryBtn.addEventListener('click', () => openModal(theoryModal));
+            rulesBtn.addEventListener('click', () => openModal(rulesModal));
+            moreBtn.addEventListener('click', () => openModal(moreModal));
+            resetBtn.addEventListener('click', resetGame);
+            
+            // Botões para fechar modais
+            closeProject.addEventListener('click', () => closeModal(projectModal));
+            closeSkills.addEventListener('click', () => closeModal(skillsModal));
+            closeReview.addEventListener('click', () => closeModal(reviewModal));
+            closeTheory.addEventListener('click', () => closeModal(theoryModal));
+            closeRules.addEventListener('click', () => closeModal(rulesModal));
+            closeMore.addEventListener('click', () => closeModal(moreModal));
+            closeGame.addEventListener('click', () => {
+                closeModal(gameModal);
+                // Resetar estado da pergunta atual
+                gameState.selectedAnswer = null;
+                gameState.answered = false;
+            });
+            
+            // Fechar modal ao clicar fora
+            window.addEventListener('click', (e) => {
+                if (e.target === projectModal) closeModal(projectModal);
+                if (e.target === skillsModal) closeModal(skillsModal);
+                if (e.target === reviewModal) closeModal(reviewModal);
+                if (e.target === theoryModal) closeModal(theoryModal);
+                if (e.target === rulesModal) closeModal(rulesModal);
+                if (e.target === moreModal) closeModal(moreModal);
+                if (e.target === gameModal) {
+                    closeModal(gameModal);
+                    // Resetar estado da pergunta atual
+                    gameState.selectedAnswer = null;
+                    gameState.answered = false;
+                }
+            });
+            
+            // Fechar modais com tecla ESC
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal(projectModal);
+                    closeModal(skillsModal);
+                    closeModal(reviewModal);
+                    closeModal(theoryModal);
+                    closeModal(rulesModal);
+                    closeModal(moreModal);
+                    closeModal(gameModal);
+                    // Resetar estado da pergunta atual
+                    gameState.selectedAnswer = null;
+                    gameState.answered = false;
+                }
+            });
+        }
+
+        // Configurar seletor de teoria
+        function setupTheorySelector() {
+            // Preencher o seletor com os desafios
+            theorySelector.innerHTML = '<option value="-1">Selecione um desafio para ver a teoria</option>';
+            
+            skillsData.forEach((skill, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${skill.code}: ${skill.title}`;
+                theorySelector.appendChild(option);
+            });
+            
+            // Adicionar event listener ao seletor
+            theorySelector.addEventListener('change', function() {
+                const skillIndex = parseInt(this.value);
+                
+                if (skillIndex === -1) {
+                    theoryContent.innerHTML = `
+                        <div style="text-align: center; padding: 40px 20px; color: #666;">
+                            <i class="fas fa-lightbulb" style="font-size: 3rem; margin-bottom: 15px; color: #ddd;"></i>
+                            <p>Selecione um desafio acima para aprender a teoria por trás dele!</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const skill = skillsData[skillIndex];
+                
+                // Carregar conteúdo teórico
+                theoryContent.innerHTML = `
+                    <div class="theory-item">
+                        <h3 class="theory-topic-title">${skill.code}: ${skill.title}</h3>
+                        <p class="theory-explanation" style="font-size: 1.1rem; color: #4a6bff; font-weight: bold;">${skill.description}</p>
+                        ${skill.theory}
+                        <div style="margin-top: 20px; padding: 15px; background-color: #e8eaf6; border-radius: 10px;">
+                            <p style="color: #333; margin-bottom: 10px;"><strong>📚 Categoria:</strong> ${skill.category}</p>
+                            <p style="color: #333;"><strong>🎯 Dica:</strong> Tente resolver os problemas deste desafio aplicando os conceitos teóricos que você acabou de aprender!</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Adicionar botão para jogar o desafio
+                const playButton = document.createElement('button');
+                playButton.className = 'info-btn';
+                playButton.style.marginTop = '20px';
+                playButton.style.backgroundColor = '#4caf50';
+                playButton.innerHTML = '<i class="fas fa-play-circle"></i> Jogar Este Desafio';
+                playButton.addEventListener('click', () => {
+                    closeModal(theoryModal);
+                    startSkill(skillIndex);
+                });
+                
+                theoryContent.querySelector('.theory-item').appendChild(playButton);
+            });
+        }
+
+        // Função para disparar efeito de confete
+        function triggerConfetti() {
+            console.log("Disparando confete!");
+            
+            // Efeito de confete básico
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                zIndex: 9999
+            });
+            
+            // Efeito adicional para deixar mais festivo
+            setTimeout(() => {
+                confetti({
+                    particleCount: 100,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    zIndex: 9999
+                });
+                confetti({
+                    particleCount: 100,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    zIndex: 9999
+                });
+            }, 250);
+            
+            // Efeito final (estrelas)
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    spread: 100,
+                    shapes: ['circle', 'square', 'star'],
+                    colors: ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'],
+                    zIndex: 9999
+                });
+            }, 500);
+            
+            // Efeito extra para garantir que seja visível
+            setTimeout(() => {
+                confetti({
+                    particleCount: 30,
+                    startVelocity: 25,
+                    spread: 360,
+                    ticks: 50,
+                    origin: { x: 0.5, y: 0.35 },
+                    colors: ['#ff0000', '#ffff00', '#00ff00'],
+                    zIndex: 9999
+                });
+            }, 750);
+        }
+
+        // Reiniciar o jogo
+        function resetGame() {
+            if (confirm("Tem certeza que quer reiniciar o jogo? Seu progresso será perdido.")) {
+                gameState = {
+                    score: 0,
+                    attempts: 0,
+                    completedSkills: [],
+                    currentSkillIndex: -1,
+                    currentQuestion: 0,
+                    skillProgress: Array(25).fill(0),
+                    selectedAnswer: null,
+                    answered: false
+                };
+                
+                // Atualizar interface
+                updateScoreboard();
+                renderSkillsGrid();
+                updateProgressBar();
+                saveGameState();
+                
+                // Mostrar mensagem
+                alert("Jogo reiniciado! Comece a jogar novamente!");
+            }
+        }
+
+        // Renderizar grade de habilidades
+        function renderSkillsGrid() {
+            skillsGrid.innerHTML = '';
+            
+            skillsData.forEach((skill, index) => {
+                const card = document.createElement('div');
+                card.className = 'skill-card';
+                
+                // Determinar estado do cartão
+                if (gameState.skillProgress[index] === 2) {
+                    card.classList.add('completed');
+                } else if (gameState.skillProgress[index] === 1) {
+                    card.classList.add('in-progress');
+                }
+                
+                // Adicionar animação se completado recentemente
+                if (gameState.skillProgress[index] === 2) {
+                    card.classList.add('celebrate-animation');
+                    setTimeout(() => {
+                        card.classList.remove('celebrate-animation');
+                    }, 500);
+                }
+                
+                card.innerHTML = `
+                    <div class="skill-code">${skill.code}</div>
+                    <div class="card-icon"><i class="${skill.icon}"></i></div>
+                    <div class="card-title">${skill.title}</div>
+                    <div class="card-desc">${skill.description}</div>
+                    <div class="progress-indicator">
+                        ${gameState.skillProgress[index] === 2 ? '<i class="fas fa-check-circle"></i> Completo' : 
+                          gameState.skillProgress[index] === 1 ? '<i class="fas fa-spinner"></i> Em andamento' : 
+                          '<i class="fas fa-play-circle"></i> Jogar'}
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => startSkill(index));
+                skillsGrid.appendChild(card);
+            });
+        }
+
+        // Iniciar uma habilidade
+        function startSkill(skillIndex) {
+            gameState.currentSkillIndex = skillIndex;
+            gameState.currentQuestion = 0;
+            gameState.selectedAnswer = null;
+            gameState.answered = false;
+            
+            // Marcar habilidade como em progresso
+            if (gameState.skillProgress[skillIndex] === 0) {
+                gameState.skillProgress[skillIndex] = 1;
+            }
+            
+            // Atualizar interface
+            renderSkillsGrid();
+            updateProgressBar();
+            saveGameState();
+            
+            // Abrir modal do jogo
+            openGameModal(skillIndex);
+        }
+
+        // Abrir modal do jogo
+        function openGameModal(skillIndex) {
+            const skill = skillsData[skillIndex];
+            document.getElementById('gameTopicTitle').textContent = skill.title;
+            document.getElementById('skillCodeDisplay').textContent = `${skill.code}: ${skill.description}`;
+            
+            openModal(gameModal);
+            loadQuestion();
+        }
+
+        // Carregar pergunta atual
+        function loadQuestion() {
+            const skill = skillsData[gameState.currentSkillIndex];
+            const questionData = skill.questions[gameState.currentQuestion];
+            
+            // Atualizar contador de perguntas
+            const questionCounter = document.getElementById('questionCounter');
+            questionCounter.textContent = `Pergunta ${gameState.currentQuestion + 1} de 3`;
+            questionCounter.classList.add('bounce-animation');
+            setTimeout(() => {
+                questionCounter.classList.remove('bounce-animation');
+            }, 500);
+            
+            let gameHTML = `
+                <div style="margin-bottom: 25px;">
+                    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid #4a6bff;">
+                        <h3 style="color: #333; margin-bottom: 15px; font-size: 1.3rem;">${questionData.question}</h3>
+                    </div>
+                    
+                    <div id="optionsContainer" style="margin-bottom: 20px;">
+            `;
+            
+            // Adicionar opções de resposta
+            questionData.options.forEach((option, index) => {
+                const isSelected = gameState.selectedAnswer === index;
+                const isAnswered = gameState.answered;
+                let buttonClass = 'option-btn';
+                
+                if (isSelected && !isAnswered) {
+                    buttonClass += ' selected';
+                }
+                
+                gameHTML += `
+                    <button class="${buttonClass}" data-index="${index}" ${isAnswered ? 'disabled' : ''}>
+                        ${String.fromCharCode(65 + index)}) ${option}
+                    </button>
+                `;
+            });
+            
+            gameHTML += `
+                    </div>
+                    
+                    <div id="feedback" class="feedback-box" style="display: ${gameState.answered ? 'block' : 'none'};">
+                        ${gameState.answered ? getFeedbackHtml() : ''}
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button id="respondBtn" class="respond-btn" style="display: ${gameState.selectedAnswer !== null && !gameState.answered ? 'block' : 'none'};" ${gameState.selectedAnswer === null || gameState.answered ? 'disabled' : ''}>
+                            <i class="fas fa-paper-plane"></i> Responder
+                        </button>
+                        <button id="nextBtn" class="next-btn" style="display: ${gameState.answered ? 'block' : 'none'};">
+                            ${gameState.currentQuestion < 2 ? 'Próxima Pergunta ➡️' : '🏁 Finalizar Desafio'}
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('gameContent').innerHTML = gameHTML;
+            
+            // Adicionar event listeners às opções (se ainda não respondida)
+            if (!gameState.answered) {
+                document.querySelectorAll('.option-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        selectAnswer(parseInt(this.getAttribute('data-index')));
+                    });
+                });
+            }
+            
+            // Adicionar event listener ao botão Responder
+            const respondBtn = document.getElementById('respondBtn');
+            if (respondBtn) {
+                respondBtn.addEventListener('click', () => checkAnswer());
+            }
+            
+            // Adicionar event listener ao botão Próxima/Finalizar
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', nextQuestionOrFinish);
+            }
+        }
+
+        // Selecionar uma resposta
+        function selectAnswer(index) {
+            // Remover seleção anterior
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Marcar nova seleção
+            const selectedBtn = document.querySelector(`.option-btn[data-index="${index}"]`);
+            selectedBtn.classList.add('selected');
+            selectedBtn.classList.add('bounce-animation');
+            setTimeout(() => {
+                selectedBtn.classList.remove('bounce-animation');
+            }, 500);
+            
+            // Atualizar estado
+            gameState.selectedAnswer = index;
+            
+            // Mostrar botão Responder
+            const respondBtn = document.getElementById('respondBtn');
+            if (respondBtn) {
+                respondBtn.style.display = 'block';
+                respondBtn.disabled = false;
+                respondBtn.classList.add('bounce-animation');
+                setTimeout(() => {
+                    respondBtn.classList.remove('bounce-animation');
+                }, 500);
+            }
+        }
+
+        // Verificar resposta
+        function checkAnswer() {
+            if (gameState.selectedAnswer === null || gameState.answered) return;
+            
+            const skill = skillsData[gameState.currentSkillIndex];
+            const questionData = skill.questions[gameState.currentQuestion];
+            const isCorrect = gameState.selectedAnswer === questionData.correct;
+            
+            // Atualizar estado
+            gameState.answered = true;
+            gameState.attempts++;
+            
+            if (isCorrect) {
+                gameState.score++;
+                // DISPARAR EFEITO DE CONFETE QUANDO ACERTA!
+                console.log("Resposta correta! Disparando confete...");
+                triggerConfetti();
+            }
+            
+            // Atualizar interface das opções
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                const index = parseInt(btn.getAttribute('data-index'));
+                btn.disabled = true;
+                
+                if (index === questionData.correct) {
+                    btn.classList.add('correct');
+                } else if (index === gameState.selectedAnswer && !isCorrect) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            // Mostrar feedback
+            const feedback = document.getElementById('feedback');
+            feedback.innerHTML = getFeedbackHtml();
+            feedback.style.display = 'block';
+            
+            // Esconder botão Responder, mostrar botão Próxima
+            const respondBtn = document.getElementById('respondBtn');
+            if (respondBtn) respondBtn.style.display = 'none';
+            
+            const nextBtn = document.getElementById('nextBtn');
+            if (nextBtn) {
+                nextBtn.style.display = 'block';
+                nextBtn.classList.add('bounce-animation');
+                setTimeout(() => {
+                    nextBtn.classList.remove('bounce-animation');
+                }, 500);
+            }
+            
+            // Atualizar placar
+            updateScoreboard();
+            saveGameState();
+        }
+
+        // Gerar HTML do feedback
+        function getFeedbackHtml() {
+            const skill = skillsData[gameState.currentSkillIndex];
+            const questionData = skill.questions[gameState.currentQuestion];
+            const isCorrect = gameState.selectedAnswer === questionData.correct;
+            
+            if (isCorrect) {
+                return `
+                    <div class="feedback-correct">
+                        <h4 style="color: #2e7d32; margin-bottom: 10px;"><span class="emoji">🎉</span> <i class="fas fa-check-circle"></i> Parabéns! Resposta Correta!</h4>
+                        <p style="color: #333;">${questionData.explanation}</p>
+                        <p style="color: #4caf50; font-weight: bold; margin-top: 10px;">🎊 Confete para celebrar sua resposta correta! 🎊</p>
+                    </div>
+                `;
+            } else {
+                const selectedOption = questionData.options[gameState.selectedAnswer];
+                const correctOption = questionData.options[questionData.correct];
+                
+                return `
+                    <div class="feedback-incorrect">
+                        <h4 style="color: #c62828; margin-bottom: 10px;"><span class="emoji">💡</span> <i class="fas fa-times-circle"></i> Vamos tentar novamente!</h4>
+                        <p style="color: #333;"><strong>Sua resposta:</strong> ${selectedOption}</p>
+                        <p style="color: #333;"><strong>Resposta correta:</strong> ${correctOption}</p>
+                        <p style="color: #333; margin-top: 10px;">${questionData.explanation}</p>
+                        <p style="color: #666; margin-top: 10px; font-style: italic;">Não desanime! Cada erro é uma chance de aprender!</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Próxima pergunta ou finalizar
+        function nextQuestionOrFinish() {
+            if (gameState.currentQuestion < 2) {
+                // Ainda há perguntas
+                gameState.currentQuestion++;
+                gameState.selectedAnswer = null;
+                gameState.answered = false;
+                loadQuestion();
+            } else {
+                // Finalizar habilidade
+                finishSkill();
+            }
+        }
+
+        // Finalizar habilidade
+        function finishSkill() {
+            const skillIndex = gameState.currentSkillIndex;
+            
+            // Marcar habilidade como completada
+            gameState.skillProgress[skillIndex] = 2;
+            
+            // Atualizar interface
+            renderSkillsGrid();
+            updateProgressBar();
+            updateScoreboard();
+            saveGameState();
+            
+            // Mostrar resultado
+            showSkillResult();
+        }
+
+        // Mostrar resultado da habilidade
+        function showSkillResult() {
+            const skill = skillsData[gameState.currentSkillIndex];
+            const completedCount = gameState.skillProgress.filter(p => p === 2).length;
+            
+            // Determinar nível baseado em quantos desafios completados
+            let levelText = "🌟";
+            if (completedCount >= 9) levelText = "🌟🌟";
+            if (completedCount >= 17) levelText = "🌟🌟🌟";
+            if (completedCount >= 25) levelText = "🌟🌟🌟🌟";
+            
+            level.textContent = levelText;
+            
+            let message = "";
+            let emoji = "🎉";
+            
+            if (completedCount === 25) {
+                message = "🏆 VOCÊ É UM MESTRE DA MATEMÁTICA! 🏆";
+                emoji = "🏆";
+                // Disparar confete especial para completar todos os desafios
+                setTimeout(() => {
+                    for(let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            confetti({
+                                particleCount: 200,
+                                spread: 100,
+                                origin: { y: 0.6 },
+                                zIndex: 9999
+                            });
+                        }, i * 250);
+                    }
+                }, 500);
+            } else if (completedCount >= 17) {
+                message = "Uau! Você está indo muito bem! Continue assim!";
+                emoji = "🚀";
+            } else if (completedCount >= 9) {
+                message = "Muito bom! Você está aprendendo bastante!";
+                emoji = "👍";
+            } else {
+                message = "Bom trabalho! Continue praticando!";
+                emoji = "👏";
+            }
+            
+            document.getElementById('gameContent').innerHTML = `
+                <div style="text-align: center; padding: 20px 0;">
+                    <div style="font-size: 4rem; margin-bottom: 15px;">
+                        ${emoji}
+                    </div>
+                    
+                    <h3 style="color: #4a6bff; margin-bottom: 15px; font-size: 1.6rem;">Desafio Concluído!</h3>
+                    
+                    <div style="background-color: #f5f5f5; padding: 20px; border-radius: 15px; max-width: 500px; margin: 0 auto 20px;">
+                        <div style="font-size: 1.8rem; font-weight: bold; color: #4a6bff; margin-bottom: 8px;">
+                            ${skill.code}
+                        </div>
+                        <div style="font-size: 1.2rem; color: #666; margin-bottom: 15px;">
+                            ${skill.title}
+                        </div>
+                        
+                        <div style="background-color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                            <p style="color: #333; font-size: 1.1rem; margin-bottom: 8px;">${message}</p>
+                            <p style="color: #666; font-size: 1rem;">Você completou <strong>${completedCount} de 25</strong> desafios!</p>
+                            <p style="color: #666; font-size: 1rem;">Seu nível atual: <strong>${levelText}</strong></p>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                        <button id="continueBtn" style="background: linear-gradient(135deg, #4a6bff, #6b8cff); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-size: 1.1rem; cursor: pointer; font-weight: bold;">
+                            <i class="fas fa-play"></i> Continuar Jogando
+                        </button>
+                        <button id="closeGameBtn" style="background: linear-gradient(135deg, #ff6b9d, #ff4081); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-size: 1.1rem; cursor: pointer; font-weight: bold;">
+                            <i class="fas fa-home"></i> Voltar ao Início
+                        </button>
+                        <button id="reviewTheoryBtn" style="background: linear-gradient(135deg, #4caf50, #8bc34a); color: white; border: none; padding: 12px 25px; border-radius: 50px; font-size: 1.1rem; cursor: pointer; font-weight: bold;">
+                            <i class="fas fa-brain"></i> Revisar Teoria
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Event listeners para os botões
+            document.getElementById('continueBtn').addEventListener('click', () => {
+                closeModal(gameModal);
+                // Resetar estado da pergunta atual
+                gameState.selectedAnswer = null;
+                gameState.answered = false;
+            });
+            
+            document.getElementById('closeGameBtn').addEventListener('click', () => {
+                closeModal(gameModal);
+                // Resetar estado da pergunta atual
+                gameState.selectedAnswer = null;
+                gameState.answered = false;
+            });
+            
+            document.getElementById('reviewTheoryBtn').addEventListener('click', () => {
+                closeModal(gameModal);
+                // Abrir modal de revisão teórica para este desafio
+                openModal(theoryModal);
+                // Selecionar o desafio atual no seletor
+                theorySelector.value = gameState.currentSkillIndex;
+                // Disparar o evento change para carregar o conteúdo
+                theorySelector.dispatchEvent(new Event('change'));
+            });
+        }
+
+        // Atualizar placar
+        function updateScoreboard() {
+            correctCount.textContent = gameState.score;
+            attemptCount.textContent = gameState.attempts;
+            
+            const percentage = gameState.attempts > 0 
+                ? Math.round((gameState.score / gameState.attempts) * 100) 
+                : 0;
+            document.getElementById('percentage').textContent = percentage + '%';
+            
+            // Atualizar nível
+            const completedCount = gameState.skillProgress.filter(p => p === 2).length;
+            if (completedCount >= 25) {
+                level.textContent = "🌟🌟🌟🌟";
+            } else if (completedCount >= 17) {
+                level.textContent = "🌟🌟🌟";
+            } else if (completedCount >= 9) {
+                level.textContent = "🌟🌟";
+            } else {
+                level.textContent = "🌟";
+            }
+        }
+
+        // Atualizar barra de progresso
+        function updateProgressBar() {
+            const completedCount = gameState.skillProgress.filter(p => p === 2).length;
+            const progressPercentage = (completedCount / 25) * 100;
+            
+            globalProgress.style.width = progressPercentage + '%';
+            document.getElementById('completedCount').textContent = completedCount;
+        }
+
+        // Salvar estado do jogo
+        function saveGameState() {
+            localStorage.setItem('mathGameState', JSON.stringify(gameState));
+        }
+
+        // Funções para manipular modais
+        function openModal(modal) {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Inicializar o jogo quando a página carregar
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
