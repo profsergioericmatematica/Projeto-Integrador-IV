@@ -1,10 +1,10 @@
 # Projeto-Integrador-IV
 
-# 🎮 Jogo de Matemática - 9º Ano
+# 🎮 LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano - 9º Ano
 
 ## 📖 Sobre o Projeto
 
-O **Jogo de Matemática - 9º Ano** é uma aplicação web educativa desenvolvida como parte do **Projeto Integrador IV** do curso de Licenciatura em Matemática da **UNIVESP** (Universidade Virtual do Estado de São Paulo).
+O **LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano** é uma aplicação web educativa desenvolvida como parte do **Projeto Integrador IV** do curso de Licenciatura em Matemática da **UNIVESP** (Universidade Virtual do Estado de São Paulo).
 
 O objetivo da aplicação é auxiliar alunos do **9º Ano do Ensino Fundamental (Anos Finais)** a consolidarem conhecimentos em **Probabilidade e Estatística** através de uma abordagem gamificada, moderna e interativa. O sistema inclui ferramentas de apoio ao cálculo e métricas detalhadas de desempenho.
 
