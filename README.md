@@ -1,67 +1,82 @@
 # Projeto-Integrador-IV
 
-# 🎮 ABC da Matemática - 5º Ano
+# 🎮 Jogo de Matemática - 9º Ano
 
 ## 📖 Sobre o Projeto
 
-O **ABC da Matemática** é um Jogo Educativo Web desenvolvido como parte do **Projeto Integrador IV** do curso de Licenciatura em Matemática da **UNIVESP** (Universidade Virtual do Estado de São Paulo), no ano de 2026.
+O **Jogo de Matemática - 9º Ano** é uma aplicação web educativa desenvolvida como parte do **Projeto Integrador IV** do curso de Licenciatura em Matemática da **UNIVESP** (Universidade Virtual do Estado de São Paulo).
 
-O objetivo da aplicação é auxiliar alunos do **5º Ano do Ensino Fundamental (Anos Iniciais)** a fixarem conceitos matemáticos de forma lúdica, interativa e acessível. O jogo aborda temas previstos na BNCC como Números, Álgebra, Geometria, Grandezas e Medidas, e Probabilidade e Estatística.
-
----
-
-## 🚀 Funcionalidades
-
-O sistema conta com uma interface amigável e gamificada, incluindo:
-
-* **25 Desafios Progressivos:** Cobrindo desde leitura de números grandes até interpretação de gráficos.
-* **Sistema de Gamificação:**
-    * Barra de progresso global.
-    * Sistema de níveis (Iniciante a Mestre).
-    * Feedback visual e sonoro (animações, confetes e sons de vitória/erro).
-* **Revisão Teórica:** Módulo integrado que explica a teoria matemática por trás de cada desafio.
-* **Persistência de Dados:** O progresso do aluno é salvo automaticamente no navegador (`localStorage`), permitindo continuar depois.
-* **Relatórios:**
-    * Geração de arquivo de estatísticas detalhado (TXT) com erros e acertos.
-    * Opção para baixar material de apoio em PDF.
-* **Responsividade:** Funciona bem em computadores, tablets e celulares.
+O objetivo da aplicação é auxiliar alunos do **9º Ano do Ensino Fundamental (Anos Finais)** a consolidarem conhecimentos em **Probabilidade e Estatística** através de uma abordagem gamificada, moderna e interativa. O sistema inclui ferramentas de apoio ao cálculo e métricas detalhadas de desempenho.
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Funcionalidades Principais
 
-O projeto foi desenvolvido utilizando tecnologias web padrão, garantindo leveza e facilidade de execução sem necessidade de instalação de softwares complexos.
+O sistema foi projetado para engajar adolescentes através de elementos visuais modernos e mecânicas de jogos:
 
-* **HTML5:** Estrutura semântica da aplicação.
-* **CSS3:** Estilização, animações (keyframes), gradientes e design responsivo.
-* **JavaScript (Vanilla):** Lógica do jogo, manipulação do DOM, sistema de áudio e gerenciamento de estado.
-* **Bibliotecas Externas:**
-    * [Canvas Confetti](https://www.kirilv.com/canvas-confetti/): Para efeitos visuais de celebração.
-    * [Font Awesome](https://fontawesome.com/): Para ícones intuitivos.
+### 🏆 Gamificação e Engajamento
+* **Sistema de XP e Níveis:** Os alunos ganham experiência a cada acerto e sobem de nível, desbloqueando novos recursos.
+* **Sequência de Acertos (Streak):** Bonificação visual e pontuação extra para respostas corretas consecutivas.
+* **Conquistas:** Badges desbloqueáveis (ex: "Demônio da Velocidade", "Mestre da Sequência").
+* **Power-ups Estratégicos:**
+    * 💡 **Dica:** Mostra uma explicação auxiliar.
+    * ⏭️ **Pular:** Permite avançar sem perder a sequência.
+    * ⏱️ **Tempo Extra:** Adiciona segundos ao cronômetro.
+    * ✨ **Dobro:** Pontuação em dobro na próxima jogada.
+
+### 🧮 Ferramentas Integradas
+* **Calculadora Científica:** Uma calculadora completa embutida na interface (drag-and-drop), permitindo que o aluno realize cálculos complexos (raízes, potências, porcentagem, Pi) sem sair do jogo.
+
+### 📊 Análise de Desempenho
+* **Gráficos Interativos:** Utiliza a biblioteca `Chart.js` para plotar a evolução do aluno (Acertos vs. Tempo de Resposta).
+* **Feedback Imediato:** Explicações detalhadas para erros e acertos.
+* **Relatórios Exportáveis:** Gera um arquivo `.txt` detalhado com todas as estatísticas da partida para download.
 
 ---
 
 ## 📚 Conteúdos Abordados
 
-O jogo está dividido em 5 eixos temáticos principais:
+O jogo foca nas unidades temáticas essenciais para o 9º ano, conforme a BNCC:
 
-1.  **🔢 Números:** Leitura, escrita, decimais, frações e porcentagem.
-2.  **⚖️ Álgebra:** Igualdades, proporções e divisão justa.
-3.  **🔺 Geometria:** Plano cartesiano, polígonos, formas espaciais, ampliação e redução.
-4.  **📏 Grandezas e Medidas:** Comprimento, tempo, perímetro, área e volume.
-5.  **📊 Probabilidade e Estatística:** Análise de chances, leitura de gráficos e tabelas.
+1.  **📊 Probabilidade:**
+    * Eventos dependentes e independentes.
+    * Cálculo de chances (frações e porcentagens).
+    * Espaço amostral (dados, moedas, urnas).
+2.  **📈 Estatística:**
+    * Medidas de tendência central (Média, Mediana, Moda).
+    * Interpretação de gráficos e tabelas.
+    * Amplitude e Desvio Padrão.
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+O projeto é uma **Single Page Application (SPA)** leve e performática:
+
+* **HTML5:** Estrutura semântica.
+* **CSS3:** Design responsivo com tema "Dark/Neon", animações de fogos de artifício (CSS puro + JS) e layout Flexbox/Grid.
+* **JavaScript (Vanilla):**
+    * Lógica completa do jogo e gerenciamento de estado.
+    * Manipulação de áudio (Web Audio API e Fallbacks).
+    * Persistência local (`localStorage`) para salvar progresso e XP.
+* **Bibliotecas Externas:**
+    * [Chart.js](https://www.chartjs.org/): Para visualização de dados.
+    * [Font Awesome](https://fontawesome.com/): Para ícones da interface.
 
 ---
 
 ## 💻 Como Executar
 
-Não é necessário instalar nada. Como o projeto é uma aplicação estática:
+Este é um projeto estático, não requer instalação de servidor backend (Node, PHP, etc).
 
-1.  Baixe o repositório ou o arquivo `index.html`.
-2.  Certifique-se de estar conectado à internet (para carregar os ícones e scripts externos).
-3.  Abra o arquivo `index.html` em qualquer navegador moderno (Chrome, Firefox, Edge).
-
-**Ou acesse diretamente pelo GitHub Pages (se configurado).**
+1.  **Clone o repositório:**
+    ```bash
+    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
+    ```
+2.  **Abra o projeto:**
+    Navegue até a pasta e abra o arquivo `index.html` em seu navegador de preferência (Chrome, Firefox, Edge).
+3.  **Áudio:**
+    Na primeira execução, clique em qualquer lugar da tela ou no botão "Testar Som" para habilitar a reprodução de efeitos sonoros pelo navegador.
 
 ---
 
@@ -80,8 +95,7 @@ Trabalho desenvolvido pelos alunos de Licenciatura em Matemática da UNIVESP:
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a licença **MIT** - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está licenciado sob a licença **MIT** - sinta-se livre para usar, modificar e distribuir para fins educacionais.
 
 ---
-*Desenvolvido com 💙 para a alfabetização e educação matemática.*
-
+*Desenvolvido com 💙 para o ensino da matemática.*
