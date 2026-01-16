@@ -243,6 +243,28 @@
             box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
         }
         
+        /* NOVO BOTÃO DA CALCULADORA INLINE */
+        .calc-btn-inline {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .calc-btn-inline:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+        }
+        
         .calculator {
             position: fixed;
             top: 50%;
@@ -1165,7 +1187,7 @@
             🔥 Streak: <span id="current-streak">0</span>
         </div>
         
-        <!-- Botão da calculadora -->
+        <!-- Botão da calculadora (FIXO - visível fora da tela de questões) -->
         <button class="calc-btn" id="open-calc">🔢</button>
         
         <!-- Calculadora - AGORA FUNCIONAL -->
@@ -1380,6 +1402,10 @@
             <div class="game-controls" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
                 <button class="btn" id="next-btn" disabled>Próxima Questão</button>
                 <button class="btn btn-secondary" id="hint-btn" onclick="showHint()">💡 Pedir Dica</button>
+                <!-- NOVO BOTÃO DA CALCULADORA INLINE -->
+                <button class="calc-btn-inline" id="open-calc-inline">
+                    <i class="fas fa-calculator"></i> Calculadora
+                </button>
             </div>
         </div>
         
@@ -1803,8 +1829,14 @@
             // Configurar conquistas
             document.getElementById('achievement-btn').addEventListener('click', toggleAchievements);
             
-            // Configurar calculadora - CORREÇÃO SIMPLIFICADA
+            // Configurar calculadora
             initCalculator();
+            
+            // Configurar o novo botão inline da calculadora
+            document.getElementById('open-calc-inline').addEventListener('click', function(e) {
+                e.stopPropagation();
+                document.getElementById('calculator').classList.add('active');
+            });
             
             // Configurar configurações
             document.getElementById('question-count').addEventListener('change', (e) => {
@@ -1827,6 +1859,9 @@
             
             // Selecionar tema padrão
             document.querySelector('[data-theme="probabilidade"]').click();
+            
+            // Esconder botão inline inicialmente
+            document.getElementById('open-calc-inline').style.display = 'none';
             
             console.log("🎮 Jogo inicializado com sucesso!");
             
@@ -2855,6 +2890,17 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                 screen.style.display = 'none';
             });
             document.getElementById(screenId).style.display = 'block';
+            
+            // Controlar visibilidade dos botões da calculadora
+            if (screenId === 'question-screen') {
+                // Na tela de questões, mostrar o botão inline e esconder o fixo
+                document.getElementById('open-calc-inline').style.display = 'flex';
+                document.getElementById('open-calc').style.display = 'none';
+            } else {
+                // Nas outras telas, esconder o inline e mostrar o fixo
+                document.getElementById('open-calc-inline').style.display = 'none';
+                document.getElementById('open-calc').style.display = 'block';
+            }
         }
 
         function updateGameStatus() {
