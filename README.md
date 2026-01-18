@@ -37,7 +37,7 @@ Este projeto foi desenvolvido como parte do **Projeto Integrador IV** da Licenci
   - ✨ Pontos em Dobro (3 disponíveis)
 
 ### 🛠️ Ferramentas Integradas
-- **🧮 Calculadora Científica:** Integrada na interface, com arrastar e minimizar
+- **🧮 Calculadora:** Integrada na interface, com arrastar e minimizar
 - **📊 Análise de Desempenho:** Gráficos interativos (Chart.js) e estatísticas detalhadas
 - **🔔 Feedback Imediato:** Correção visual e explicativa passo a passo
 - **📥 Exportação de Dados:** Download de relatório completo em .txt
