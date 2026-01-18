@@ -19,6 +19,8 @@
 
 Este projeto foi desenvolvido como parte do **Projeto Integrador IV** da Licenciatura em Matemática da **UNIVESP**. O objetivo é transformar a resolução de exercícios matemáticos em uma experiência engajadora, utilizando gamificação para reduzir a ansiedade matemática e aumentar a fixação de conteúdo, tornando o aprendizado mais interativo e eficaz.
 
+---
+
 ## ✨ Funcionalidades Principais
 
 ### 📚 Conteúdo Educacional
@@ -46,26 +48,61 @@ Este projeto foi desenvolvido como parte do **Projeto Integrador IV** da Licenci
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## 🏗️ Nova Estrutura do Projeto
 
-O projeto foi construído utilizando tecnologias Web padrão, garantindo compatibilidade com qualquer navegador moderno.
+O projeto foi reorganizado em uma estrutura modular para melhor manutenção e escalabilidade:
+
+```
+Projeto-Integrador-IV/
+├── index.html          # Página principal
+├── LICENSE             # Licença MIT
+├── README.md           # Documentação
+├── css/                # Estilos separados por funcionalidade
+│   ├── variables.css   # Variáveis CSS e tema
+│   ├── reset.css       # Reset de estilos
+│   ├── layout.css      # Layout principal
+│   ├── game-status.css # Status do jogo
+│   ├── themes.css      # Temas e seleção
+│   ├── questions.css   # Estilos das questões
+│   ├── powerups.css    # Estilos dos power-ups
+│   ├── buttons.css     # Estilos dos botões
+│   ├── calculator.css  # Calculadora
+│   ├── achievements.css # Sistema de conquistas
+│   ├── results.css     # Tela de resultados
+│   ├── modals.css      # Modais e overlays
+│   ├── footer.css      # Rodapé
+│   ├── animations.css  # Animações
+│   └── responsive.css  # Responsividade
+├── js/                 # Lógica JavaScript modular
+│   ├── questions.js    # Banco de questões e gerenciamento
+│   ├── calculator.js   # Calculadora científica
+│   ├── game.js         # Lógica principal do jogo
+│   ├── achievements.js # Sistema de conquistas
+│   ├── audio.js        # Sistema de áudio
+│   ├── fireworks.js    # Efeitos visuais (fogos)
+│   └── main.js         # Inicialização e eventos
+└── assets/             # Recursos (se necessário)
+```
+
+---
+
+## 🚀 Tecnologias Utilizadas
 
 ### Core Technologies
 - **HTML5** - Estrutura semântica e acessível
 - **CSS3** - Estilização responsiva, animações, CSS Grid e Flexbox
-- **JavaScript (ES6+)** - Lógica completa do jogo, manipulação do DOM
+- **JavaScript (ES6+)** - Lógica completa do jogo, modularizada
 
 ### Bibliotecas Externas (via CDN)
 - **[MathJax 3](https://www.mathjax.org/)** - Renderização de fórmulas matemáticas LaTeX
 - **[Chart.js](https://www.chartjs.org/)** - Gráficos de desempenho e análise
 - **[Font Awesome 6](https://fontawesome.com/)** - Ícones e elementos visuais
-- **Canvas API** - Efeitos visuais de alta performance (fogos de artifício)
 
-### Recursos Avançados
+### APIs Navegador
+- **Canvas API** - Efeitos visuais de alta performance (fogos de artifício)
 - **Web Audio API** - Sistema de sons e efeitos sonoros
 - **LocalStorage** - Persistência de dados do jogador
 - **CSS Variables** - Sistema de design consistente
-- **Responsive Design** - Adaptação para mobile e desktop
 
 ---
 
@@ -73,7 +110,7 @@ O projeto foi construído utilizando tecnologias Web padrão, garantindo compati
 
 ### 🌐 Opção 1: GitHub Pages (Recomendado)
 Acesse a versão online diretamente pelo link:
-> ** [https://profsergioericmatematica.github.io/Projeto-Integrador-IV/] **
+> **[https://profsergioericmatematica.github.io/Projeto-Integrador-IV/](https://profsergioericmatematica.github.io/Projeto-Integrador-IV/)**
 
 ### 💻 Opção 2: Execução Local
 1. **Clone este repositório:**
@@ -98,7 +135,7 @@ Acesse a versão online diretamente pelo link:
      ```
      Acesse: `http://localhost:8000`
 
-**Nota:** Conexão com internet é necessária para carregar as bibliotecas via CDN.
+**Nota:** Conexão com internet é necessária para carregar as bibliotecas via CDN (MathJax, Chart.js, Font Awesome).
 
 ---
 
@@ -113,62 +150,23 @@ Acesse a versão online diretamente pelo link:
 
 ---
 
-## 📊 Estrutura do Código
+## 🔧 Arquitetura Modular
 
-### Arquitetura (Single Page Application)
-O projeto foi intencionalmente mantido em um arquivo único (`index.html`) para facilitar a distribuição e execução em ambientes escolares com restrições de internet/instalação.
+### Vantagens da Nova Estrutura
+- **Manutenção Facilitada:** Código dividido por responsabilidade
+- **Performance Otimizada:** Carregamento seletivo de recursos
+- **Escalabilidade:** Fácil adição de novos módulos
+- **Colaboração:** Múltiplos desenvolvedores podem trabalhar simultaneamente
 
+### Fluxo de Dados
 ```
-index.html
-├── <HEAD>: Estilos CSS (Variáveis, Animações, Layout Responsivo)
-├── <BODY>:
-│   ├── #game-container (Interface Principal)
-│   ├── #modals (Config, Tutorial, Teoria)
-│   └── <CANVAS> (Sistema de Partículas/Fogos)
-└── <SCRIPT>:
-    ├── Lógica do Jogo (State Management)
-    ├── Banco de Questões (Probabilidade/Estatística)
-    ├── Engine de Áudio (Web Audio API)
-    └── Renderização MathJax
-```
-
-### Principais Módulos
-- **Sistema de Questões:** Banco de 40 questões (20 por tema)
-- **Calculadora Científica:** Operações básicas e funções matemáticas
-- **Sistema de Conquistas:** 10 conquistas com tracking de progresso
-- **Gerenciador de Áudio:** Efeitos sonoros e fallbacks
-- **Canvas Animations:** Sistema otimizado de fogos de artifício
-
----
-
-## 🔧 Análise Técnica
-
-### ✅ Pontos Fortes
-- **Código completamente autossuficiente** (single HTML file)
-- **Sistema de gamificação bem implementado** com XP, níveis e conquistas
-- **Design responsivo** e visualmente atraente
-- **Recursos de acessibilidade** integrados
-- **Performance otimizada** com Canvas para efeitos visuais
-- **Persistência de dados** via LocalStorage
-
-### 🔧 Pontos de Melhoria
-- **Modularização:** Separar CSS e JS em arquivos externos
-- **Performance:** Otimizar carregamento de recursos
-- **Manutenibilidade:** Dividir código JavaScript em módulos
-- **Testes:** Adicionar testes cross-browser e mobile
-
-### 🛠️ Personalização
-Para adicionar novas questões:
-```javascript
-{
-  question: "Texto da pergunta com $fórmulas$ LaTeX",
-  options: ["A", "B", "C", "D"],
-  correct: 0,
-  hint: "Dica para o aluno",
-  explanation: "Explicação detalhada da resposta",
-  difficulty: "easy|medium|hard",
-  points: 10|15|20
-}
+index.html → main.js (coordenação)
+          ├── game.js (estado do jogo)
+          ├── questions.js (questões atuais)
+          ├── calculator.js (cálculos)
+          ├── achievements.js (progresso)
+          ├── audio.js (feedback sonoro)
+          └── fireworks.js (celebrações)
 ```
 
 ---
@@ -205,6 +203,7 @@ Contribuições são bem-vindas! Para colaborar:
 - 🎨 Novos temas visuais
 - 📚 Expansão do banco de questões
 - 🌐 Tradução para outros idiomas
+- 🧪 Testes automatizados
 
 ---
 
@@ -246,5 +245,4 @@ O projeto atende às competências específicas de Matemática do 9º Ano:
 
 ---
 
-
-*Última atualização: Fevereiro 2026*
+*Última atualização: Janeiro 2026*
