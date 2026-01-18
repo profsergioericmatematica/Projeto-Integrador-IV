@@ -1,8 +1,11 @@
+<!-- versão 78 -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano</title>
     <!-- Font Awesome para ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,6 +17,19 @@
             font-family: 'Segoe UI', Arial, sans-serif;
         }
         
+        :root {
+            /* --- SISTEMA DE CAMADAS (Z-INDEX) --- */
+            --z-back: -1;          /* Fundo */
+            --z-base: 1;           /* Conteúdo normal */
+            --z-content: 10;       /* Container principal */
+            --z-controls: 100;     /* Botões flutuantes (Conquista, Calc Btn) */
+            --z-floating: 500;     /* Calculadora aberta */
+            --z-overlay: 900;      /* Fundo escuro do modal */
+            --z-modal: 1000;       /* Janelas (Conquistas, Config) */
+            --z-notification: 2000;/* Avisos (Level Up, Pontos) */
+            --z-effects: 9999;     /* Fogos de artifício (Sempre no topo) */
+        }
+
         body {
             background: linear-gradient(135deg, #1a237e, #283593);
             color: white;
@@ -30,7 +46,7 @@
             padding: 25px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             position: relative;
-            z-index: 10;
+            z-index: var(--z-content); /* Era 10 */
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
@@ -112,7 +128,7 @@
             font-size: 24px;
             cursor: pointer;
             box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
-            z-index: 100;
+            z-index: var(--z-controls);
             transition: all 0.3s;
         }
         
@@ -120,25 +136,184 @@
             transform: scale(1.1) rotate(15deg);
         }
         
-        .achievements-panel {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 350px;
-            height: 100vh;
-            background: rgba(26, 35, 126, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            transition: right 0.4s ease;
-            z-index: 1000;
-            overflow-y: auto;
-            border-left: 2px solid #ff9800;
-        }
-        
-        .achievements-panel.active {
-            right: 0;
-        }
-        
+/* ========== MODAL DE CONQUISTAS ========== */
+.achievements-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    animation: fadeIn 0.3s ease;
+}
+
+.achievements-modal.active {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-overlay);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow: hidden;
+    z-index: var(--z-modal);
+    position: relative;
+    border: 2px solid #ff9800;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: slideInUp 0.4s ease;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+    background: rgba(255, 152, 0, 0.3);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 50vh;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Ajuste para os itens de conquista no modal */
+.modal-body .achievement-item {
+    margin-bottom: 15px;
+}
+
+/* Responsividade do modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .modal-body {
+        max-height: 60vh;
+    }
+}
+  
+
+
+/* Modal de teoria */
+.theory-modal, .theory-content-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    animation: fadeIn 0.3s ease;
+}
+
+.theory-modal.active, .theory-content-modal.active {
+    display: flex;
+}
+
+.theme-choice-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.theme-choice-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ff9800;
+    transform: translateY(-5px);
+}
+
+.theory-content-modal .modal-body {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.theory-content-modal h4 {
+    color: #ffeb3b;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.theory-content-modal p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.theory-content-modal ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.theory-content-modal li {
+    margin-bottom: 5px;
+}
+
+
+
         .achievement-item {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -170,6 +345,19 @@
             margin-bottom: 5px;
         }
         
+
+        /* --- ADICIONE ISTO AO SEU CSS --- */
+        
+        .power-up.disabled {
+            opacity: 0.3;               /* Bem transparente */
+            filter: grayscale(100%);    /* Tira toda a cor (fica cinza) */
+            cursor: not-allowed;        /* Cursor de bloqueio */
+            pointer-events: none;       /* Impede cliques */
+            box-shadow: none !important;/* Remove o brilho */
+            border-color: #555 !important; /* Borda escura */
+            transform: none !important; /* Remove animação de movimento */
+        }
+
         .achievement-info p {
             font-size: 12px;
             color: #bbdefb;
@@ -220,51 +408,38 @@
             100% { transform: translateX(100%); }
         }
         
-        /* Calculadora aprimorada */
-        .calc-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #4caf50, #2e7d32);
-            color: white;
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .calc-btn:hover {
-            transform: scale(1.1) rotate(10deg);
-            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.6);
-        }
-        
-        /* NOVO BOTÃO DA CALCULADORA INLINE */
-        .calc-btn-inline {
-            background: linear-gradient(135deg, #4caf50, #2e7d32);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
-            transition: all 0.3s;
-        }
-        
-        .calc-btn-inline:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
-        }
-        
+        /* Substitua todo o bloco .calc-btn antigo por este: */
+
+.calc-btn {
+    /* Removemos position: fixed, bottom e left */
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Tamanho igual ao dos power-ups */
+    width: 60px;
+    height: 60px;
+    
+    /* Estilo visual */
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    color: white;
+    border-radius: 50%;
+    border: 2px solid #4caf50; /* Borda para combinar */
+    font-size: 24px; /* Ajuste para o ícone ficar centralizado */
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+    z-index: var(--z-controls);
+    transition: all 0.3s ease;
+    
+    /* Margem para não colar nos outros */
+    margin: 0; 
+}
+
+.calc-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+}        
         .calculator {
             position: fixed;
             top: 50%;
@@ -276,7 +451,7 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
             display: none;
             flex-direction: column;
-            z-index: 1001;
+            z-index: var(--z-floating);
             border: 2px solid #444;
             overflow: hidden;
         }
@@ -433,6 +608,73 @@
             color: #90caf9;
         }
         
+
+
+        /* Modal do Tutorial */
+.tutorial-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-modal);
+    animation: fadeIn 0.3s ease;
+}
+
+.tutorial-modal.active {
+    display: flex;
+}
+
+.tutorial-modal .modal-content {
+    background: linear-gradient(135deg, #1a237e, #283593);
+    border-radius: 20px;
+    width: 90%;
+    max-width: 900px;
+    max-height: 80vh;
+    overflow: hidden;
+    z-index: var(--z-modal);
+    position: relative;
+    border: 2px solid #2196f3;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: slideInUp 0.4s ease;
+}
+
+.tutorial-modal h4 {
+    color: #ffeb3b;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+.tutorial-modal p {
+    margin-bottom: 10px;
+    line-height: 1.5;
+    color: #bbdefb;
+}
+
+.tutorial-modal ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.tutorial-modal li {
+    margin-bottom: 8px;
+    color: #bbdefb;
+}
+
+        /* Adicionar no CSS: */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake { animation: shake 0.5s ease; }
+
         /* Configurações - CORRIGIDO */
         select {
             width: 100%;
@@ -524,6 +766,11 @@
         }
         
         .option {
+            width: 100%;
+            text-align: left;
+            font-family: inherit;
+            font-size: 1rem;
+            color: white;
             background: rgba(255, 255, 255, 0.08);
             border: 2px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -731,6 +978,33 @@
             transition: all 0.3s;
         }
         
+/* --- NOVO: Canvas para Fogos de Artifício (Alta Performance) --- */
+        #fireworks-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Deixa clicar através dele */
+            z-index: var(--z-effects);
+        }
+
+        /* --- NOVO: Classe para Leitor de Tela (Invisível visualmente) --- */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+
+
+
         .stat-card:hover {
             transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.15);
@@ -780,21 +1054,21 @@
             height: 5px;
             border-radius: 50%;
             pointer-events: none;
-            z-index: 9999;
+            z-index: var(--z-effects);
         }
         
         .firework-particle {
             position: fixed;
             pointer-events: none;
             border-radius: 50%;
-            z-index: 9998;
+            z-index: var(--z-effects);
         }
         
         .firework-trail {
             position: fixed;
             pointer-events: none;
             border-radius: 50%;
-            z-index: 9997;
+            z-index: var(--z-effects);
         }
         
         /* Streak indicator */
@@ -1126,28 +1400,78 @@
                 font-size: 1.5rem;
             }
         }
+
+/* --- ATUALIZAÇÃO DO CSS --- */
+
+/* Estilo para opção selecionada (Ainda não confirmada) - Cor Azul Neutra */
+.option.selected {
+    background: rgba(33, 150, 243, 0.2);
+    border: 2px solid #2196f3;
+    transform: translateX(10px);
+    box-shadow: 0 0 15px rgba(33, 150, 243, 0.3);
+}
+
+/* Garante que o VERDE (Correto) sobrescreva o azul */
+.option.correct {
+    background: rgba(76, 175, 80, 0.2) !important;
+    border-color: #4caf50 !important;
+    transform: scale(1.02);
+}
+
+/* Garante que o VERMELHO (Incorreto) sobrescreva o azul */
+.option.incorrect {
+    background: rgba(244, 67, 54, 0.2) !important;
+    border-color: #f44336 !important;
+}
+
     </style>
+
+    <script>
+    window.MathJax = {
+        tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']], // Permite usar $fórmula$ no meio do texto
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] // Permite usar $$fórmula$$ em linha separada
+        },
+        svg: {
+        fontCache: 'global'
+        }
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+
 </head>
 <body>
-    <div class="container">
-        <!-- Botão de conquistas -->
-        <!-- Botão de conquistas no canto superior direito do container -->
-    <div class="achievement-badge" id="achievement-btn" style="position: absolute; top: 0px; right: 0px;">
-        🏆
-        <span class="achievement-count" id="achievement-count">0</span>
-    </div>
+    <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div class="container"> <!-- INÍCIO DO CONTAINER -->
         
-        <!-- Painel de conquistas -->
-        <div class="achievements-panel" id="achievements-panel">
-            <h3 style="color: #ffeb3b; margin-bottom: 20px;">🏆 Conquistas</h3>
-            <div id="achievements-list">
-                <!-- Conquistas serão adicionadas aqui -->
-            </div>
-            <button class="btn" onclick="closeAchievements()" style="margin-top: 20px; width: 100%;">Fechar</button>
-        </div>
         
         <h1>🎮 LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano 🎮</h1>
         
+<div style="text-align: center;">
+    <button class="btn" onclick="openTutorialModal()" style="background: linear-gradient(90deg, #2196f3, #1976d2); margin-top: 10px;">
+        🎓 Tutorial Inicial
+    </button>
+    <button class="btn" id="theory-btn" style="background: linear-gradient(90deg, #9c27b0, #673ab7); margin-top: 10px;">
+        📚 Revisão Teórica
+    </button>
+    <button class="btn btn-secondary" onclick="showStats()">📊 Ver Estatísticas</button>
+    <button class="btn test-fireworks-btn" onclick="testFireworks()" style="margin-top: 10px;">🎆 Testar Fogos de Artifício</button>
+    <button class="btn" onclick="testAudio()" style="background: linear-gradient(90deg, #5cda2a, #1ead25); margin-top: 10px;">🔊 Testar Som</button>
+    
+    <!-- Novo botão de conquistas -->
+    <button class="btn" onclick="toggleAchievements()" style="background: linear-gradient(90deg, #ff9800, #ff5722); margin-top: 10px;">
+        🏆 Conquistas
+    </button>
+
+</div>
+
+<!-- Botão de conquistas -->
+        <div class="achievement-badge" id="achievement-btn" role="button" tabindex="0" aria-label="Abrir Conquistas">
+    🏆      <span class="achievement-count" id="achievement-count">0</span>
+        </div>
         <!-- Status do jogo -->
         <div class="game-status">
             <div class="status-item">
@@ -1161,8 +1485,8 @@
             </div>
             <div class="status-item">
                 <div class="status-label">Questão</div>
-                <div class="status-value" id="question-counter">0/10</div>
-                <div class="status-subtext" id="difficulty">Nível: -</div>
+                <div class="status-value" id="question-counter">0/20</div>
+                <div class="status-subtext">Tempo: 60s</div>
             </div>
             <div class="status-item">
                 <div class="status-label">Nível</div>
@@ -1187,10 +1511,7 @@
             🔥 Streak: <span id="current-streak">0</span>
         </div>
         
-        <!-- Botão da calculadora (FIXO - visível fora da tela de questões) -->
-        <button class="calc-btn" id="open-calc">🔢</button>
-        
-        <!-- Calculadora - AGORA FUNCIONAL -->
+       
         <div class="calculator" id="calculator">
             <div class="calc-header" id="calc-header">
                 <div class="calc-title">Calculadora Científica</div>
@@ -1241,7 +1562,7 @@
                 <circle cx="50" cy="50" r="45" class="timer-bg"></circle>
                 <circle cx="50" cy="50" r="45" class="timer-progress" id="timer-progress"></circle>
             </svg>
-            <div class="timer-text" id="timer-text">30</div>
+            <div class="timer-text" id="timer-text">60</div>
         </div>
         
         <!-- Tela inicial -->
@@ -1273,44 +1594,17 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Configurações - CORRIGIDO -->
+
+            <!-- BOTÃO INICIAR JOGO ABAIXO DA SELEÇÃO DE TEMA -->
+<div style="text-align: center; margin: 40px 0;">
+    <button class="btn" id="start-btn" style="padding: 20px 50px; font-size: 1.2em;">
+        🎮 Iniciar Jogo
+    </button>
+</div>
+         
+ <!-- Power-ups disponíveis -->
             <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
-                <h3 style="color: #ffeb3b; margin-bottom: 15px;">⚙️ Configurações</h3>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                    <div>
-                        <label for="question-count">Número de questões:</label>
-                        <select id="question-count">
-                            <option value="5">5 questões</option>
-                            <option value="10" selected>10 questões</option>
-                            <option value="15">15 questões</option>
-                            <option value="20">20 questões</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="time-limit">Tempo por questão:</label>
-                        <select id="time-limit">
-                            <option value="0">Sem limite</option>
-                            <option value="30">30 segundos</option>
-                            <option value="60" selected>1 minuto</option>
-                            <option value="90">1 minuto 30</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="difficulty-level">Dificuldade:</label>
-                        <select id="difficulty-level">
-                            <option value="mixed">Misturada</option>
-                            <option value="easy">Fácil</option>
-                            <option value="medium" selected>Médio</option>
-                            <option value="hard">Difícil</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Power-ups disponíveis -->
-            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
-                <h3 style="color: #ffeb3b; margin-bottom: 15px;">✨ Power-ups</h3>
+                <h3 style="color: #ffeb3b; margin-bottom: 15px;">✨ Power-ups e Calculadora</h3>
                 <div class="power-ups" style="justify-content: center;">
                     <div class="power-up" data-power="hint" title="Dica extra (3 disponíveis)">
                         💡
@@ -1320,7 +1614,7 @@
                         ⏭️
                         <div class="power-up-count" id="skip-count">2</div>
                     </div>
-                    <div class="power-up" data-power="time" title="+30 segundos (1 disponível)">
+                    <div class="power-up" data-power="time" title="+10 segundos (1 disponível)">
                         ⏱️
                         <div class="power-up-count" id="time-count">1</div>
                     </div>
@@ -1328,15 +1622,49 @@
                         ✨
                         <div class="power-up-count" id="double-count">1</div>
                     </div>
+                    <button class="calc-btn" id="open-calc" aria-label="Abrir Calculadora" title="Calculadora">
+        🔢
+    </button>
                 </div>
             </div>
-            
-            <div style="text-align: center;">
-                <button class="btn" id="start-btn">🎮 Iniciar Jogo</button>
-                <button class="btn btn-secondary" onclick="showStats()">📊 Ver Estatísticas</button>
-                <!-- <button class="btn test-fireworks-btn" onclick="testFireworks()" style="margin-top: 10px;">🎆 Testar Fogos de Artifício</button>-->
-                <!-- <button class="btn" onclick="testAudio()" style="background: linear-gradient(90deg, #2196f3, #1976d2); margin-top: 10px;">🔊 Testar Som</button> -->
+
+
+            <!-- Configurações simplificadas -->
+           
+
+<div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="color: #ffeb3b; margin-bottom: 15px;">⚙️ Configurações</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 300px; margin: 0 auto;">
+                    
+                    <div>
+                        <label for="sound-toggle">Sons e Efeitos:</label>
+                        <select id="sound-toggle">
+                            <option value="true">Ligado 🔊</option>
+                            <option value="false">Desligado 🔇</option>
+                        </select>
+                    </div>
+
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <button id="reset-progress-btn" class="btn" style="background: linear-gradient(90deg, #d32f2f, #b71c1c); width: 100%; font-size: 14px; padding: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                            🗑️ Apagar Todo o Progresso
+                        </button>
+                    </div>
+                    </div>
+
+                <div style="text-align: center; margin-top: 15px; color: #bbdefb; font-size: 14px;">
+                    <p>📝 Cada tema tem 20 questões</p>
+                    <p>⏱️ Tempo: 60 segundos por questão</p>
+                    <p>🎯 Dificuldade: Mista (Fácil, Médio e Difícil)</p>
+                </div>
             </div>
+
+
+
+            
+           
+            
+            
         </div>
         
         <!-- Tela de perguntas -->
@@ -1366,13 +1694,13 @@
                     ⏭️
                     <div class="power-up-count" id="game-skip-count">2</div>
                 </div>
-                <div class="power-up" data-power="time" title="+30 segundos" onclick="usePowerUp('time')">
+                <div class="power-up" data-power="time" title="+10 segundos" onclick="usePowerUp('time')">
                     ⏱️
-                    <div class="power-up-count" id="game-time-count">1</div>
+                    <div class="power-up-count" id="game-time-count">2</div>
                 </div>
                 <div class="power-up" data-power="double" title="Pontos em dobro" onclick="usePowerUp('double')">
                     ✨
-                    <div class="power-up-count" id="game-double-count">1</div>
+                    <div class="power-up-count" id="game-double-count">3</div>
                 </div>
             </div>
             
@@ -1402,10 +1730,6 @@
             <div class="game-controls" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
                 <button class="btn" id="next-btn" disabled>Próxima Questão</button>
                 <button class="btn btn-secondary" id="hint-btn" onclick="showHint()">💡 Pedir Dica</button>
-                <!-- NOVO BOTÃO DA CALCULADORA INLINE -->
-                <button class="calc-btn-inline" id="open-calc-inline">
-                    <i class="fas fa-calculator"></i> Calculadora
-                </button>
             </div>
         </div>
         
@@ -1521,9 +1845,330 @@
         </footer>
     </div>
 
+<!-- Modal de Conquistas FORA DO CONTAINER (CORRETO!) -->
+<div class="achievements-modal" id="achievements-modal">
+    <div class="modal-overlay" onclick="closeAchievements()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">🏆 Conquistas</h3>
+            <button class="modal-close" onclick="closeAchievements()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="achievements-list">
+                <!-- Conquistas serão adicionadas aqui -->
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn" onclick="closeAchievements()" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de escolha de revisão -->
+<div class="theory-modal" id="theory-modal">
+    <div class="modal-overlay" onclick="closeTheoryModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">📚 Escolha o Tema da Revisão</h3>
+            <button class="modal-close" onclick="closeTheoryModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px;">
+                <button class="theme-choice-btn" data-theory="probabilidade">
+                    <div style="font-size: 40px;">📊</div>
+                    <h4>Probabilidade</h4>
+                    <p>Revise conceitos de probabilidade para ajudar nas questões.</p>
+                </button>
+                <button class="theme-choice-btn" data-theory="estatistica">
+                    <div style="font-size: 40px;">📈</div>
+                    <h4>Estatística</h4>
+                    <p>Revise conceitos de estatística para ajudar nas questões.</p>
+                </button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTheoryModal()" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Revisão de Probabilidade -->
+<div class="theory-content-modal" id="probabilidade-modal">
+    <div class="modal-overlay" onclick="closeTheoryContentModal('probabilidade')"></div>
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">📊 Revisão de Probabilidade</h3>
+            <button class="modal-close" onclick="closeTheoryContentModal('probabilidade')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                <h4>Conceitos Básicos</h4>
+                <p><strong>Probabilidade</strong> é a chance de um evento ocorrer.</p>
+                <p>Espaço amostral (S) é o conjunto de todos os resultados possíveis de um experimento aleatório.</p>
+                <p>Evento (E) é um subconjunto do espaço amostral.</p>
+                
+                <h4>Cálculo de Probabilidade</h4>
+                <p>A probabilidade de um evento E ocorrer é dada por:</p>
+                <p style="text-align: center; font-size: 1.2em;">P(E) = número de casos favoráveis / número de casos possíveis</p>
+                
+                <h4>Exemplo</h4>
+                <p>Jogar um dado: espaço amostral S = {1,2,3,4,5,6}</p>
+                <p>Evento "sair um número par": E = {2,4,6}</p>
+                <p>P(E) = 3/6 = 1/2 = 50%</p>
+                
+                <h4>Eventos Independentes</h4>
+                <p>Dois eventos são independentes quando a ocorrência de um não afeta a probabilidade do outro.</p>
+                <p>Exemplo: jogar uma moeda duas vezes. O resultado da primeira jogada não afeta a segunda.</p>
+                
+                <h4>Eventos Dependentes</h4>
+                <p>Dois eventos são dependentes quando a ocorrência de um afeta a probabilidade do outro.</p>
+                <p>Exemplo: tirar duas cartas de um baralho sem reposição. A segunda carta depende da primeira.</p>
+                
+                <h4>Probabilidade Condicional</h4>
+                <p>É a probabilidade de um evento ocorrer dado que outro evento já ocorreu.</p>
+                <p>Notação: P(A|B) - probabilidade de A dado B.</p>
+                
+                <h4>Dicas para as Questões</h4>
+                <ul>
+                    <li>Identifique sempre o espaço amostral (total de possibilidades)</li>
+                    <li>Conte cuidadosamente os casos favoráveis</li>
+                    <li>Para moedas e dados, lembre que todos os lados têm igual chance</li>
+                    <li>Probabilidade varia de 0 (impossível) a 1 (certo), ou 0% a 100%</li>
+                    <li>A soma das probabilidades de todos os resultados possíveis é sempre 1</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTheoryContentModal('probabilidade')" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Revisão de Estatística -->
+<div class="theory-content-modal" id="estatistica-modal">
+    <div class="modal-overlay" onclick="closeTheoryContentModal('estatistica')"></div>
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">📈 Revisão de Estatística</h3>
+            <button class="modal-close" onclick="closeTheoryContentModal('estatistica')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                <h4>Conceitos Básicos</h4>
+                <p><strong>Estatística</strong> é a ciência que coleta, organiza, analisa e interpreta dados.</p>
+                
+                <h4>Medidas de Tendência Central</h4>
+                <p><strong>Média Aritmética:</strong> Soma de todos os valores dividida pelo número de valores.</p>
+                <p>Fórmula: Média = (x₁ + x₂ + ... + xₙ) / n</p>
+                <p>Exemplo: notas 5, 6, 7 → média = (5+6+7)/3 = 6</p>
+                
+                <p><strong>Mediana:</strong> Valor que divide o conjunto de dados ordenados ao meio.</p>
+                <p>Como calcular: 1) Ordene os dados; 2) Encontre o valor do meio.</p>
+                <p>Exemplo: 1, 3, 3, 6, 7, 8, 9 → mediana = 6</p>
+                <p>Se houver número par de valores, mediana é a média dos dois centrais.</p>
+                <p>Exemplo: 1, 2, 3, 4 → mediana = (2+3)/2 = 2,5</p>
+                
+                <p><strong>Moda:</strong> Valor que aparece com maior frequência.</p>
+                <p>Exemplo: 1, 2, 2, 3, 4 → moda = 2</p>
+                
+                <h4>Gráficos</h4>
+                <p><strong>Gráfico de Barras:</strong> Usado para comparar quantidades entre categorias.</p>
+                <p><strong>Gráfico de Linhas:</strong> Usado para mostrar tendências ao longo do tempo.</p>
+                <p><strong>Gráfico de Setores (Pizza):</strong> Usado para mostrar partes de um todo.</p>
+                <p><strong>Histograma:</strong> Gráfico de barras para dados agrupados em intervalos.</p>
+                
+                <h4>Medidas de Dispersão</h4>
+                <p><strong>Amplitude:</strong> Diferença entre o maior e o menor valor.</p>
+                <p>Fórmula: Amplitude = valor máximo - valor mínimo</p>
+                <p>Exemplo: no conjunto {2, 5, 8, 10}, amplitude = 10 - 2 = 8</p>
+                
+                <h4>População e Amostra</h4>
+                <p><strong>População:</strong> Conjunto completo de elementos a ser estudado.</p>
+                <p><strong>Amostra:</strong> Subconjunto da população (parte selecionada para estudo).</p>
+                <p>Exemplo: Pesquisa eleitoral: população = todos os eleitores, amostra = parte dos eleitores entrevistados.</p>
+                
+                <h4>Dicas para as Questões</h4>
+                <ul>
+                    <li>Média: some todos e divida pela quantidade</li>
+                    <li>Mediana: primeiro ORDENE os dados, depois ache o meio</li>
+                    <li>Moda: é o valor que mais se repete</li>
+                    <li>Para gráficos de pizza: o círculo inteiro = 100%</li>
+                    <li>Dados qualitativos (cores, nomes) só têm moda, não média</li>
+                    <li>Amplitude mostra a variação dos dados</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTheoryContentModal('estatistica')" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal do Tutorial -->
+<div class="tutorial-modal" id="tutorial-modal">
+    <div class="modal-overlay" onclick="closeTutorialModal()"></div>
+    <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">🎓 Tutorial - LIAM - Laboratório Interativo de Alfabetização Matemática</h3>
+            <button class="modal-close" onclick="closeTutorialModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 70vh; overflow-y: auto; padding-right: 10px;">
+                
+                <!-- Seção: Sobre o Projeto -->
+                <div style="background: rgba(33, 150, 243, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #2196f3;">
+                    <h4 style="color: #2196f3; margin-bottom: 15px;">📋 Sobre o Projeto</h4>
+                    <p><strong>LIAM - Laboratório Interativo de Alfabetização Matemática</strong> é um jogo educativo desenvolvido como parte do <strong>Projeto Integrador IV</strong> da Licenciatura em Matemática da UNIVESP.</p>
+                    <p><strong>Objetivo:</strong> Auxiliar estudantes do 9º ano do Ensino Fundamental no aprendizado de Probabilidade e Estatística, tornando o estudo mais interativo, divertido e eficaz.</p>
+                    <p><strong>Público-alvo:</strong> Alunos do 9º ano, professores de matemática e qualquer pessoa interessada em reforçar seus conhecimentos matemáticos.</p>
+                </div>
+                
+                <!-- Seção: Desenvolvedores -->
+                <div style="background: rgba(76, 175, 80, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #4caf50;">
+                    <h4 style="color: #4caf50; margin-bottom: 15px;">👥 Equipe de Desenvolvimento</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Antonio Antunes Junior</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Giovani Machado de Lima</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👩‍💻</div>
+                            <strong>Priscilla Santiago Zamorra</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Rodrigo Aires de Medeiros Correa</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍🏫</div>
+                            <strong>Sergio Eric Reis de Oliveira</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Vitor Correa Uberti</strong>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 14px; color: #bbdefb;">Projeto Integrador IV - Licenciatura em Matemática - UNIVESP - 2026</p>
+                </div>
+                
+                <!-- Seção: Como Jogar -->
+                <div style="background: rgba(255, 152, 0, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #ff9800;">
+                    <h4 style="color: #ff9800; margin-bottom: 15px;">🎮 Como Jogar</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">1️⃣</div>
+                            <h5 style="color: #ffeb3b;">Escolha o Tema</h5>
+                            <p style="font-size: 14px;">Selecione entre <strong>Probabilidade</strong> ou <strong>Estatística</strong>. Cada tema tem 20 questões.</p>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">2️⃣</div>
+                            <h5 style="color: #ffeb3b;">Responda as Questões</h5>
+                            <p style="font-size: 14px;">Você tem <strong>60 segundos</strong> por questão. Selecione a alternativa correta.</p>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">3️⃣</div>
+                            <h5 style="color: #ffeb3b;">Use Power-ups</h5>
+                            <p style="font-size: 14px;">Utilize dicas, pule questões, ganhe tempo extra ou ative pontos em dobro!</p>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">4️⃣</div>
+                            <h5 style="color: #ffeb3b;">Acompanhe Seu Progresso</h5>
+                            <p style="font-size: 14px;">Ganhe XP, suba de nível e desbloqueie conquistas!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Seção: Sistema de Pontuação -->
+                <div style="background: rgba(156, 39, 176, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #9c27b0;">
+                    <h4 style="color: #9c27b0; margin-bottom: 15px;">🏅 Sistema de Pontuação</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #4caf50;">10</div>
+                            <p style="font-size: 14px;"><strong>Questões Fáceis</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #ff9800;">15</div>
+                            <p style="font-size: 14px;"><strong>Questões Médias</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #f44336;">20</div>
+                            <p style="font-size: 14px;"><strong>Questões Difíceis</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #ffeb3b;">+5</div>
+                            <p style="font-size: 14px;"><strong>Bônus por Velocidade</strong><br>(resposta em <10s)</p>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 14px;"><strong>Streak Bonus:</strong> A cada 3 acertos consecutivos, ganhe +5 pontos adicionais!</p>
+                </div>
+                
+                <!-- Seção: Recursos Disponíveis -->
+                <div style="background: rgba(0, 150, 136, 0.1); padding: 20px; border-radius: 10px; border-left: 5px solid #009688;">
+                    <h4 style="color: #009688; margin-bottom: 15px;">🛠️ Recursos Disponíveis</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">🧮</div>
+                            <p><strong>Calculadora</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">📚</div>
+                            <p><strong>Revisão Teórica</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">💡</div>
+                            <p><strong>Dicas</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">🏆</div>
+                            <p><strong>Conquistas</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">📊</div>
+                            <p><strong>Estatísticas</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">🎆</div>
+                            <p><strong>Efeitos Visuais</strong></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Seção: Dicas Importantes -->
+                <div style="background: rgba(244, 67, 54, 0.1); padding: 20px; border-radius: 10px; margin-top: 25px; border-left: 5px solid #f44336;">
+                    <h4 style="color: #f44336; margin-bottom: 15px;">💡 Dicas Importantes</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>Use a <strong>calculadora</strong> para ajudar nos cálculos complexos</li>
+                        <li>Consulte a <strong>revisão teórica</strong> se tiver dúvidas sobre os conceitos</li>
+                        <li>Administre bem seus <strong>power-ups</strong> - use-os estrategicamente</li>
+                        <li>Pratique ambos os temas para dominar Probabilidade e Estatística</li>
+                        <li>Preste atenção ao <strong>tempo</strong> - cada questão tem 60 segundos</li>
+                        <li>Quanto mais rápido responder corretamente, mais pontos ganha!</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTutorialModal()" style="width: 100%; background: linear-gradient(90deg, #2196f3, #1976d2);">Fechar Tutorial</button>
+        </div>
+    </div>
+</div>
+
     <!-- Áudio para efeitos sonoros - URLs alternativas -->
     <audio id="correct-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
+        <source src="https://actions.google.com/sounds/v1/foley/firecrackers_exploding.ogg" type="audio/ogg">
+
+        <!-- <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3" type="audio/mpeg">   -->  
     </audio>
     
     <audio id="incorrect-sound" preload="auto">
@@ -1544,20 +2189,29 @@
     
     <!-- Som de fogos de artifício - URLs alternativas -->
     <audio id="firework-sound" preload="auto">
-        <source src="https://assets.mixkit.co/sfx/preview/mixkit-fireworks-show-audio-3065.mp3" type="audio/mpeg">
+       <!--  <source src="https://assets.mixkit.co/sfx/preview/mixkit-fireworks-show-audio-3065.mp3" type="audio/mpeg"> -->
+        <!-- <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_82173f40f0.mp3" type="audio/mpeg"> -->
+
+       <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_5b6623642d.mp3"  type="audio/mpeg">
     </audio>
 
     <!-- Biblioteca Chart.js para gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+
+
 
     <script>
         // ================ DADOS DO JOGO ================
         const gameData = {
             theme: null,
             currentQuestion: 0,
+            isQuestionAnswered: false,
             score: 0,
             correctAnswers: 0,
-            totalQuestions: 10,
+            totalQuestions: 20, // Fixo: 20 questões
             questions: [],
             userAnswers: [],
             currentStreak: 0,
@@ -1567,20 +2221,18 @@
             powerUps: {
                 hint: { count: 3, used: 0 },
                 skip: { count: 2, used: 0 },
-                time: { count: 1, used: 0 },
-                double: { count: 1, used: 0 }
+                time: { count: 2, used: 0 },
+                double: { count: 3, used: 0 }
             },
             xp: 0,
             level: 1,
             xpToNextLevel: 100,
             achievements: [],
             settings: {
-                questionCount: 10,
-                timeLimit: 60,
-                difficulty: 'medium'
+                sound: true
             },
             timer: null,
-            timeLeft: 60,
+            timeLeft: 60, // Fixo: 60 segundos
             doublePointsActive: false
         };
 
@@ -1607,200 +2259,383 @@
             { id: 'persistent', name: 'Persistente', description: 'Jogar 5 vezes', icon: '💪', unlocked: false, xp: 90 }
         ];
 
-        // ================ BANCO DE QUESTÕES AMPLIADO ================
-        const questions = {
-            probabilidade: [
-                {
-                    question: "Em uma urna há 5 bolas vermelhas, 3 azuis e 2 verdes. Qual a probabilidade de retirar uma bola azul?",
-                    options: ["3/10", "1/2", "3/5", "2/5"],
-                    correct: 0,
-                    hint: "Probabilidade = casos favoráveis / casos totais. Casos favoráveis: 3, Total: 10",
-                    explanation: "P = 3/10 = 0.3 = 30%",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Dois eventos A e B são independentes se:",
-                    options: [
-                        "A ocorrência de A não afeta a probabilidade de B",
-                        "A e B não podem ocorrer ao mesmo tempo",
-                        "A ocorrência de A sempre leva à ocorrência de B",
-                        "A e B têm a mesma probabilidade"
-                    ],
-                    correct: 0,
-                    hint: "Eventos independentes não se influenciam mutuamente",
-                    explanation: "Eventos independentes têm P(A∩B) = P(A) × P(B)",
-                    difficulty: "medium",
-                    points: 15
-                },
-                {
-                    question: "João lança um dado honesto. Qual a probabilidade de sair um número primo?",
-                    options: ["1/2", "2/3", "1/3", "1/6"],
-                    correct: 0,
-                    hint: "Números primos no dado: 2, 3, 5",
-                    explanation: "Números primos: {2, 3, 5} → 3 casos favoráveis de 6",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Uma moeda é lançada 3 vezes. Qual a probabilidade de obter exatamente 2 caras?",
-                    options: ["3/8", "1/2", "1/4", "1/8"],
-                    correct: 0,
-                    hint: "Use combinações: C(3,2) = 3 combinações possíveis",
-                    explanation: "Total de casos: 2³ = 8. Casos com 2 caras: 3. P = 3/8",
-                    difficulty: "medium",
-                    points: 15
-                },
-                {
-                    question: "Para eventos dependentes, P(A e B) = ?",
-                    options: ["P(A) × P(B|A)", "P(A) + P(B)", "P(A) × P(B)", "P(A) / P(B)"],
-                    correct: 0,
-                    hint: "Probabilidade condicional considera a influência entre eventos",
-                    explanation: "P(A∩B) = P(A) × P(B|A) quando A e B são dependentes",
-                    difficulty: "hard",
-                    points: 20
-                },
-                {
-                    question: "Qual a probabilidade de tirar um ás de um baralho de 52 cartas?",
-                    options: ["1/13", "1/4", "1/52", "4/52"],
-                    correct: 0,
-                    hint: "Há 4 ases em 52 cartas",
-                    explanation: "4/52 = 1/13 ≈ 7.69%",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Se P(A) = 0.3 e P(B) = 0.4, e A e B são independentes, qual é P(A e B)?",
-                    options: ["0.12", "0.7", "0.1", "0.3"],
-                    correct: 0,
-                    hint: "Para eventos independentes: P(A∩B) = P(A) × P(B)",
-                    explanation: "0.3 × 0.4 = 0.12",
-                    difficulty: "medium",
-                    points: 15
-                },
-                {
-                    question: "Em uma sala com 30 alunos, 18 gostam de matemática. Qual a probabilidade de escolher aleatoriamente um aluno que NÃO goste de matemática?",
-                    options: ["2/5", "3/5", "12/30", "18/30"],
-                    correct: 0,
-                    hint: "Alunos que não gostam: 30 - 18 = 12",
-                    explanation: "12/30 = 2/5 = 40%",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Qual é o espaço amostral no lançamento de dois dados?",
-                    options: ["36 resultados", "12 resultados", "6 resultados", "24 resultados"],
-                    correct: 0,
-                    hint: "Cada dado tem 6 faces, totalizando 6×6 combinações",
-                    explanation: "6 × 6 = 36 resultados possíveis",
-                    difficulty: "medium",
-                    points: 15
-                },
-                {
-                    question: "Se a probabilidade de chover é 0.3 e a probabilidade de trânsito intenso é 0.5, qual a probabilidade de NÃO chover?",
-                    options: ["0.7", "0.5", "0.2", "0.3"],
-                    correct: 0,
-                    hint: "P(não A) = 1 - P(A)",
-                    explanation: "1 - 0.3 = 0.7 = 70%",
-                    difficulty: "easy",
-                    points: 10
-                }
-            ],
-            estatistica: [
-                {
-                    question: "Qual medida de tendência central é mais afetada por valores extremos?",
-                    options: ["Média", "Mediana", "Moda", "Amplitude"],
-                    correct: 0,
-                    hint: "Ela considera todos os valores na sua fórmula",
-                    explanation: "A média aritmética é sensível a valores extremos (outliers)",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "No conjunto {2, 4, 6, 8, 10}, qual é a mediana?",
-                    options: ["6", "5", "4", "8"],
-                    correct: 0,
-                    hint: "Valor do meio quando ordenado",
-                    explanation: "Conjunto já ordenado, valor central: 6",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Qual gráfico é melhor para mostrar partes de um todo?",
-                    options: ["Gráfico de pizza", "Gráfico de barras", "Histograma", "Gráfico de linha"],
-                    correct: 0,
-                    hint: "Pense em fatias de pizza representando porcentagens",
-                    explanation: "Gráfico de pizza (setores) mostra proporções de um total",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Amplitude = ?",
-                    options: ["Maior valor - menor valor", "(Maior + menor)/2", "Soma/quantidade", "Valor mais frequente"],
-                    correct: 0,
-                    hint: "Diferença entre os valores extremos",
-                    explanation: "Amplitude = valor máximo - valor mínimo",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Moda de {3, 5, 5, 7, 7, 7, 9, 9} é:",
-                    options: ["7", "5", "9", "Não tem"],
-                    correct: 0,
-                    hint: "Valor que mais se repete",
-                    explanation: "O número 7 aparece 3 vezes, mais que qualquer outro",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Qual é a média de {10, 15, 20, 25, 30}?",
-                    options: ["20", "25", "22", "18"],
-                    correct: 0,
-                    hint: "Soma todos e divide pela quantidade",
-                    explanation: "(10+15+20+25+30)/5 = 100/5 = 20",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Para dados agrupados em classes, usamos:",
-                    options: ["Histograma", "Gráfico de pizza", "Gráfico de linha", "Gráfico de dispersão"],
-                    correct: 0,
-                    hint: "Gráfico de barras para intervalos de valores",
-                    explanation: "Histograma é usado para distribuição de frequências em classes",
-                    difficulty: "medium",
-                    points: 15
-                },
-                {
-                    question: "Qual medida não é de tendência central?",
-                    options: ["Amplitude", "Média", "Mediana", "Moda"],
-                    correct: 0,
-                    hint: "Esta é uma medida de dispersão",
-                    explanation: "Amplitude mede a variabilidade, não a tendência central",
-                    difficulty: "medium",
-                    points: 15
-                },
-                {
-                    question: "No conjunto {1, 2, 2, 3, 4, 4, 4, 5}, qual é a moda?",
-                    options: ["4", "2", "3", "Bimodal (2 e 4)"],
-                    correct: 0,
-                    hint: "Valor com maior frequência",
-                    explanation: "O número 4 aparece 3 vezes, mais que qualquer outro",
-                    difficulty: "easy",
-                    points: 10
-                },
-                {
-                    question: "Desvio padrão mede:",
-                    options: ["Dispersão dos dados", "Tendência central", "Assimetria", "Correlação"],
-                    correct: 0,
-                    hint: "Como os dados estão espalhados em relação à média",
-                    explanation: "Desvio padrão mede a dispersão (variabilidade) dos dados",
-                    difficulty: "medium",
-                    points: 15
-                }
-            ]
-        };
+// ================ BANCO DE QUESTÕES (20 Probabilidade + 20 Estatística) ================
+       
+const questions = {
+    probabilidade: [
+        // --- Nível Básico (Intuição) ---
+        {
+            question: "Se você jogar uma moeda comum para o alto, qual a chance de cair 'Cara'?",
+            options: ["100% (Certeza)", "25%", "50% (Metade)", "0% (Impossível)"],
+            correct: 2,
+            hint: "A moeda só tem dois lados iguais: cara e coroa.",
+            explanation: "Como são apenas 2 possibilidades iguais, a chance é 1 em 2, ou seja, metade (50%).",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Em um dado comum de 6 lados, qual a chance de sair o número 7?",
+            options: ["0% (Impossível)", "100%", "50%", "10%"],
+            correct: 0,
+            hint: "Olhe para um dado comum. Qual é o maior número que aparece nele?",
+            explanation: "O dado só vai até o número 6. Sair o número 7 é impossível, por isso a chance é 0%.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Uma urna tem 10 bolas: 9 brancas e 1 vermelha. Se você pegar uma sem olhar, o que é mais provável?",
+            options: ["Pegar a vermelha", "As chances são iguais", "Nenhuma das anteriores", "Pegar a branca"],
+            correct: 3,
+            hint: "Pense em qual cor tem em maior quantidade dentro da urna.",
+            explanation: "Como há muito mais bolas brancas (9) do que vermelhas (1), a chance de pegar uma branca é muito maior.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Qual a probabilidade de tirar um número PAR ao jogar um dado?",
+            options: ["\\(\\frac{1}{6}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{5}{6}\\)"],
+            correct: 1,
+            hint: "Os números pares no dado são 2, 4 e 6. Isso representa metade dos números.",
+            explanation: "São 3 números pares (2, 4, 6) em um total de 6 números. \\(\\frac{3}{6}\\) simplificando é igual a \\(\\frac{1}{2}\\) (metade).",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "O sorteio de uma rifa tem 100 números. Se você comprou 1 número, qual sua chance de ganhar?",
+            options: ["50 em 100", "1 em 10", "1 em 100", "100 em 1"],
+            correct: 2,
+            hint: "Você tem apenas um bilhete contra o total de bilhetes da rifa.",
+            explanation: "Sua chance é de 1 bilhete favorável (o seu) dividido pelo total de 100 bilhetes: \\(\\frac{1}{100}\\).",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Se a previsão do tempo diz que há 100% de chance de chuva, isso significa que:",
+            options: ["Com certeza vai chover", "Talvez chova", "É impossível chover", "Vai chover pouco"],
+            correct: 0,
+            hint: "100% representa o total, a certeza completa.",
+            explanation: "Na probabilidade, 100% (ou 1) representa um 'evento certo', ou seja, temos certeza absoluta que vai acontecer.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Escolhendo ao acaso uma letra da palavra 'ESCOLA', qual a chance de ser a letra 'A'?",
+            options: ["\\(\\frac{1}{5}\\)", "\\(\\frac{2}{6}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{1}{6}\\)"],
+            correct: 3,
+            hint: "Conte quantas letras tem a palavra ESCOLA no total e quantas são a letra 'A'.",
+            explanation: "A palavra E-S-C-O-L-A tem 6 letras no total. Apenas uma delas é 'A'. Logo, a chance é \\(\\frac{1}{6}\\).",
+            difficulty: "easy",
+            points: 10
+        },
+        // --- Nível Médio (Cálculos Simples) ---
+        {
+            question: "Em uma caixa há 3 bolas Azuis e 2 Vermelhas. Qual a chance de pegar uma Azul?",
+            options: ["\\(\\frac{3}{5}\\)", "\\(\\frac{2}{5}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{3}{2}\\)"],
+            correct: 0,
+            hint: "Primeiro, some todas as bolas para saber o total na caixa.",
+            explanation: "Total de bolas = 3 azuis + 2 vermelhas = 5. Como queremos as azuis (3), a chance é \\(\\frac{3}{5}\\).",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Qual a probabilidade de escolher um dia da semana que comece com a letra 'S'?",
+            options: ["\\(\\frac{1}{7}\\)", "\\(\\frac{3}{7}\\)", "\\(\\frac{2}{7}\\)", "\\(\\frac{5}{7}\\)"],
+            correct: 1,
+            hint: "Os dias são: Domingo, Segunda, Terça, Quarta, Quinta, Sexta, Sábado. Quantos começam com S?",
+            explanation: "Os dias com S são: Segunda, Sexta e Sábado (3 dias). O total de dias é 7. Probabilidade = \\(\\frac{3}{7}\\).",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Se você jogar dois dados e somar os números, qual soma é IMPOSSÍVEL de acontecer?",
+            options: ["12", "7", "2", "1"],
+            correct: 3,
+            hint: "O menor número em cada dado é 1. Qual a menor soma possível?",
+            explanation: "O mínimo que se pode tirar é 1 em cada dado, somando 1+1=2. Portanto, obter soma 1 é impossível.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Uma prova tem 4 questões de múltipla escolha (A, B, C, D). Se chutar uma, qual a chance de acertar?",
+            options: ["50%", "10%", "25%", "75%"],
+            correct: 2,
+            hint: "Existe apenas uma opção correta entre as quatro possíveis.",
+            explanation: "1 chance em 4 é igual a \\(\\frac{1}{4}\\). Em porcentagem: 100% dividido por 4 é igual a 25%.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Em um baralho comum, qual naipe tem mais cartas?",
+            options: ["Copas", "Todos têm a mesma quantidade", "Espadas", "Ouros"],
+            correct: 1,
+            hint: "Um baralho padrão é dividido igualmente entre os símbolos.",
+            explanation: "Um baralho é dividido igualmente em 4 naipes. A probabilidade de tirar qualquer naipe é a mesma.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Se a chance de chover é 30%, qual é a chance de NÃO chover?",
+            options: ["70%", "30%", "50%", "100%"],
+            correct: 0,
+            hint: "A soma das chances de acontecer (chuva) e não acontecer (sol) deve ser 100%.",
+            explanation: "O total é 100%. Se tirarmos os 30% de chuva, sobra 70% para não chover (100 - 30 = 70).",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Lançando uma moeda 2 vezes, qual a chance de sair 'Cara' nas duas vezes?",
+            options: ["\\(\\frac{1}{2}\\)", "\\(\\frac{1}{3}\\)", "\\(\\frac{1}{8}\\)", "\\(\\frac{1}{4}\\)"],
+            correct: 3,
+            hint: "As opções são: Cara-Cara, Cara-Coroa, Coroa-Cara, Coroa-Coroa.",
+            explanation: "Há 4 combinações possíveis. Apenas uma serve (Cara-Cara). Logo, \\(\\frac{1}{4}\\).",
+            difficulty: "medium",
+            points: 15
+        },
+        // --- Nível Difícil (Raciocínio Lógico) ---
+        {
+            question: "Uma caixa tem 5 bolas: 1 Amarela, 1 Azul, 1 Verde, 1 Branca, 1 Preta. Qual a chance de NÃO pegar a preta?",
+            options: ["\\(\\frac{1}{5}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{4}{5}\\)", "\\(\\frac{3}{5}\\)"],
+            correct: 2,
+            hint: "Quantas bolas sobram se excluirmos a bola preta?",
+            explanation: "Existem 4 bolas que não são pretas num total de 5. Probabilidade = \\(\\frac{4}{5}\\).",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Se eu tenho 3 camisas e 2 calças, de quantas formas diferentes posso me vestir?",
+            options: ["6", "5", "3", "2"],
+            correct: 0,
+            hint: "Para cada uma das 3 camisas, você pode usar 2 calças diferentes. Tente multiplicar.",
+            explanation: "Pelo princípio multiplicativo: 3 camisas × 2 calças = 6 combinações diferentes de roupa.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Em um jogo, você ganha se tirar um número maior que 4 no dado. Qual sua chance?",
+            options: ["\\(\\frac{1}{6}\\)", "\\(\\frac{2}{6}\\)", "\\(\\frac{1}{2}\\)", "\\(\\frac{4}{6}\\)"],
+            correct: 1,
+            hint: "Quais números no dado são maiores que 4?",
+            explanation: "Os números maiores que 4 são o 5 e o 6. São 2 números favoráveis em 6 possíveis (\\(\\frac{2}{6}\\) ou \\(\\frac{1}{3}\\)).",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Qual a chance de tirar um número PRIMO em um dado (2, 3, 5)?",
+            options: ["20%", "30%", "50%", "60%"],
+            correct: 2,
+            hint: "Conte quantos números primos existem até 6 (o 2, o 3 e o 5).",
+            explanation: "Os primos no dado são 2, 3 e 5. São 3 números em 6 totais. \\(\\frac{3}{6}\\) é igual a metade, ou 50%.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Se você retirar uma carta de um baralho de 52 cartas, é mais provável sair:",
+            options: ["Um Rei", "Um Ás vermelho", "O 7 de Ouros", "Uma carta de Copas"],
+            correct: 3,
+            hint: "Pense na quantidade de cada tipo. Existem 4 Reis, 2 Áses vermelhos, 1 sete de ouros e 13 cartas de Copas.",
+            explanation: "Existem 13 cartas de Copas, o que é maior quantidade que Reis (4), Áses vermelhos (2) ou 7 de Ouros (1).",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Em um sorteio entre 10 meninos e 15 meninas, qual a chance de o vencedor ser menino?",
+            options: ["\\(\\frac{10}{25}\\)", "\\(\\frac{10}{15}\\)", "\\(\\frac{15}{25}\\)", "\\(\\frac{1}{2}\\)"],
+            correct: 0,
+            hint: "Lembre-se de somar meninos e meninas para achar o total de alunos.",
+            explanation: "Total de alunos = 10 + 15 = 25. Meninos = 10. Probabilidade = \\(\\frac{10}{25}\\) (meninos sobre o total).",
+            difficulty: "hard",
+            points: 20
+        }
+    ],
+    estatistica: [
+        // --- Nível Básico (Leitura e Conceitos) ---
+        {
+            question: "O que é uma 'Pesquisa Censitária' (Censo)?",
+            options: ["Entrevistar algumas pessoas", "Adivinhar os dados", "Entrevistar TODA a população", "Fazer um sorteio"],
+            correct: 2,
+            hint: "Lembre-se do Censo do IBGE, que tenta contar todos os brasileiros.",
+            explanation: "Censo é quando coletamos dados de 100% dos indivíduos de um grupo ou população, sem deixar ninguém de fora.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Para descobrir qual o sabor de sorvete favorito da turma, qual a melhor pergunta?",
+            options: ["Qual seu sabor favorito?", "Você gosta de sorvete?", "Você gosta de chocolate?", "Quanto custa o sorvete?"],
+            correct: 0,
+            hint: "A pergunta deve permitir várias respostas diferentes sobre sabores.",
+            explanation: "Perguntar 'Qual seu sabor favorito?' permite coletar os dados variados (morango, chocolate, creme...) para fazer a estatística.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Em um gráfico de barras, o que a altura da barra geralmente representa?",
+            options: ["A beleza do gráfico", "A largura dos dados", "A cor dos dados", "A quantidade ou frequência"],
+            correct: 3,
+            hint: "Quanto mais alta a barra, mais gente escolheu aquela opção.",
+            explanation: "A altura (ou comprimento) da barra indica a frequência ou quantidade daquela categoria (quantos votos ela teve).",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Se 5 alunos tiraram nota 10, dizemos que a FREQUÊNCIA da nota 10 é:",
+            options: ["10", "5", "50", "1"],
+            correct: 1,
+            hint: "Frequência é a quantidade de vezes que algo aconteceu.",
+            explanation: "Frequência absoluta é o número de vezes que o dado aparece. Se 5 alunos tiraram 10, a frequência é 5.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "Qual gráfico usa 'fatias' para representar as partes de um todo?",
+            options: ["Gráfico de Pizza (Setores)", "Gráfico de Linhas", "Gráfico de Barras", "Histograma"],
+            correct: 0,
+            hint: "Tem o formato de uma comida redonda dividida.",
+            explanation: "O gráfico de setores é popularmente conhecido como gráfico de pizza porque suas fatias representam partes do total.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "João tirou notas 5, 5 e 5. Qual é a média dele?",
+            options: ["15", "3", "5", "10"],
+            correct: 2,
+            hint: "Se todas as notas são iguais, a média é esse mesmo valor.",
+            explanation: "A média de valores iguais é o próprio valor. (5+5+5) dividido por 3 é igual a 5.",
+            difficulty: "easy",
+            points: 10
+        },
+        {
+            question: "O que é 'Amostra' em uma pesquisa?",
+            options: ["Toda a população", "O resultado final", "O gráfico", "Uma parte pequena escolhida para representar o todo"],
+            correct: 3,
+            hint: "É como quando você prova um pedacinho do bolo para ver se está bom, sem comer o bolo inteiro.",
+            explanation: "Amostra é um pequeno grupo selecionado da população para a pesquisa, pois muitas vezes é impossível perguntar a todos.",
+            difficulty: "easy",
+            points: 10
+        },
+        // --- Nível Médio (Moda, Média, Mediana) ---
+        {
+            question: "Observe os números: 2, 5, 8, 5, 9. Qual é a MODA?",
+            options: ["5", "2", "8", "9"],
+            correct: 0,
+            hint: "Moda é o que está 'na moda', ou seja, o que aparece mais vezes.",
+            explanation: "O número 5 aparece duas vezes, os outros apenas uma. Logo, 5 é a moda.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Qual a Média de idade entre dois irmãos de 10 e 12 anos?",
+            options: ["10", "12", "22", "11"],
+            correct: 3,
+            hint: "Qual número está exatamente no meio de 10 e 12?",
+            explanation: "Soma-se as idades (10+12=22) e divide pela quantidade de pessoas (2). A média é 11.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Em uma corrida, os tempos foram: 10s, 12s, 15s. O tempo MÉDIO foi:",
+            options: ["12s", "13s", "12,3s", "37s"],
+            correct: 2,
+            hint: "Some 10+12+15 e divida o resultado por 3.",
+            explanation: "10+12+15 = 37. Dividindo 37 por 3, obtemos aproximadamente 12,33 segundos.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Para saber qual a fruta preferida da turma para o lanche, que medida usamos?",
+            options: ["Média", "Moda", "Mediana", "Amplitude"],
+            correct: 1,
+            hint: "Queremos saber a fruta que teve MAIS votos.",
+            explanation: "A Moda indica o valor mais frequente (o vencedor). Não dá para calcular a 'Média' de maçãs e bananas.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Qual a Mediana dos números: 1, 3, 5, 7, 9?",
+            options: ["5", "1", "9", "7"],
+            correct: 0,
+            hint: "Coloque em ordem (já estão) e pegue o número que está bem no meio.",
+            explanation: "Os números já estão ordenados. O termo central é o 5.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "A Amplitude dos dados 10, 20, 50 é:",
+            options: ["50", "10", "40", "30"],
+            correct: 2,
+            hint: "É a diferença (distância) entre o maior valor e o menor valor.",
+            explanation: "Amplitude = Maior valor (50) menos o Menor valor (10). 50 - 10 = 40.",
+            difficulty: "medium",
+            points: 15
+        },
+        {
+            question: "Qual gráfico é melhor para mostrar se a temperatura subiu ou desceu durante a semana?",
+            options: ["Gráfico de Pizza", "Tabela", "Pictograma", "Gráfico de Linha"],
+            correct: 3,
+            hint: "As linhas conectam pontos e mostram a evolução ou mudança.",
+            explanation: "Gráficos de linha são ideais para mostrar evolução ou variação ao longo do tempo (como temperatura, crescimento, etc).",
+            difficulty: "medium",
+            points: 15
+        },
+        // --- Nível Difícil (Interpretação) ---
+        {
+            question: "Em uma lista ordenada: 2, 3, X, 8, 10. Se a mediana é 6, qual o valor de X?",
+            options: ["6", "5", "7", "4"],
+            correct: 0,
+            hint: "A mediana é o número do meio. Olhe para a posição do X.",
+            explanation: "Como são 5 números, o X está exatamente na posição do meio. Para a mediana ser 6, o X deve valer 6.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Se a média de 4 provas foi 7,0. Qual a soma total das notas?",
+            options: ["21", "30", "28", "14"],
+            correct: 2,
+            hint: "Se ele tivesse tirado 7 em todas as 4 provas, qual seria o total?",
+            explanation: "Se a média é 7 e foram 4 provas, fazemos 7 vezes 4 = 28 pontos no total.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Uma variável 'Qualitativa' representa:",
+            options: ["Números e contas", "Qualidades ou categorias (ex: cor dos olhos)", "Apenas notas de prova", "A quantidade de alunos"],
+            correct: 1,
+            hint: "Qualitativa vem de 'Qualidade', não de quantidade (números).",
+            explanation: "Variáveis qualitativas expressam características (cor, gênero, nome, escolaridade), e não números que podemos somar.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Se em um gráfico de pizza a parte do 'Futebol' ocupa metade do círculo, quantos % gostam de futebol?",
+            options: ["25%", "75%", "100%", "50%"],
+            correct: 3,
+            hint: "O círculo inteiro vale 100%. Quanto vale a metade?",
+            explanation: "Metade do círculo corresponde a metade do total, ou seja, 50%.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Em estatística, o que significa organizar os dados em 'Rol'?",
+            options: ["Misturar os dados", "Colocar em ordem crescente ou decrescente", "Apagar os dados", "Somar os dados"],
+            correct: 1,
+            hint: "É o primeiro passo importante antes de achar a mediana.",
+            explanation: "Rol é a organização dos dados brutos em uma ordem (geralmente do menor para o maior) para facilitar a análise.",
+            difficulty: "hard",
+            points: 20
+        },
+        {
+            question: "Se a moda de um conjunto é 7, isso significa que:",
+            options: ["A média é 7", "O maior número é 7", "O número 7 é o que mais se repete", "A mediana é 7"],
+            correct: 2,
+            hint: "Lembre-se da definição de Moda (o mais popular).",
+            explanation: "A Moda é o valor com maior frequência absoluta, ou seja, o que mais aparece na lista.",
+            difficulty: "hard",
+            points: 20
+        }
+    ]
+};
 
-        // ================ INICIALIZAÇÃO ================
+
+// ================ INICIALIZAÇÃO ================
         document.addEventListener('DOMContentLoaded', function() {
             console.log("DOM carregado, inicializando...");
             
@@ -1820,7 +2655,6 @@
             
             // Configurar botões
             document.getElementById('start-btn').addEventListener('click', startGame);
-            document.getElementById('next-btn').addEventListener('click', nextQuestion);
             document.getElementById('restart-btn').addEventListener('click', restartGame);
             document.getElementById('change-theme-btn').addEventListener('click', () => {
                 showScreen('start-screen');
@@ -1832,27 +2666,60 @@
             // Configurar calculadora
             initCalculator();
             
-            // Configurar o novo botão inline da calculadora
-            document.getElementById('open-calc-inline').addEventListener('click', function(e) {
-                e.stopPropagation();
-                document.getElementById('calculator').classList.add('active');
-            });
-            
-            // Configurar configurações
-            document.getElementById('question-count').addEventListener('change', (e) => {
-                gameData.settings.questionCount = parseInt(e.target.value);
+            // Configurar controle de som
+            document.getElementById('sound-toggle').addEventListener('change', (e) => {
+                const isEnabled = e.target.value === 'true';
+                
+                // Atualiza o gameData
+                gameData.settings.sound = isEnabled;
+                
+                // Atualiza o localStorage
+                localStorage.setItem('soundEnabled', isEnabled.toString());
+                
+                // Feedback
+                if (isEnabled) {
+                    audioEnabled = true; 
+                    playSound('powerup');
+                }
+                
                 saveGameData();
-            });
-            
-            document.getElementById('time-limit').addEventListener('change', (e) => {
-                gameData.settings.timeLimit = parseInt(e.target.value);
-                saveGameData();
-            });
-            
-            document.getElementById('difficulty-level').addEventListener('change', (e) => {
-                gameData.settings.difficulty = e.target.value;
-                saveGameData();
-            });
+            }); // <--- O CÓDIGO DO SOM TERMINA AQUI
+
+            // ============================================================
+            // CÓDIGO DO RESET AGORA ESTÁ FORA DO SOM (LUGAR CORRETO)
+            // ============================================================
+            const resetBtn = document.getElementById('reset-progress-btn');
+            if (resetBtn) {
+                resetBtn.addEventListener('click', function() {
+                    // Tocar um som de alerta
+                    if (typeof playSound === "function") playSound('incorrect');
+
+                    // Pergunta de segurança
+                    const confirmReset = confirm(
+                        "⚠️ PERIGO: ATENÇÃO! ⚠️\n\n" +
+                        "Você está prestes a APAGAR TODO O SEU PROGRESSO.\n" +
+                        "Isto inclui:\n" +
+                        "- O seu Nível e XP\n" +
+                        "- Todas as Conquistas/Troféus\n" +
+                        "- Estatísticas de acertos\n\n" +
+                        "Tem a certeza absoluta que quer começar do zero?"
+                    );
+                    
+                    if (confirmReset) {
+                        // 1. Apagar chaves específicas do localStorage
+                        localStorage.removeItem('mathGameData');   // Dados do jogo
+                        localStorage.removeItem('themeProgress');  // Progresso dos temas
+                        localStorage.removeItem('gamesPlayed');    // Contador de jogos
+                        
+                        // 2. Feedback visual
+                        alert("🗑️ Memória limpa com sucesso!\nO jogo será reiniciado agora.");
+                        
+                        // 3. Recarregar a página
+                        window.location.reload();
+                    }
+                });
+            }
+            // ============================================================
             
             // Configurar botão de download de estatísticas
             document.getElementById('download-stats-btn')?.addEventListener('click', downloadStatistics);
@@ -1860,14 +2727,170 @@
             // Selecionar tema padrão
             document.querySelector('[data-theme="probabilidade"]').click();
             
-            // Esconder botão inline inicialmente
-            document.getElementById('open-calc-inline').style.display = 'none';
-            
             console.log("🎮 Jogo inicializado com sucesso!");
             
             // Inicializar áudios
             initAudio();
+
+            // Fechar modal com ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && document.getElementById('achievements-modal').classList.contains('active')) {
+                    closeAchievements();
+                }
+            });
+
+// --- CÓDIGO QUE FALTA PARA A REVISÃO TEÓRICA ---
+
+    // 1. Configurar o botão principal "Revisão Teórica"
+    const theoryBtn = document.getElementById('theory-btn');
+    if (theoryBtn) {
+        theoryBtn.addEventListener('click', openTheoryModal);
+    }
+
+    // 2. Configurar os botões de escolha (Probabilidade vs Estatística) dentro do modal
+    document.querySelectorAll('.theme-choice-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const theoryType = btn.dataset.theory; // Pega 'probabilidade' ou 'estatistica'
+            closeTheoryModal(); // Fecha o menu de escolha
+            openTheoryContentModal(theoryType); // Abre o conteúdo
         });
+    });
+            
+        });
+    
+        
+
+// ================ FUNÇÕES DO MODAL DE TUTORIAL ================
+
+function openTutorialModal() {
+    const modal = document.getElementById('tutorial-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeTutorialModal() {
+    const modal = document.getElementById('tutorial-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Fechar modal com ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        if (document.getElementById('tutorial-modal').classList.contains('active')) {
+            closeTutorialModal();
+        }
+    }
+});
+
+
+
+
+
+        function switchTheoryContent(targetTheme) {
+    // Fecha o modal atual
+    if (document.getElementById('probabilidade-modal').classList.contains('active')) {
+        closeTheoryContentModal('probabilidade');
+    } else if (document.getElementById('estatistica-modal').classList.contains('active')) {
+        closeTheoryContentModal('estatistica');
+    }
+    
+    // Abre o novo modal
+    setTimeout(() => {
+        openTheoryContentModal(targetTheme);
+    }, 300);
+}
+
+function createPerformanceChart() {
+            // === INÍCIO DA CORREÇÃO ===
+            // Verifica se já existe um gráfico no canvas e o destrói antes de criar um novo
+            const existingChart = Chart.getChart("performance-chart");
+            if (existingChart) {
+                existingChart.destroy();
+            }
+            // === FIM DA CORREÇÃO ===
+
+            const ctx = document.getElementById('performance-chart').getContext('2d');
+            
+            // Dados para o gráfico
+            const questionNumbers = Array.from({length: gameData.userAnswers.length}, (_, i) => i + 1);
+            const correctness = gameData.userAnswers.map(a => a.isCorrect ? 1 : 0);
+            const responseTimes = gameData.userAnswers.map(a => a.time);
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: questionNumbers,
+                    datasets: [
+                        {
+                            label: 'Acertos (1=sim, 0=não)',
+                            data: correctness,
+                            borderColor: '#4caf50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                            tension: 0.3,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Tempo de resposta (s)',
+                            data: responseTimes,
+                            borderColor: '#2196f3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                            tension: 0.3,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#bbdefb'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbdefb'
+                            }
+                        },
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#bbdefb'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            grid: {
+                                drawOnChartArea: false
+                            },
+                            ticks: {
+                                color: '#bbdefb'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+
 
         // ================ FUNÇÃO DE DOWNLOAD DE ESTATÍSTICAS ================
         function downloadStatistics() {
@@ -1893,9 +2916,8 @@ ESTATÍSTICAS DA PARTIDA - LIAM - Laboratório Interativo de Alfabetização Mat
 🎮 INFORMAÇÕES DA PARTIDA
 ========================
 • Tema: ${gameData.theme === 'probabilidade' ? 'Probabilidade' : 'Estatística'}
-• Dificuldade: ${gameData.settings.difficulty}
 • Número de questões: ${gameData.totalQuestions}
-• Tempo limite por questão: ${gameData.settings.timeLimit > 0 ? `${gameData.settings.timeLimit}s` : 'Sem limite'}
+• Tempo por questão: 60 segundos
 
 📊 RESULTADOS
 =============
@@ -2169,9 +3191,9 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             // Resetar dados do jogo
             resetGameData();
             
-            // Configurar com base nas settings
-            gameData.totalQuestions = gameData.settings.questionCount;
-            gameData.timeLeft = gameData.settings.timeLimit;
+            // Configurar com base nas settings fixas
+            gameData.totalQuestions = 20; // Fixo
+            gameData.timeLeft = 60; // Fixo
             
             // Selecionar questões
             selectQuestions();
@@ -2184,13 +3206,9 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             // Mostrar tela de questões
             showScreen('question-screen');
             
-            // Iniciar timer se configurado
-            if (gameData.settings.timeLimit > 0) {
-                document.getElementById('timer-container').style.display = 'block';
-                startTimer();
-            } else {
-                document.getElementById('timer-container').style.display = 'none';
-            }
+            // Iniciar timer (sempre 60 segundos)
+            document.getElementById('timer-container').style.display = 'block';
+            startTimer();
             
             // Registrar início do jogo
             gameData.startTime = Date.now();
@@ -2200,178 +3218,286 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
 
         function selectQuestions() {
             const allQuestions = questions[gameData.theme];
-            let filteredQuestions = [...allQuestions];
             
-            // Filtrar por dificuldade se não for "mixed"
-            if (gameData.settings.difficulty !== 'mixed') {
-                filteredQuestions = filteredQuestions.filter(q => 
-                    q.difficulty === gameData.settings.difficulty
-                );
-            }
+            // Embaralhar todas as questões
+            let shuffledQuestions = [...allQuestions].sort(() => Math.random() - 0.5);
             
-            // Embaralhar e selecionar
-            filteredQuestions = filteredQuestions.sort(() => Math.random() - 0.5);
-            gameData.questions = filteredQuestions.slice(0, gameData.totalQuestions);
+            // Pegar as primeiras 20 questões
+            gameData.questions = shuffledQuestions.slice(0, 20);
             
-            // Se não houver questões suficientes, usar todas
-            if (gameData.questions.length < gameData.totalQuestions) {
-                gameData.questions = allQuestions.slice(0, gameData.totalQuestions);
+            // Se não houver questões suficientes, repetir algumas
+            if (gameData.questions.length < 20) {
+                const needed = 20 - gameData.questions.length;
+                const extraQuestions = shuffledQuestions.slice(0, needed);
+                gameData.questions = gameData.questions.concat(extraQuestions);
             }
         }
 
-        function showQuestion() {
-            const q = gameData.questions[gameData.currentQuestion];
-            
-            // Atualizar interface
-            document.getElementById('question-number').textContent = gameData.currentQuestion + 1;
-            document.getElementById('question-text').textContent = q.question;
-            document.getElementById('question-difficulty').textContent = 
-                q.difficulty === 'easy' ? 'Fácil' : 
-                q.difficulty === 'medium' ? 'Médio' : 'Difícil';
-            document.getElementById('question-difficulty').className = 
-                `question-difficulty difficulty-${q.difficulty}`;
-            
-            // Limpar opções anteriores
-            const optionsContainer = document.getElementById('options-container');
-            optionsContainer.innerHTML = '';
-            
-            // Adicionar novas opções
-            ['A', 'B', 'C', 'D'].forEach((letter, index) => {
-                const option = document.createElement('div');
-                option.className = 'option';
-                option.innerHTML = `
-                    <div class="option-letter">${letter}</div>
-                    <div>${q.options[index]}</div>
-                `;
-                
-                option.addEventListener('click', () => selectOption(option, index));
-                optionsContainer.appendChild(option);
-            });
-            
-            // Resetar feedback
-            document.getElementById('correct-feedback').style.display = 'none';
-            document.getElementById('incorrect-feedback').style.display = 'none';
-            document.getElementById('next-btn').disabled = true;
-            
-            // Habilitar opções
-            document.querySelectorAll('.option').forEach(o => {
-                o.style.pointerEvents = 'auto';
-                o.classList.remove('selected', 'correct', 'incorrect');
-            });
-            
-            // Resetar timer
-            if (gameData.settings.timeLimit > 0) {
-                gameData.timeLeft = gameData.settings.timeLimit;
-                updateTimerDisplay();
-            }
-            
-            // Registrar tempo de início da questão
-            gameData.questionStartTime = Date.now();
-        }
 
-        function selectOption(optionElement, selectedIndex) {
-            // Desabilitar todas as opções
-            document.querySelectorAll('.option').forEach(o => {
-                o.style.pointerEvents = 'none';
-            });
-            
-            // Marcar como selecionada
-            optionElement.classList.add('selected');
-            
-            // Verificar resposta
-            checkAnswer(selectedIndex);
-        }
 
-        function checkAnswer(selectedIndex) {
+// 1. Variável Global para armazenar a escolha temporária
+let selectedOptionIndex = null;
+
+// 2. Nova Função para Confirmar a Resposta (O intermediário)
+function confirmAnswer() {
+    if (selectedOptionIndex === null) return; // Segurança
+
+    // Chama a correção oficial
+    checkAnswer(selectedOptionIndex);
+
+    // Transforma o botão em "Próxima Questão"
+    const actionBtn = document.getElementById('next-btn');
+    actionBtn.textContent = "Próxima Questão ➔";
+    actionBtn.onclick = nextQuestion; // Muda o evento do clique
+}
+
+
+
+// 3. Atualização da função showQuestion (Reseta o botão)
+
+
+function showQuestion() {
+    const q = gameData.questions[gameData.currentQuestion];
+    
+    // === RESETAR ESTADO ===
+    gameData.isQuestionAnswered = false;
+    updatePowerUpDisplay();
+
+    // === ACESSIBILIDADE: Anunciar nova questão ===
+    setTimeout(() => {
+        announceToScreenReader(`Questão ${gameData.currentQuestion + 1}. Dificuldade ${q.difficulty === 'easy' ? 'Fácil' : q.difficulty === 'medium' ? 'Médio' : 'Difícil'}.`);
+    }, 500);
+    
+    // === CONFIGURAÇÃO DO BOTÃO ===
+    selectedOptionIndex = null; 
+    const actionBtn = document.getElementById('next-btn');
+    actionBtn.textContent = "Confirmar Resposta"; 
+    actionBtn.onclick = confirmAnswer; 
+    actionBtn.disabled = true; 
+
+    // Atualizar número e texto
+    document.getElementById('question-number').textContent = gameData.currentQuestion + 1;
+    document.getElementById('question-text').innerHTML = q.question;
+    
+    // Dificuldade
+    const diffEl = document.getElementById('question-difficulty');
+    diffEl.textContent = q.difficulty === 'easy' ? 'Fácil' : 
+                         q.difficulty === 'medium' ? 'Médio' : 'Difícil';
+    diffEl.className = 'question-difficulty'; 
+    diffEl.classList.add(`difficulty-${q.difficulty}`);
+    
+    // === GERAÇÃO DAS OPÇÕES ===
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.innerHTML = '';
+    
+    ['A', 'B', 'C', 'D'].forEach((letter, index) => {
+        const option = document.createElement('button');
+        option.className = 'option';
+        
+        // ARIA Label para acessibilidade
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = q.options[index];
+        const cleanText = tempDiv.textContent || tempDiv.innerText || "";
+        option.setAttribute('aria-label', `Opção ${letter}: ${cleanText}`);
+        
+        option.innerHTML = `
+            <div class="option-letter">${letter}</div>
+            <div style="flex: 1; text-align: left;">${q.options[index]}</div>
+        `;
+        
+        option.addEventListener('click', () => selectOption(option, index));
+        optionsContainer.appendChild(option);
+    });
+    
+    // Resetar feedback
+    document.getElementById('correct-feedback').style.display = 'none';
+    document.getElementById('incorrect-feedback').style.display = 'none';
+    
+    // Timer
+    gameData.timeLeft = 60;
+    updateTimerDisplay();
+    gameData.questionStartTime = Date.now();
+    
+    // === MATHJAX - AGORA COM TIMEOUT PARA GARANTIR QUE O DOM ESTÁ PRONTO ===
+    setTimeout(() => {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            // Garante que tanto a pergunta quanto as opções sejam processadas
+            const elementsToTypeset = [
+                document.getElementById('question-text'),
+                document.getElementById('options-container')
+            ];
+            
+            MathJax.typesetPromise(elementsToTypeset)
+                .then(() => {
+                    console.log('LaTeX renderizado com sucesso!');
+                })
+                .catch((err) => {
+                    console.log('Erro MathJax:', err);
+                    // Tentativa alternativa se a primeira falhar
+                    setTimeout(() => {
+                        if (window.MathJax && window.MathJax.typeset) {
+                            MathJax.typeset(elementsToTypeset);
+                        }
+                    }, 500);
+                });
+        }
+    }, 100); // 100ms é suficiente para o DOM atualizar
+}
+
+function renderMathJaxWithRetry(attempt = 0) {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        const elementsToTypeset = [
+            document.getElementById('question-text'),
+            document.getElementById('options-container')
+        ];
+        
+        MathJax.typesetPromise(elementsToTypeset)
+            .then(() => {
+                console.log('LaTeX renderizado com sucesso!');
+            })
+            .catch((err) => {
+                console.log('Erro MathJax, tentativa:', attempt + 1, err);
+                if (attempt < 3) {
+                    setTimeout(() => renderMathJaxWithRetry(attempt + 1), 300 * (attempt + 1));
+                }
+            });
+    } else if (attempt < 5) {
+        // Se MathJax ainda não carregou, tenta novamente
+        setTimeout(() => renderMathJaxWithRetry(attempt + 1), 500);
+    }
+}
+
+// Chama a primeira vez
+setTimeout(() => renderMathJaxWithRetry(), 150);
+
+
+function forceMathJaxRender(elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        MathJax.typesetPromise([element]).catch(err => {
+            console.log('Erro ao renderizar MathJax para', elementId, err);
+        });
+    }
+}
+
+// 4. Atualização da função selectOption (Apenas visual)
+function selectOption(optionElement, index) {
+    // Se o botão já virou "Próxima Questão", não deixa mudar a resposta (já foi corrigido)
+    const actionBtn = document.getElementById('next-btn');
+    if (actionBtn.textContent.includes("Próxima")) return;
+
+    // Remove seleção visual das outras
+    document.querySelectorAll('.option').forEach(o => {
+        o.classList.remove('selected');
+    });
+    
+    // Adiciona na atual
+    optionElement.classList.add('selected');
+    
+    // Salva o índice na memória
+    selectedOptionIndex = index;
+    
+    // Libera o botão para confirmar
+    actionBtn.disabled = false;
+    
+    // Opcional: Feedback sonoro leve de "clique" (se tiver áudio de UI)
+    // playSound('click'); 
+}
+
+// 5. Atualização da função checkAnswer (Correção Final)
+function checkAnswer(selectedIndex) {
+            clearInterval(gameData.timer);
+
+            // === BLOQUEAR POWER-UPS ===
+            gameData.isQuestionAnswered = true; // Marca como respondida
+            
+            document.querySelectorAll('.power-up').forEach(btn => btn.disabled = true); // Desabilita visualmente todos
+            updatePowerUpDisplay();
+            // ==========================
+
+
             const q = gameData.questions[gameData.currentQuestion];
             const isCorrect = selectedIndex === q.correct;
             const options = document.querySelectorAll('.option');
             
-            // Calcular tempo de resposta
+            options.forEach(o => o.style.pointerEvents = 'none');
+
             const responseTime = (Date.now() - gameData.questionStartTime) / 1000;
             gameData.questionTimes.push(responseTime);
             
-            // Mostrar resposta correta
             options[q.correct].classList.add('correct');
             
             if (isCorrect) {
-                // Acertou
                 options[selectedIndex].classList.add('correct');
                 
-                // Calcular pontos
                 let points = q.points;
                 let bonusText = [];
                 
-                // Bônus por streak
                 gameData.currentStreak++;
-                if (gameData.currentStreak > gameData.maxStreak) {
-                    gameData.maxStreak = gameData.currentStreak;
-                }
+                if (gameData.currentStreak > gameData.maxStreak) gameData.maxStreak = gameData.currentStreak;
                 
                 if (gameData.currentStreak >= 3) {
                     const streakBonus = Math.floor(gameData.currentStreak / 3) * 5;
                     points += streakBonus;
                     bonusText.push(`Streak +${streakBonus}`);
-                    
-                    // Mostrar indicador de streak
-                    if (gameData.currentStreak >= 5) {
-                        showStreakIndicator();
-                    }
+                    if (gameData.currentStreak >= 5) showStreakIndicator();
                 }
                 
-                // Bônus por velocidade
                 if (responseTime < 10) {
-                    const speedBonus = 5;
-                    points += speedBonus;
-                    bonusText.push(`Rápido +${speedBonus}`);
+                    points += 5;
+                    bonusText.push(`Rápido +5`);
                 }
                 
-                // Bônus por dificuldade
-                if (q.difficulty === 'hard') points += 5;
-                
-                // Pontos em dobro
                 if (gameData.doublePointsActive) {
                     points *= 2;
-                    bonusText.push(`Dobro!`);
-                    gameData.doublePointsActive = false;
+                    bonusText.push(`✨ Dobro!`);
+                    gameData.doublePointsActive = false; // RESETA DEPOIS DE USAR
                 }
                 
-                // Adicionar pontos
                 gameData.score += points;
                 gameData.correctAnswers++;
-                
-                // Adicionar XP
                 addXP(points);
                 
-                // Mostrar feedback
                 document.getElementById('correct-feedback').style.display = 'block';
                 document.getElementById('points-earned').textContent = points;
-                document.getElementById('bonus-info').textContent = bonusText.length > 0 ? 
-                    `Bônus: ${bonusText.join(', ')}` : '';
+                document.getElementById('bonus-info').textContent = bonusText.length > 0 ? `Bônus: ${bonusText.join(', ')}` : '';
                 
-                // Tocar som de acerto
-                playSound('correct');
+                // === ACESSIBILIDADE: Anunciar acerto ===
+                announceToScreenReader(`Resposta Correta! Você ganhou ${points} pontos.`);
                 
-                // Criar fogos de artifício para comemorar
-                createFireworksEffect();
-                
-                // Verificar conquistas
+                if (typeof playSound === "function") playSound('correct');
+                createFireworksEffect(); // Usa a nova função de canvas
                 checkAchievements();
                 
             } else {
-                // Errou
-                options[selectedIndex].classList.add('incorrect');
-                gameData.currentStreak = 0;
-                
-                document.getElementById('incorrect-feedback').style.display = 'block';
-                document.getElementById('correct-answer').textContent = 
-                    q.options[q.correct];
-                document.getElementById('explanation').textContent = q.explanation;
-                
-                playSound('incorrect');
+        options[selectedIndex].classList.add('incorrect');
+        gameData.currentStreak = 0;
+        
+        document.getElementById('incorrect-feedback').style.display = 'block';
+        document.getElementById('correct-answer').innerHTML = q.options[q.correct];
+        document.getElementById('explanation').innerHTML = q.explanation;
+        
+        // === ACESSIBILIDADE: Anunciar erro ===
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = q.options[q.correct];
+        const cleanAnswer = tempDiv.textContent || "";
+        announceToScreenReader(`Resposta Incorreta. A resposta correta era: ${cleanAnswer}`);
+        
+        if (typeof playSound === "function") playSound('incorrect');
+        
+        // === ADICIONE ESTAS LINHAS: Atualizar MathJax ===
+        setTimeout(() => {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([
+                    document.getElementById('correct-answer'),
+                    document.getElementById('explanation')
+                ]).catch(err => console.log('Erro ao processar MathJax:', err));
             }
+        }, 100);
+    }
             
-            // Registrar resposta do usuário
             gameData.userAnswers.push({
                 question: q.question,
                 userAnswer: selectedIndex,
@@ -2381,24 +3507,17 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                 points: isCorrect ? q.points : 0
             });
             
-            // Atualizar status
             updateGameStatus();
-            
-            // Habilitar próximo botão
-            document.getElementById('next-btn').disabled = false;
-            
-            // Parar timer
-            clearInterval(gameData.timer);
         }
 
+
+        
         function nextQuestion() {
             gameData.currentQuestion++;
             
             if (gameData.currentQuestion < gameData.totalQuestions) {
                 showQuestion();
-                if (gameData.settings.timeLimit > 0) {
-                    startTimer();
-                }
+                startTimer();
             } else {
                 finishGame();
             }
@@ -2452,166 +3571,33 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             }
         }
 
-        // ================ FOGOS DE ARTIFÍCIO - NOVO EFEITO ================
-        function createFireworksEffect() {
-            console.log("Criando fogos de artifício...");
-            
-            // Tocar som de fogos de artifício
-            playSound('firework');
-            
-            // Cores vibrantes para os fogos
-            const colors = [
-                '#ff0000', '#ff8800', '#ffff00', '#00ff00', 
-                '#00ffff', '#0088ff', '#8800ff', '#ff00ff',
-                '#ff1493', '#ff4500', '#ffd700', '#00ff7f'
-            ];
-            
-            // Criar múltiplas explosões de fogos de artifício
-            const explosionCount = 8 + Math.floor(gameData.currentStreak / 2);
-            
-            for (let i = 0; i < explosionCount; i++) {
-                // Tempo aleatório para cada explosão (entre 0 e 2 segundos)
-                const delay = Math.random() * 2000;
-                
-                setTimeout(() => {
-                    createSingleFireworkExplosion(colors);
-                }, delay);
-            }
-        }
         
-        function createSingleFireworkExplosion(colors) {
-            // Posição aleatória na tela
-            const x = Math.random() * window.innerWidth;
-            const y = Math.random() * window.innerHeight * 0.7; // Limitar ao topo da tela
-            
-            // Criar elemento de foguete (que sobe)
-            const rocket = document.createElement('div');
-            rocket.className = 'firework';
-            rocket.style.left = `${x}px`;
-            rocket.style.top = `${window.innerHeight}px`;
-            rocket.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-            rocket.style.boxShadow = `0 0 10px ${rocket.style.backgroundColor}`;
-            document.body.appendChild(rocket);
-            
-            // Animação do foguete subindo
-            const rocketDuration = 800;
-            rocket.animate([
-                { 
-                    transform: 'translateY(0) scale(1)', 
-                    opacity: 1 
-                },
-                { 
-                    transform: `translateY(-${window.innerHeight - y}px) scale(0.5)`, 
-                    opacity: 0.8 
-                }
-            ], {
-                duration: rocketDuration,
-                easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
-            });
-            
-            // Quando o foguete chegar ao topo, explodir
-            setTimeout(() => {
-                // Remover o foguete
-                if (rocket.parentNode) rocket.parentNode.removeChild(rocket);
-                
-                // Criar explosão
-                createExplosion(x, y, colors);
-            }, rocketDuration);
-        }
-        
-        function createExplosion(x, y, colors) {
-            const particleCount = 60 + Math.floor(Math.random() * 40);
-            const explosionRadius = 80 + Math.random() * 70;
-            
-            for (let i = 0; i < particleCount; i++) {
-                // Criar partícula
-                const particle = document.createElement('div');
-                particle.className = 'firework-particle';
-                particle.style.left = `${x}px`;
-                particle.style.top = `${y}px`;
-                particle.style.width = '8px';
-                particle.style.height = '8px';
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.borderRadius = '50%';
-                particle.style.boxShadow = `0 0 15px ${particle.style.backgroundColor}`;
-                document.body.appendChild(particle);
-                
-                // Ângulo aleatório
-                const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * explosionRadius;
-                
-                // Duração da animação
-                const duration = 1000 + Math.random() * 1000;
-                
-                // Animar partícula
-                particle.animate([
-                    { 
-                        transform: 'translate(0, 0) scale(1)', 
-                        opacity: 1 
-                    },
-                    { 
-                        transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, 
-                        opacity: 0 
-                    }
-                ], {
-                    duration: duration,
-                    easing: 'cubic-bezier(0.1, 0.2, 0.8, 1)'
-                });
-                
-                // Remover partícula após a animação
-                setTimeout(() => {
-                    if (particle.parentNode) particle.parentNode.removeChild(particle);
-                }, duration);
-            }
-            
-            // Criar rastros (partículas menores)
-            const trailCount = 20;
-            for (let i = 0; i < trailCount; i++) {
-                const trail = document.createElement('div');
-                trail.className = 'firework-trail';
-                trail.style.left = `${x}px`;
-                trail.style.top = `${y}px`;
-                trail.style.width = '4px';
-                trail.style.height = '4px';
-                trail.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                trail.style.borderRadius = '50%';
-                trail.style.opacity = '0.7';
-                document.body.appendChild(trail);
-                
-                const trailAngle = Math.random() * Math.PI * 2;
-                const trailDistance = Math.random() * explosionRadius * 0.7;
-                const trailDuration = 600 + Math.random() * 600;
-                
-                trail.animate([
-                    { 
-                        transform: 'translate(0, 0) scale(1)', 
-                        opacity: 0.7 
-                    },
-                    { 
-                        transform: `translate(${Math.cos(trailAngle) * trailDistance}px, ${Math.sin(trailAngle) * trailDistance}px) scale(0)`, 
-                        opacity: 0 
-                    }
-                ], {
-                    duration: trailDuration,
-                    easing: 'cubic-bezier(0.1, 0.2, 0.8, 1)'
-                });
-                
-                setTimeout(() => {
-                    if (trail.parentNode) trail.parentNode.removeChild(trail);
-                }, trailDuration);
-            }
-        }
-        
-        // Função para testar fogos de artifício
-        function testFireworks() {
-            console.log("Testando fogos de artifício...");
-            createFireworksEffect();
-        }
-
         // ================ POWER-UPS ================
         function usePowerUp(power) {
-            if (gameData.powerUps[power].count <= 0) return;
             
+            // === PROTEÇÃO NOVA ===
+            if (gameData.isQuestionAnswered) {
+                showNotification("⏸️ Questão já respondida!", "warning");
+                return;
+            }
+            // =====================
+
+            if (gameData.timeLeft <= 0) {
+                showNotification("⌛ Tempo esgotado!", "warning");
+                return;
+            }
+
+
+        if (gameData.powerUps[power].count <= 0) {
+                // Feedback visual sutil
+                const btn = document.querySelector(`.power-up[data-power="${power}"]`);
+                if (btn) {
+                    btn.classList.add('shake');
+                    setTimeout(() => btn.classList.remove('shake'), 500);
+                }
+                return;
+            }   
+
             switch(power) {
                 case 'hint':
                     showHint();
@@ -2620,7 +3606,7 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                     skipQuestion();
                     break;
                 case 'time':
-                    addTime(30);
+                    addTime(10);
                     break;
                 case 'double':
                     activateDoublePoints();
@@ -2633,12 +3619,37 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             playSound('powerup');
         }
 
-        function showHint() {
-            const q = gameData.questions[gameData.currentQuestion];
-            alert(`💡 Dica: ${q.hint}`);
-        }
+ function showHint() {
+    const q = gameData.questions[gameData.currentQuestion];
+    
+    // Criar tooltip temporário
+    const hintTooltip = document.createElement('div');
+    hintTooltip.className = 'hint-tooltip';
+    hintTooltip.innerHTML = `
+        <div style="padding: 10px; background: rgba(0,0,0,0.9); border-radius: 10px; 
+                    border: 2px solid #ff9800; color: white; max-width: 300px;">
+            <strong>💡 Dica:</strong> ${q.hint}
+        </div>
+    `;
+    
+    hintTooltip.style.position = 'fixed';
+    hintTooltip.style.top = '50%';
+    hintTooltip.style.left = '50%';
+    hintTooltip.style.transform = 'translate(-50%, -50%)';
+    hintTooltip.style.zIndex = '10000';
+    
+    document.body.appendChild(hintTooltip);
+    
+    // Auto-remover após 5 segundos
+    setTimeout(() => {
+        hintTooltip.style.opacity = '0';
+        setTimeout(() => hintTooltip.remove(), 300);
+    }, 5000);
+}
 
         function skipQuestion() {
+            clearInterval(gameData.timer);
+            gameData.doublePointsActive = false;
             // Registrar como errada
             gameData.userAnswers.push({
                 question: gameData.questions[gameData.currentQuestion].question,
@@ -2710,14 +3721,21 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
 
         function updateTimerDisplay() {
             const timerText = document.getElementById('timer-text');
-            const timerProgress = document.getElementById('timer-progress');
+    const timerProgress = document.getElementById('timer-progress');
+    
+    // Exibir o tempo real
+    timerText.textContent = gameData.timeLeft;
+    
+    const circumference = 283;
+    const maxTime = 60;
+    
+    // Para cálculo visual, limitar a 60s máximo
+    let displayTime = Math.min(gameData.timeLeft, maxTime);
+    const offset = circumference - (displayTime / maxTime) * circumference;
+    
+    timerProgress.style.strokeDashoffset = offset;
             
-            timerText.textContent = gameData.timeLeft;
-            
-            // Atualizar círculo do timer
-            const circumference = 283; // 2 * π * 45
-            const offset = circumference - (gameData.timeLeft / gameData.settings.timeLimit) * circumference;
-            timerProgress.style.strokeDashoffset = offset;
+           
             
             // Mudar cor conforme o tempo
             if (gameData.timeLeft < 10) {
@@ -2733,25 +3751,41 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
         }
 
         function timeUp() {
-            // Desabilitar opções
-            document.querySelectorAll('.option').forEach(o => {
-                o.style.pointerEvents = 'none';
-            });
-            
-            // Mostrar feedback de tempo esgotado
-            alert('⏰ Tempo esgotado!');
-            
-            // Registrar como resposta errada
-            const q = gameData.questions[gameData.currentQuestion];
-            const options = document.querySelectorAll('.option');
-            options[q.correct].classList.add('correct');
+            gameData.doublePointsActive = false; 
+    // Desabilitar opções
+    document.querySelectorAll('.option').forEach(o => {
+        o.style.pointerEvents = 'none';
+    });
+    
+    // Mostrar feedback de tempo esgotado
+    alert('⏰ Tempo esgotado!');
+    
+    // Registrar como resposta errada
+    const q = gameData.questions[gameData.currentQuestion];
+    const options = document.querySelectorAll('.option');
+    options[q.correct].classList.add('correct');
+    
+    // Mostrar feedback incorreto
+    document.getElementById('incorrect-feedback').style.display = 'block';
+    document.getElementById('correct-answer').innerHTML = q.options[q.correct];
+    document.getElementById('explanation').innerHTML = "Tempo esgotado! " + q.explanation;
+    
+    // === ADICIONE ESTAS LINHAS: Atualizar MathJax ===
+    setTimeout(() => {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            MathJax.typesetPromise([
+                document.getElementById('correct-answer'),
+                document.getElementById('explanation')
+            ]).catch(err => console.log('Erro ao processar MathJax:', err));
+        }
+    }, 100); 
             
             gameData.userAnswers.push({
                 question: q.question,
                 userAnswer: -1,
                 correctAnswer: q.correct,
                 isCorrect: false,
-                time: gameData.settings.timeLimit,
+                time: 60,
                 points: 0,
                 timeout: true
             });
@@ -2759,6 +3793,23 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             gameData.currentStreak = 0;
             document.getElementById('next-btn').disabled = false;
         }
+
+function updateMathJax(elements) {
+    if (!elements) return;
+    
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        setTimeout(() => {
+            MathJax.typesetPromise(elements).catch(err => {
+                console.log('Erro ao processar MathJax:', err);
+                // Tentativa alternativa
+                if (window.MathJax && window.MathJax.typeset) {
+                    MathJax.typeset(elements);
+                }
+            });
+        }, 50);
+    }
+}
+
 
         // ================ SISTEMA DE XP E NÍVEIS ================
         function addXP(points) {
@@ -2783,18 +3834,29 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             playSound('level-up');
             
             // Efeito visual
-            const levelUp = document.createElement('div');
-            levelUp.innerHTML = `
-                <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-                           background: rgba(0,0,0,0.8); color: white; padding: 30px; border-radius: 20px; 
-                           text-align: center; z-index: 10000; border: 3px solid #ffeb3b;">
-                    <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
-                    <h2 style="color: #ffeb3b; margin-bottom: 10px;">Nível Up!</h2>
-                    <h3 style="font-size: 40px; color: #4caf50;">Nível ${gameData.level}</h3>
-                    <p style="margin-top: 20px;">Novos power-ups desbloqueados!</p>
-                </div>
-            `;
-            document.body.appendChild(levelUp);
+           
+           
+           const levelUp = document.createElement('div');
+levelUp.innerHTML = `
+    <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+               background: rgba(0,0,0,0.9); color: white; padding: 30px; border-radius: 20px; 
+               text-align: center; border: 3px solid #ffeb3b;
+               z-index: 2000;">
+        <div style="font-size: 50px; margin-bottom: 20px;">🎉</div>
+        <h2 style="color: #ffeb3b; margin-bottom: 10px;">Nível Up!</h2>
+        <h3 style="font-size: 40px; color: #4caf50;">Nível ${gameData.level}</h3>
+        <p style="margin-top: 20px;">Novos power-ups desbloqueados!</p>
+    </div>
+`;
+document.body.appendChild(levelUp); // Adiciona o elemento na tela
+           
+          /*(Nota: No JS inline não dá para usar `var(--z...)` facilmente sem configurar antes, então usamos `2000` que é o valor equivalente à nossa camada de notificação).*/
+
+/*### Por que isso é melhor? */
+/*Se amanhã você criar um novo "Menu de Configurações" e quiser que ele fique em cima da calculadora, mas embaixo do aviso de "Level Up", você só precisa definir `z-index: var(--z-modal)`. Não precisa ficar lembrando se o número era 1001 ou 10005. */
+                  
+
+
             
             // Fogos de artifício para celebrar level up
             setTimeout(() => createFireworksEffect(), 300);
@@ -2806,14 +3868,19 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             }, 3000);
             
             // Desbloquear power-ups adicionais
-            if (gameData.level % 3 === 0) {
-                Object.keys(gameData.powerUps).forEach(power => {
-                    gameData.powerUps[power].count += 1;
-                });
-                updatePowerUpDisplay();
-            }
-        }
-
+           // PREMIAÇÃO: Dá +1 de cada item a cada 3 níveis
+    if (gameData.level % 3 === 0) {
+        gameData.powerUps.hint.count++;
+        gameData.powerUps.skip.count++;
+        gameData.powerUps.time.count++;
+        gameData.powerUps.double.count++;
+        
+        // Salva imediatamente para não perder o prêmio se fechar o navegador
+        saveGameData(); 
+        updatePowerUpDisplay();
+        alert("🎁 Bônus de Nível: Você ganhou +1 de todos os Power-ups!");
+    }
+}
         // ================ CONQUISTAS ================
         function checkAchievements() {
             const newAchievements = [];
@@ -2890,34 +3957,26 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                 screen.style.display = 'none';
             });
             document.getElementById(screenId).style.display = 'block';
-            
-            // Controlar visibilidade dos botões da calculadora
-            if (screenId === 'question-screen') {
-                // Na tela de questões, mostrar o botão inline e esconder o fixo
-                document.getElementById('open-calc-inline').style.display = 'flex';
-                document.getElementById('open-calc').style.display = 'none';
-            } else {
-                // Nas outras telas, esconder o inline e mostrar o fixo
-                document.getElementById('open-calc-inline').style.display = 'none';
-                document.getElementById('open-calc').style.display = 'block';
-            }
         }
 
-        function updateGameStatus() {
+       function updateGameStatus() {
             document.getElementById('score').textContent = gameData.score;
             document.getElementById('question-counter').textContent = 
                 `${gameData.currentQuestion + 1}/${gameData.totalQuestions}`;
-            document.getElementById('streak').textContent = `Streak: ${gameData.currentStreak}`;
+            
+            // Verifica se o elemento streak existe antes de atualizar
+            const streakEl = document.getElementById('streak');
+            if (streakEl) {
+                streakEl.textContent = `Streak: ${gameData.currentStreak}`;
+            }
+
             document.getElementById('current-theme').textContent = 
                 gameData.theme === 'probabilidade' ? 'Probabilidade' : 'Estatística';
-            document.getElementById('difficulty').textContent = 
-                `Nível: ${gameData.settings.difficulty === 'easy' ? 'Fácil' : 
-                        gameData.settings.difficulty === 'medium' ? 'Médio' : 
-                        gameData.settings.difficulty === 'hard' ? 'Difícil' : 'Misturado'}`;
+            
+            // A LINHA QUE CAUSAVA ERRO FOI REMOVIDA AQUI (document.getElementById('difficulty')...)
             
             updateLevelDisplay();
         }
-
         function updateLevelDisplay() {
             document.getElementById('level').textContent = gameData.level;
             document.getElementById('xp').textContent = `${gameData.xp}/${gameData.xpToNextLevel} XP`;
@@ -2927,29 +3986,40 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             document.getElementById('level-percentage').textContent = `${Math.floor(percentage)}%`;
         }
 
+
         function updatePowerUpDisplay() {
-            // Tela inicial
-            document.getElementById('hint-count').textContent = gameData.powerUps.hint.count;
-            document.getElementById('skip-count').textContent = gameData.powerUps.skip.count;
-            document.getElementById('time-count').textContent = gameData.powerUps.time.count;
-            document.getElementById('double-count').textContent = gameData.powerUps.double.count;
-            
-            // Durante o jogo
-            document.getElementById('game-hint-count').textContent = gameData.powerUps.hint.count;
-            document.getElementById('game-skip-count').textContent = gameData.powerUps.skip.count;
-            document.getElementById('game-time-count').textContent = gameData.powerUps.time.count;
-            document.getElementById('game-double-count').textContent = gameData.powerUps.double.count;
-            
-            // Desabilitar power-ups sem estoque
+            // Atualiza os contadores na tela inicial e no jogo
+            ['hint', 'skip', 'time', 'double'].forEach(type => {
+                // Tenta atualizar contador da tela inicial (se existir)
+                const homeCount = document.getElementById(`${type}-count`);
+                if (homeCount) homeCount.textContent = gameData.powerUps[type].count;
+                
+                // Tenta atualizar contador do jogo (se existir)
+                const gameCount = document.getElementById(`game-${type}-count`);
+                if (gameCount) gameCount.textContent = gameData.powerUps[type].count;
+            });
+
+            // Lógica para habilitar/desabilitar visualmente (ADICIONAR/REMOVER CLASSE .disabled)
             document.querySelectorAll('.power-up').forEach(powerUp => {
                 const power = powerUp.dataset.power;
-                if (gameData.powerUps[power].count <= 0) {
-                    powerUp.disabled = true;
+                
+                // O power-up deve ficar desabilitado se:
+                // 1. O estoque for 0 OU
+                // 2. A pergunta já tiver sido respondida (bloqueio pós-confirmação)
+                const shouldDisable = (gameData.powerUps[power].count <= 0) || gameData.isQuestionAnswered;
+
+                if (shouldDisable) {
+                    powerUp.classList.add('disabled'); // Aplica o estilo sombreado
+                    // Mantém o atributo disabled para acessibilidade se for button
+                    if (powerUp.tagName === 'BUTTON') powerUp.disabled = true; 
                 } else {
-                    powerUp.disabled = false;
+                    powerUp.classList.remove('disabled'); // Remove o sombreado (volta a cor)
+                    if (powerUp.tagName === 'BUTTON') powerUp.disabled = false;
                 }
             });
         }
+
+
 
         function updateThemeDisplay() {
             // Atualizar progresso dos temas
@@ -3008,10 +4078,28 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                 `;
                 
                 summary.appendChild(item);
-            });
-        }
 
-        function createPerformanceChart() {
+setTimeout(() => {
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise([item]).catch(err => {
+                    console.log('Erro MathJax no resumo:', err);
+                });
+            }
+        }, 100);
+    });
+}
+
+
+
+       function createPerformanceChart() {
+            // === INÍCIO DA CORREÇÃO ===
+            // Verifica se já existe um gráfico no canvas e o destrói antes de criar um novo
+            const existingChart = Chart.getChart("performance-chart");
+            if (existingChart) {
+                existingChart.destroy();
+            }
+            // === FIM DA CORREÇÃO ===
+
             const ctx = document.getElementById('performance-chart').getContext('2d');
             
             // Dados para o gráfico
@@ -3086,7 +4174,6 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                 }
             });
         }
-
         // ================ AUDIO CORRIGIDO DEFINITIVAMENTE ================
         let audioEnabled = false;
         
@@ -3097,12 +4184,14 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             const audioElements = document.querySelectorAll('audio');
             audioElements.forEach(audio => {
                 // Configurar volume
-                audio.volume = 0.5;
+                audio.volume = 1.0;
                 
-                // Tentar carregar
-                audio.load().catch(e => {
+                // Tentar carregar (sem .catch, pois load() não retorna promessa)
+                try {
+                    audio.load();
+                } catch (e) {
                     console.log("Erro ao carregar áudio:", e);
-                });
+                }
             });
             
             console.log("Áudios inicializados");
@@ -3133,10 +4222,15 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
                     audio.currentTime = 0;
                     
                     // Ajustar volume específico para fogos de artifício
+                    // Ajustar volume específico para fogos de artifício
+                  // Ajustar volume específico para fogos de artifício
                     if (type === 'firework') {
-                        audio.volume = 0.6;
+                        audio.volume = 1.0; // Volume MÁXIMO
+                        audio.currentTime = 0; // Reinicia o som para dar o estalo imediato
                     } else {
-                        audio.volume = 0.5;
+                        // Se não for fogo, toca um pouco mais baixo (60%) 
+                        // para que, quando os fogos entrarem (100%), eles pareçam muito altos
+                        audio.volume = 0.6; 
                     }
                     
                     // Tenta tocar
@@ -3278,32 +4372,45 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             localStorage.setItem('mathGameData', JSON.stringify(data));
         }
 
-        function loadGameData() {
-            const data = JSON.parse(localStorage.getItem('mathGameData'));
-            if (data) {
-                gameData.xp = data.xp || 0;
-                gameData.level = data.level || 1;
-                gameData.xpToNextLevel = data.xpToNextLevel || 100;
-                gameData.achievements = data.achievements || [];
-                gameData.settings = data.settings || gameData.settings;
-                gameData.powerUps = data.powerUps || gameData.powerUps;
-                
-                // Atualizar conquistas
-                achievements.forEach(ach => {
-                    ach.unlocked = gameData.achievements.includes(ach.id);
-                });
+function loadGameData() {
+    try {
+        const data = JSON.parse(localStorage.getItem('mathGameData'));
+        if (data) {
+            // Carrega dados persistentes
+            gameData.xp = data.xp || 0;
+            gameData.level = data.level || 1;
+            gameData.xpToNextLevel = data.xpToNextLevel || 100;
+            gameData.achievements = data.achievements || [];
+            gameData.settings = data.settings || { sound: true };
+            
+            // IMPORTANTE: Carrega o estoque de power-ups salvo
+            if (data.powerUps) {
+                gameData.powerUps = data.powerUps;
             }
-            
-            // Carregar configurações da UI
-            document.getElementById('question-count').value = gameData.settings.questionCount;
-            document.getElementById('time-limit').value = gameData.settings.timeLimit;
-            document.getElementById('difficulty-level').value = gameData.settings.difficulty;
-            
-            updateAchievementsDisplay();
-            updateThemeDisplay();
-            updatePowerUpDisplay();
-            updateLevelDisplay();
+
+            // Atualizar status das conquistas
+            achievements.forEach(ach => {
+                ach.unlocked = gameData.achievements.includes(ach.id);
+            });
         }
+    } catch (e) {
+        console.error("Erro ao carregar save:", e);
+    }
+
+    // Configurar som na UI
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle && gameData.settings) {
+        soundToggle.value = gameData.settings.sound.toString();
+        localStorage.setItem('soundEnabled', gameData.settings.sound);
+    }
+
+    // === ATUALIZAÇÃO VISUAL IMEDIATA ===
+    // Isso garante que a tela inicial mostre os números reais do banco de dados
+    updateAchievementsDisplay();
+    updateThemeDisplay();
+    updateLevelDisplay();
+    updatePowerUpDisplay(); // <--- Essa linha corrige o número na tela inicial
+}
 
         function saveRecords() {
             const accuracy = (gameData.correctAnswers / gameData.totalQuestions) * 100;
@@ -3357,61 +4464,74 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
             document.getElementById('achievement-count').textContent = unlockedCount;
         }
 
-        function showUnlockedAchievements(achievementIds) {
-            const container = document.getElementById('new-achievements');
-            const list = document.getElementById('achievements-unlocked');
-            list.innerHTML = '';
-            
-            achievementIds.forEach(id => {
-                const ach = achievements.find(a => a.id === id);
-                if (ach) {
-                    const item = document.createElement('div');
-                    item.className = 'achievement-item unlocked';
-                    item.style.marginBottom = '10px';
-                    item.innerHTML = `
-                        <div class="achievement-icon">${ach.icon}</div>
-                        <div class="achievement-info">
-                            <h4>${ach.name}</h4>
-                            <p>${ach.description}</p>
-                            <p style="color: #4caf50; font-size: 12px;">+${ach.xp} XP ganhos!</p>
-                        </div>
-                    `;
-                    list.appendChild(item);
-                }
-            });
-            
-            container.style.display = 'block';
+       function showUnlockedAchievements(achievementIds) {
+    const container = document.getElementById('new-achievements');
+    const list = document.getElementById('achievements-unlocked');
+    list.innerHTML = '';
+    
+    achievementIds.forEach(id => {
+        const ach = achievements.find(a => a.id === id);
+        if (ach) {
+            const item = document.createElement('div');
+            item.className = 'achievement-item unlocked';
+            item.style.marginBottom = '10px';
+            item.innerHTML = `
+                <div class="achievement-icon">${ach.icon}</div>
+                <div class="achievement-info">
+                    <h4>${ach.name}</h4>
+                    <p>${ach.description}</p>
+                    <p style="color: #4caf50; font-size: 12px;">+${ach.xp} XP ganhos!</p>
+                </div>
+            `;
+            list.appendChild(item);
         }
+    });
+    
+    container.style.display = 'block';
+    
+    // Auto-fechar após 5 segundos
+    setTimeout(() => {
+        container.style.display = 'none';
+    }, 5000);
+}
 
         function toggleAchievements() {
-            document.getElementById('achievements-panel').classList.toggle('active');
-        }
+    document.getElementById('achievements-modal').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Previne scroll do body
+}
 
-        function closeAchievements() {
-            document.getElementById('achievements-panel').classList.remove('active');
-        }
+function closeAchievements() {
+    document.getElementById('achievements-modal').classList.remove('active');
+    document.body.style.overflow = ''; // Restaura scroll do body
+}
 
-        // ================ UTILIDADES ================
-        function resetGameData() {
-            gameData.currentQuestion = 0;
-            gameData.score = 0;
-            gameData.correctAnswers = 0;
-            gameData.userAnswers = [];
-            gameData.currentStreak = 0;
-            gameData.maxStreak = 0;
-            gameData.questionTimes = [];
-            gameData.doublePointsActive = false;
-            gameData.questionStartTime = null;
-            
-            // Resetar power-ups (exceto os extras ganhos por nível)
-            gameData.powerUps = {
-                hint: { count: 3 + Math.floor(gameData.level / 3), used: 0 },
-                skip: { count: 2 + Math.floor(gameData.level / 3), used: 0 },
-                time: { count: 1 + Math.floor(gameData.level / 3), used: 0 },
-                double: { count: 1 + Math.floor(gameData.level / 3), used: 0 }
-            };
-        }
+       function resetGameData() {
+    // 1. Resetar APENAS dados da partida momentânea (Pontos, Streak, Tempo)
+    gameData.currentQuestion = 0;
+    gameData.score = 0;
+    gameData.correctAnswers = 0;
+    gameData.userAnswers = [];
+    gameData.currentStreak = 0;
+    gameData.maxStreak = 0;
+    gameData.questionTimes = [];
+    gameData.doublePointsActive = false;
+    gameData.questionStartTime = null;
+    gameData.timeLeft = 60; // Reinicia o tempo base
 
+    // 2. Lógica de Estoque de Power-ups (CORREÇÃO)
+    // Se os power-ups NÃO existirem ou estiverem vazios (Primeira vez jogando), cria o pacote inicial.
+    // Se já existirem (carregados do save), NÃO MEXE NELES.
+    if (!gameData.powerUps || !gameData.powerUps.hint) {
+        gameData.powerUps = {
+            hint: { count: 3, used: 0 },
+            skip: { count: 2, used: 0 },
+            time: { count: 2, used: 0 },
+            double: { count: 3, used: 0 }
+        };
+    }
+    // Nota: Removemos a matemática de "nível" daqui para não resetar o estoque toda vez.
+    // O jogador ganhará mais itens apenas na função levelUpEffects().
+}
         function restartGame() {
             resetGameData();
             showScreen('start-screen');
@@ -3463,6 +4583,161 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
         localStorage.setItem('gamesPlayed', (gamesPlayed + 1).toString());
         
         console.log('🎮 Jogo de Matemática carregado com sucesso!');
+
+// ============================================================
+    //  NOVOS RECURSOS: ACESSIBILIDADE E FOGOS OTIMIZADOS
+    // ============================================================
+
+    // 1. Função Auxiliar de Acessibilidade (Leitor de Tela)
+    function announceToScreenReader(message) {
+        const announcer = document.getElementById('a11y-announcer');
+        if (announcer) {
+            announcer.textContent = ''; // Limpa para forçar o anúncio
+            setTimeout(() => {
+                announcer.textContent = message;
+            }, 100);
+        }
+    }
+
+    // 2. Sistema de Fogos de Artifício Otimizado (Canvas)
+    const canvas = document.getElementById('fireworks-canvas');
+    let ctx = null;
+    let particles = [];
+
+    // Inicializa o contexto do canvas se ele existir
+    if (canvas) {
+        ctx = canvas.getContext('2d');
+        
+        // Ajustar tamanho
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Loop de animação
+        function animationLoop() {
+            if (particles.length > 0) {
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.globalCompositeOperation = 'lighter';
+
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.05;
+                    p.alpha -= 0.01;
+
+                    ctx.fillStyle = `rgba(${p.r}, ${p.g}, ${p.b}, ${p.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    if (p.alpha <= 0) particles.splice(i, 1);
+                }
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            requestAnimationFrame(animationLoop);
+        }
+        animationLoop();
+    }
+
+    // Função principal de criar fogos (Substitui a antiga)
+    function createFireworksEffect() {
+        if (!ctx) return; // Segurança caso o canvas não carregue
+        console.log("Criando fogos (Canvas)...");
+        
+        // Tenta tocar som se existir
+        if (typeof playSound === "function") playSound('firework');
+        
+        // Cria 5 explosões
+        for(let i=0; i<5; i++) {
+            setTimeout(() => {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * (canvas.height * 0.6);
+                createExplosion(x, y);
+            }, i * 300);
+        }
+    }
+
+    // Função auxiliar da explosão
+    function createExplosion(x, y) {
+        const particleCount = 50;
+        const r = Math.floor(Math.random() * 255);
+        const g = Math.floor(Math.random() * 255);
+        const b = Math.floor(Math.random() * 255);
+
+        for (let i = 0; i < particleCount; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 6 + 2;
+            
+            particles.push({
+                x: x, y: y,
+                vx: Math.cos(angle) * velocity,
+                vy: Math.sin(angle) * velocity,
+                size: Math.random() * 3 + 1,
+                r: r, g: g, b: b,
+                alpha: 1
+            });
+        }
+    }
+    
+    // Função de teste para o botão
+    function testFireworks() {
+        createFireworksEffect();
+    }
+
+
+    // ================ FUNÇÕES DOS MODAIS DE TEORIA ================
+
+function openTheoryModal() {
+    const modal = document.getElementById('theory-modal');
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Impede a rolagem da página de fundo
+    }
+}
+
+function closeTheoryModal() {
+    const modal = document.getElementById('theory-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Libera a rolagem
+    }
+}
+
+function openTheoryContentModal(type) {
+    const modal = document.getElementById(`${type}-modal`);
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closeTheoryContentModal(type) {
+    const modal = document.getElementById(`${type}-modal`);
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Esta função você já tinha parcialmente, mas precisa garantir que ela existe:
+function switchTheoryContent(targetTheme) {
+    // Fecha qualquer modal aberto
+    closeTheoryContentModal('probabilidade');
+    closeTheoryContentModal('estatistica');
+    
+    // Abre o novo após um breve delay para transição visual
+    setTimeout(() => {
+        openTheoryContentModal(targetTheme);
+    }, 300);
+}
+
     </script>
 </body>
 </html>
