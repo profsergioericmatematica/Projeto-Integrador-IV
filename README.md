@@ -244,11 +244,5 @@ O projeto atende às competências específicas de Matemática do 9º Ano:
 
 ---
 
-**Próximos Passos:**
-- [ ] Adicionar screenshots ao README
-- [ ] Configurar GitHub Pages para deploy
-- [ ] Implementar modo offline com Service Workers
-- [ ] Adicionar mais temas matemáticos
-- [ ] Criar versão PWA para instalação em dispositivos móveis
 
-*Última atualização: Janeiro 2026*
+*Última atualização: Fevereiro 2026*
