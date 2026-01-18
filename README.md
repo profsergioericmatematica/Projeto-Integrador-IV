@@ -175,7 +175,7 @@ index.html → main.js (coordenação)
 
 **Projeto Integrador IV - Licenciatura em Matemática - UNIVESP**
 
-| Nome | 
+| Integrantes do Grupo | 
 |------|
 | **Antonio Antunes Junior** |
 | **Flávio Rabelo Barros**|
