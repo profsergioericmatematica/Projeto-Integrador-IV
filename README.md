@@ -48,9 +48,9 @@ Este projeto foi desenvolvido como parte do **Projeto Integrador IV** do curso d
 
 ---
 
-## 🏗️ Nova Estrutura do Projeto
+## 🏗️ Estrutura do Projeto
 
-O projeto foi reorganizado em uma estrutura modular para melhor manutenção e escalabilidade:
+O projeto foi organizado em uma estrutura modular para melhor manutenção e escalabilidade:
 
 ```
 Projeto-Integrador-IV/
