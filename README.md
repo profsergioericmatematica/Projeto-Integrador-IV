@@ -73,7 +73,7 @@ O projeto foi construído utilizando tecnologias Web padrão, garantindo compati
 
 ### 🌐 Opção 1: GitHub Pages (Recomendado)
 Acesse a versão online diretamente pelo link:
-> **[INSERIR LINK DO GITHUB PAGES AQUI]**
+> ** [https://profsergioericmatematica.github.io/Projeto-Integrador-IV/] **
 
 ### 💻 Opção 2: Execução Local
 1. **Clone este repositório:**
