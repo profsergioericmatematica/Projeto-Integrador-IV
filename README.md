@@ -180,7 +180,9 @@ Para adicionar novas questões:
 | Nome | 
 |------|
 | **Antonio Antunes Junior** |
+| **Flávio Rabelo Barros**|
 | **Giovani Machado de Lima** | 
+| **Mariane Mendes Coutinho** |
 | **Priscilla Santiago Zamorra** |
 | **Rodrigo Aires de Medeiros Correa** | 
 | **Sergio Eric Reis de Oliveira** | 
