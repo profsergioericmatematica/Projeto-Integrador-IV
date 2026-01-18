@@ -188,17 +188,7 @@ index.html → main.js (coordenação)
 
 ---
 
-## 🤝 Contribuição
-
-Contribuições são bem-vindas! Para colaborar:
-
-1. **Faça um Fork** do projeto
-2. **Crie uma Branch** para sua feature (`git checkout -b feature/NovaFuncionalidade`)
-3. **Commit suas mudanças** (`git commit -m 'Adiciona nova funcionalidade'`)
-4. **Push para a Branch** (`git push origin feature/NovaFuncionalidade`)
-5. **Abra um Pull Request**
-
-### Áreas que Precisam de Ajuda
+### Áreas de Melhorias Futuras
 - 📱 Melhorias de responsividade para mobile
 - 🎨 Novos temas visuais
 - 📚 Expansão do banco de questões
