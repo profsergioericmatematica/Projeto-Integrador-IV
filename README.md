@@ -115,16 +115,21 @@ Acesse a versão online diretamente pelo link:
 
 ## 📊 Estrutura do Código
 
-### Arquitetura
+### Arquitetura (Single Page Application)
+O projeto foi intencionalmente mantido em um arquivo único (`index.html`) para facilitar a distribuição e execução em ambientes escolares com restrições de internet/instalação.
+
 ```
-index.html              # Página única com todo o conteúdo
-├── <head>              # Configurações, CSS integrado, MathJax
-├── <body>              # Interface completa do jogo
-│   ├── Container Principal
-│   ├── Múltiplos Modais
-│   ├── Sistemas de Jogo
-│   └── Footer Informativo
-└── <script>            # ~2000 linhas de JavaScript organizado
+index.html
+├── <HEAD>: Estilos CSS (Variáveis, Animações, Layout Responsivo)
+├── <BODY>:
+│   ├── #game-container (Interface Principal)
+│   ├── #modals (Config, Tutorial, Teoria)
+│   └── <CANVAS> (Sistema de Partículas/Fogos)
+└── <SCRIPT>:
+    ├── Lógica do Jogo (State Management)
+    ├── Banco de Questões (Probabilidade/Estatística)
+    ├── Engine de Áudio (Web Audio API)
+    └── Renderização MathJax
 ```
 
 ### Principais Módulos
