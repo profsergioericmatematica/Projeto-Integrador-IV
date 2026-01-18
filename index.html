@@ -824,13 +824,15 @@
             font-size: 16px;
         }
         
-        /* Power-ups */
-        .power-ups {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
+        /* Ajuste para os power-ups com calculadora */
+.power-ups {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alinha verticalmente */
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap; /* Permite quebra de linha em telas pequenas */
+}
         
         .power-up {
             background: rgba(156, 39, 176, 0.3);
@@ -1514,7 +1516,7 @@
        
         <div class="calculator" id="calculator">
             <div class="calc-header" id="calc-header">
-                <div class="calc-title">Calculadora Científica</div>
+                <div class="calc-title">Calculadora</div>
                 <div class="calc-controls">
                     <button id="minimize-calc">−</button>
                     <button id="close-calc">×</button>
@@ -1622,9 +1624,9 @@
                         ✨
                         <div class="power-up-count" id="double-count">1</div>
                     </div>
-                    <button class="calc-btn" id="open-calc" aria-label="Abrir Calculadora" title="Calculadora">
-        🔢
-    </button>
+                    <button class="calc-btn open-calc-btn" id="open-calc" aria-label="Abrir Calculadora" title="Calculadora">
+    🔢
+</button>
                 </div>
             </div>
 
@@ -1701,6 +1703,12 @@
                 <div class="power-up" data-power="double" title="Pontos em dobro" onclick="usePowerUp('double')">
                     ✨
                     <div class="power-up-count" id="game-double-count">3</div>
+                </div>
+                
+                <!-- Botão da calculadora para as questões -->
+                <button class="calc-btn open-calc-btn" id="open-calc-game" aria-label="Abrir Calculadora" title="Calculadora">
+                    🔢
+                </button>
                 </div>
             </div>
             
@@ -3014,54 +3022,56 @@ Jogo desenvolvido para o 9º Ano do Ensino Fundamental
 
         // ================ CALCULADORA - CÓDIGO SIMPLIFICADO E FUNCIONAL ================
         function initCalculator() {
-            console.log("Inicializando calculadora...");
-            
-            // Elementos da calculadora
-            const calculator = document.getElementById('calculator');
-            const openCalcBtn = document.getElementById('open-calc');
-            const closeCalcBtn = document.getElementById('close-calc');
-            const minimizeCalcBtn = document.getElementById('minimize-calc');
-            
-            if (!calculator || !openCalcBtn) {
-                console.error("Elementos da calculadora não encontrados!");
-                return;
-            }
-            
-            // Abrir calculadora
-            openCalcBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                console.log("Abrindo calculadora...");
-                calculator.classList.add('active');
-            });
-            
-            // Fechar calculadora
-            closeCalcBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                calculator.classList.remove('active');
-            });
-            
-            // Minimizar calculadora
-            let minimized = false;
-            minimizeCalcBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const buttons = calculator.querySelector('.calc-buttons');
-                const display = calculator.querySelector('.calc-display');
-                
-                if (!minimized) {
-                    buttons.style.display = 'none';
-                    display.style.display = 'none';
-                    calculator.style.height = '60px';
-                    minimized = true;
-                } else {
-                    buttons.style.display = 'grid';
-                    display.style.display = 'block';
-                    calculator.style.height = 'auto';
-                    minimized = false;
-                }
-            });
-            
-            console.log("Calculadora inicializada!");
+    console.log("Inicializando calculadora...");
+    
+    // Elementos da calculadora
+    const calculator = document.getElementById('calculator');
+    const openCalcBtns = document.querySelectorAll('.open-calc-btn'); // Seleciona TODOS os botões
+    const closeCalcBtn = document.getElementById('close-calc');
+    const minimizeCalcBtn = document.getElementById('minimize-calc');
+    
+    if (!calculator || openCalcBtns.length === 0) {
+        console.error("Elementos da calculadora não encontrados!");
+        return;
+    }
+    
+    // Abrir calculadora - para TODOS os botões
+    openCalcBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            console.log("Abrindo calculadora...");
+            calculator.classList.add('active');
+        });
+    });
+    
+    // Fechar calculadora
+    closeCalcBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        calculator.classList.remove('active');
+    });
+    
+    // Minimizar calculadora
+    let minimized = false;
+    minimizeCalcBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const buttons = calculator.querySelector('.calc-buttons');
+        const display = calculator.querySelector('.calc-display');
+        
+        if (!minimized) {
+            buttons.style.display = 'none';
+            display.style.display = 'none';
+            calculator.style.height = '60px';
+            minimized = true;
+        } else {
+            buttons.style.display = 'grid';
+            display.style.display = 'block';
+            calculator.style.height = 'auto';
+            minimized = false;
         }
+    });
+    
+    console.log("Calculadora inicializada com múltiplos botões!");
+}
 
         // Funções da calculadora
         function calcNumber(num) {
