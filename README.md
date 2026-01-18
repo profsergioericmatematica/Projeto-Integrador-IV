@@ -1,101 +1,251 @@
-# Projeto-Integrador-IV
+# 🎮 LIAM - Laboratório Interativo de Alfabetização Matemática
 
-# 🎮 LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano - 9º Ano
+> Projeto Integrador IV | Licenciatura em Matemática | UNIVESP | MIT License
 
-## 📖 Sobre o Projeto
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![UNIVESP](https://img.shields.io/badge/UNIVESP-Projeto_Integrador_IV-red)](https://univesp.br)
 
-O **LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano** é uma aplicação web educativa desenvolvida como parte do **Projeto Integrador IV** do curso de Licenciatura em Matemática da **UNIVESP** (Universidade Virtual do Estado de São Paulo).
+![Status](https://img.shields.io/badge/Status-Concluído-brightgreen)
 
-O objetivo da aplicação é auxiliar alunos do **9º Ano do Ensino Fundamental (Anos Finais)** a consolidarem conhecimentos em **Probabilidade e Estatística** através de uma abordagem gamificada, moderna e interativa. O sistema inclui ferramentas de apoio ao cálculo e métricas detalhadas de desempenho.
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
----
-
-## 🚀 Funcionalidades Principais
-
-O sistema foi projetado para engajar adolescentes através de elementos visuais modernos e mecânicas de jogos:
-
-### 🏆 Gamificação e Engajamento
-* **Sistema de XP e Níveis:** Os alunos ganham experiência a cada acerto e sobem de nível, desbloqueando novos recursos.
-* **Sequência de Acertos (Streak):** Bonificação visual e pontuação extra para respostas corretas consecutivas.
-* **Conquistas:** Badges desbloqueáveis (ex: "Demônio da Velocidade", "Mestre da Sequência").
-* **Power-ups Estratégicos:**
-    * 💡 **Dica:** Mostra uma explicação auxiliar.
-    * ⏭️ **Pular:** Permite avançar sem perder a sequência.
-    * ⏱️ **Tempo Extra:** Adiciona segundos ao cronômetro.
-    * ✨ **Dobro:** Pontuação em dobro na próxima jogada.
-
-### 🧮 Ferramentas Integradas
-* **Calculadora Científica:** Uma calculadora completa embutida na interface (drag-and-drop), permitindo que o aluno realize cálculos complexos (raízes, potências, porcentagem, Pi) sem sair do jogo.
-
-### 📊 Análise de Desempenho
-* **Gráficos Interativos:** Utiliza a biblioteca `Chart.js` para plotar a evolução do aluno (Acertos vs. Tempo de Resposta).
-* **Feedback Imediato:** Explicações detalhadas para erros e acertos.
-* **Relatórios Exportáveis:** Gera um arquivo `.txt` detalhado com todas as estatísticas da partida para download.
+> **LIAM - Laboratório Interativo de Alfabetização Matemática** é uma aplicação web gamificada desenvolvida para estudantes do 9º Ano do Ensino Fundamental, com foco em **Probabilidade** e **Estatística**, alinhada às competências da BNCC.
 
 ---
 
-## 📚 Conteúdos Abordados
+## 🎯 Objetivo do Projeto
 
-O jogo foca nas unidades temáticas essenciais para o 9º ano, conforme a BNCC:
+Este projeto foi desenvolvido como parte do **Projeto Integrador IV** da Licenciatura em Matemática da **UNIVESP**. O objetivo é transformar a resolução de exercícios matemáticos em uma experiência engajadora, utilizando gamificação para reduzir a ansiedade matemática e aumentar a fixação de conteúdo, tornando o aprendizado mais interativo e eficaz.
 
-1.  **📊 Probabilidade:**
-    * Eventos dependentes e independentes.
-    * Cálculo de chances (frações e porcentagens).
-    * Espaço amostral (dados, moedas, urnas).
-2.  **📈 Estatística:**
-    * Medidas de tendência central (Média, Mediana, Moda).
-    * Interpretação de gráficos e tabelas.
-    * Amplitude e Desvio Padrão.
+## ✨ Funcionalidades Principais
 
----
+### 📚 Conteúdo Educacional
+- **Probabilidade:** Eventos dependentes/independentes, espaço amostral, cálculo de probabilidades
+- **Estatística:** Média, moda, mediana, análise de gráficos, interpretação de dados
+- **Revisão Teórica:** Módulos de consulta rápida para reforçar conceitos antes de jogar
 
-## 🛠️ Tecnologias Utilizadas
+### 🎮 Sistema de Gamificação
+- **Sistema de XP e Níveis:** Evolução progressiva conforme acertos
+- **Streak (Sequência):** Bônus de pontuação por acertos consecutivos
+- **🏆 Conquistas:** 10 medalhas desbloqueáveis (ex: "Perfeição", "Velocista", "Mestre da Sequência")
+- **✨ Power-ups:**
+  - 💡 Dica Extra (3 disponíveis)
+  - ⏭️ Pular Questão (2 disponíveis)
+  - ⏱️ Tempo Extra (+10s, 2 disponíveis)
+  - ✨ Pontos em Dobro (3 disponíveis)
 
-O projeto é uma **Single Page Application (SPA)** leve e performática:
-
-* **HTML5:** Estrutura semântica.
-* **CSS3:** Design responsivo com tema "Dark/Neon", animações de fogos de artifício (CSS puro + JS) e layout Flexbox/Grid.
-* **JavaScript (Vanilla):**
-    * Lógica completa do jogo e gerenciamento de estado.
-    * Manipulação de áudio (Web Audio API e Fallbacks).
-    * Persistência local (`localStorage`) para salvar progresso e XP.
-* **Bibliotecas Externas:**
-    * [Chart.js](https://www.chartjs.org/): Para visualização de dados.
-    * [Font Awesome](https://fontawesome.com/): Para ícones da interface.
-
----
-
-## 💻 Como Executar
-
-Este é um projeto estático, não requer instalação de servidor backend (Node, PHP, etc).
-
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/seu-usuario/seu-repositorio.git](https://github.com/seu-usuario/seu-repositorio.git)
-    ```
-2.  **Abra o projeto:**
-    Navegue até a pasta e abra o arquivo `index.html` em seu navegador de preferência (Chrome, Firefox, Edge).
-3.  **Áudio:**
-    Na primeira execução, clique em qualquer lugar da tela ou no botão "Testar Som" para habilitar a reprodução de efeitos sonoros pelo navegador.
+### 🛠️ Ferramentas Integradas
+- **🧮 Calculadora Científica:** Integrada na interface, com arrastar e minimizar
+- **📊 Análise de Desempenho:** Gráficos interativos (Chart.js) e estatísticas detalhadas
+- **🔔 Feedback Imediato:** Correção visual e explicativa passo a passo
+- **📥 Exportação de Dados:** Download de relatório completo em .txt
+- **♿ Acessibilidade:** Suporte a leitores de tela e navegação por teclado
+- **🎆 Efeitos Visuais:** Fogos de artifício em Canvas para celebrações
 
 ---
 
-## 👥 Autores
+## 🚀 Tecnologias Utilizadas
 
-Trabalho desenvolvido pelos alunos de Licenciatura em Matemática da UNIVESP:
+O projeto foi construído utilizando tecnologias Web padrão, garantindo compatibilidade com qualquer navegador moderno.
 
-* **Antonio Antunes Junior**
-* **Giovani Machado de Lima**
-* **Priscilla Santiago Zamorra**
-* **Rodrigo Aires de Medeiros Correa**
-* **Sergio Eric Reis de Oliveira**
-* **Vitor Correa Uberti**
+### Core Technologies
+- **HTML5** - Estrutura semântica e acessível
+- **CSS3** - Estilização responsiva, animações, CSS Grid e Flexbox
+- **JavaScript (ES6+)** - Lógica completa do jogo, manipulação do DOM
+
+### Bibliotecas Externas (via CDN)
+- **[MathJax 3](https://www.mathjax.org/)** - Renderização de fórmulas matemáticas LaTeX
+- **[Chart.js](https://www.chartjs.org/)** - Gráficos de desempenho e análise
+- **[Font Awesome 6](https://fontawesome.com/)** - Ícones e elementos visuais
+- **Canvas API** - Efeitos visuais de alta performance (fogos de artifício)
+
+### Recursos Avançados
+- **Web Audio API** - Sistema de sons e efeitos sonoros
+- **LocalStorage** - Persistência de dados do jogador
+- **CSS Variables** - Sistema de design consistente
+- **Responsive Design** - Adaptação para mobile e desktop
 
 ---
 
-## 📄 Licença
+## 📦 Como Executar o Projeto
 
-Este projeto está licenciado sob a licença **MIT** - sinta-se livre para usar, modificar e distribuir para fins educacionais.
+### 🌐 Opção 1: GitHub Pages (Recomendado)
+Acesse a versão online diretamente pelo link:
+> **[INSERIR LINK DO GITHUB PAGES AQUI]**
+
+### 💻 Opção 2: Execução Local
+1. **Clone este repositório:**
+   ```bash
+   git clone https://github.com/profsergioericmatematica/Projeto-Integrador-IV.git
+   ```
+
+2. **Navegue até a pasta do projeto:**
+   ```bash
+   cd Projeto-Integrador-IV
+   ```
+
+3. **Execute de uma das formas:**
+   - **Método simples:** Abra o arquivo `index.html` diretamente no navegador
+   - **Com servidor local (recomendado):**
+     ```bash
+     # Com Python
+     python -m http.server 8000
+     
+     # Ou com Node.js
+     npx serve .
+     ```
+     Acesse: `http://localhost:8000`
+
+**Nota:** Conexão com internet é necessária para carregar as bibliotecas via CDN.
 
 ---
-*Desenvolvido com 💙 para o ensino da matemática.*
+
+## 🎮 Como Jogar
+
+1. **Escolha o Tema:** Selecione entre Probabilidade ou Estatística
+2. **Configure as Preferências:** Ajuste som e explore o tutorial
+3. **Responda as Questões:** 20 questões com 60 segundos cada
+4. **Use Estrategicamente:** Power-ups, calculadora e revisão teórica
+5. **Acompanhe o Progresso:** Ganhe XP, suba de nível e desbloqueie conquistas
+6. **Analise os Resultados:** Veja estatísticas detalhadas e gráficos de desempenho
+
+---
+
+## 📊 Estrutura do Código
+
+### Arquitetura
+```
+index.html              # Página única com todo o conteúdo
+├── <head>              # Configurações, CSS integrado, MathJax
+├── <body>              # Interface completa do jogo
+│   ├── Container Principal
+│   ├── Múltiplos Modais
+│   ├── Sistemas de Jogo
+│   └── Footer Informativo
+└── <script>            # ~2000 linhas de JavaScript organizado
+```
+
+### Principais Módulos
+- **Sistema de Questões:** Banco de 40 questões (20 por tema)
+- **Calculadora Científica:** Operações básicas e funções matemáticas
+- **Sistema de Conquistas:** 10 conquistas com tracking de progresso
+- **Gerenciador de Áudio:** Efeitos sonoros e fallbacks
+- **Canvas Animations:** Sistema otimizado de fogos de artifício
+
+---
+
+## 🔧 Análise Técnica
+
+### ✅ Pontos Fortes
+- **Código completamente autossuficiente** (single HTML file)
+- **Sistema de gamificação bem implementado** com XP, níveis e conquistas
+- **Design responsivo** e visualmente atraente
+- **Recursos de acessibilidade** integrados
+- **Performance otimizada** com Canvas para efeitos visuais
+- **Persistência de dados** via LocalStorage
+
+### 🔧 Pontos de Melhoria
+- **Modularização:** Separar CSS e JS em arquivos externos
+- **Performance:** Otimizar carregamento de recursos
+- **Manutenibilidade:** Dividir código JavaScript em módulos
+- **Testes:** Adicionar testes cross-browser e mobile
+
+### 🛠️ Personalização
+Para adicionar novas questões:
+```javascript
+{
+  question: "Texto da pergunta com $fórmulas$ LaTeX",
+  options: ["A", "B", "C", "D"],
+  correct: 0,
+  hint: "Dica para o aluno",
+  explanation: "Explicação detalhada da resposta",
+  difficulty: "easy|medium|hard",
+  points: 10|15|20
+}
+```
+
+---
+
+## 👥 Equipe de Desenvolvimento
+
+**Projeto Integrador IV - Licenciatura em Matemática - UNIVESP**
+
+| Nome | Contribuição |
+|------|--------------|
+| **Antonio Antunes Junior** | Desenvolvimento e testes |
+| **Giovani Machado de Lima** | Desenvolvimento e lógica do jogo |
+| **Priscilla Santiago Zamorra** | Design e conteúdo educacional |
+| **Rodrigo Aires de Medeiros Correa** | Sistema de gamificação |
+| **Sergio Eric Reis de Oliveira** | Arquitetura e integração |
+| **Vitor Correa Uberti** | Efeitos visuais e otimização |
+
+**Orientação:** Professores da UNIVESP
+
+---
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Para colaborar:
+
+1. **Faça um Fork** do projeto
+2. **Crie uma Branch** para sua feature (`git checkout -b feature/NovaFuncionalidade`)
+3. **Commit suas mudanças** (`git commit -m 'Adiciona nova funcionalidade'`)
+4. **Push para a Branch** (`git push origin feature/NovaFuncionalidade`)
+5. **Abra um Pull Request**
+
+### Áreas que Precisam de Ajuda
+- 📱 Melhorias de responsividade para mobile
+- 🎨 Novos temas visuais
+- 📚 Expansão do banco de questões
+- 🌐 Tradução para outros idiomas
+
+---
+
+## 📝 Licença
+
+Este projeto está licenciado sob a **MIT License** - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 📚 Recursos Educacionais
+
+### Alinhamento com a BNCC
+O projeto atende às competências específicas de Matemática do 9º Ano:
+- **Competência 1:** Utilizar conhecimentos matemáticos para resolver problemas
+- **Competência 5:** Utilizar tecnologias digitais para aprendizagem
+- **Habilidades:** EF09MA20, EF09MA21, EF09MA22, EF09MA23
+
+### Metodologia
+- **Aprendizado Baseado em Jogos (ABJ)**
+- **Feedback Imediato** para reforço positivo
+- **Progressão por Desafios** adaptada ao ritmo do aluno
+- **Contextualização** de conceitos abstratos
+
+---
+
+## 📞 Contato e Suporte
+
+- **Repositório:** [github.com/profsergioericmatematica/Projeto-Integrador-IV](https://github.com/profsergioericmatematica/Projeto-Integrador-IV)
+- **UNIVESP:** [www.univesp.br](https://www.univesp.br)
+- **Relatar Issues:** Use a seção de Issues do GitHub
+
+---
+
+<p align="center">
+  Desenvolvido com 💙, 🔢 e 🎮 para a educação matemática brasileira
+  <br>
+  <em>"A matemática é a linguagem com a qual Deus escreveu o universo." - Galileu Galilei</em>
+</p>
+
+---
+
+**Próximos Passos:**
+- [ ] Adicionar screenshots ao README
+- [ ] Configurar GitHub Pages para deploy
+- [ ] Implementar modo offline com Service Workers
+- [ ] Adicionar mais temas matemáticos
+- [ ] Criar versão PWA para instalação em dispositivos móveis
+
+*Última atualização: Janeiro 2026*
