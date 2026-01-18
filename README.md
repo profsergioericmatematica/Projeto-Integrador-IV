@@ -17,7 +17,7 @@
 
 ## 🎯 Objetivo do Projeto
 
-Este projeto foi desenvolvido como parte do **Projeto Integrador IV** do curso de Graduação de Licenciatura em Matemática da **UNIVESP**. O objetivo é transformar a resolução de exercícios matemáticos em uma experiência engajadora, utilizando gamificação para reduzir a ansiedade matemática e aumentar a fixação de conteúdo, tornando o aprendizado mais interativo e eficaz.
+Este projeto foi desenvolvido como parte do **Projeto Integrador IV** do curso de Graduação de Licenciatura em Matemática da Universidade Virtual do Estado de São Paulo - **UNIVESP**. O objetivo é transformar a resolução de exercícios matemáticos em uma experiência engajadora, utilizando gamificação para reduzir a ansiedade matemática e aumentar a fixação de conteúdo, tornando o aprendizado mais interativo e eficaz.
 
 ---
 
