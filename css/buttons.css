@@ -1,0 +1,97 @@
+/* BOTÕES GERAIS */
+.btn {
+    background: linear-gradient(90deg, #ff9800, #ff5722);
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    font-size: 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 10px;
+    font-weight: bold;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+}
+
+.btn:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.6);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn-secondary {
+    background: linear-gradient(90deg, #2196f3, #1976d2);
+}
+
+.test-fireworks-btn {
+    background: linear-gradient(90deg, #ff5722, #d81b60);
+}
+
+/* BOTÃO DA CALCULADORA */
+.calc-btn {
+    /* Removemos position: fixed, bottom e left */
+    position: relative; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Tamanho igual ao dos power-ups */
+    width: 60px;
+    height: 60px;
+    
+    /* Estilo visual */
+    background: linear-gradient(135deg, #4caf50, #2e7d32);
+    color: white;
+    border-radius: 50%;
+    border: 2px solid #4caf50; /* Borda para combinar */
+    font-size: 24px; /* Ajuste para o ícone ficar centralizado */
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+    z-index: var(--z-controls);
+    transition: all 0.3s ease;
+    
+    /* Margem para não colar nos outros */
+    margin: 0; 
+}
+
+.calc-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+}
+
+/* BOTÕES DE CONFIGURAÇÃO */
+select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffeb3b;
+    border: 1px solid rgba(255, 235, 59, 0.3);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+select:hover {
+    border-color: #ff9800;
+}
+
+select option {
+    background: #1a237e;
+    color: white;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #bbdefb;
+    font-weight: 500;
+}

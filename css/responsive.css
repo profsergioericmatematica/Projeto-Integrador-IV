@@ -1,0 +1,58 @@
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .theme-selection {
+        grid-template-columns: 1fr;
+    }
+    
+    .game-status {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .calculator {
+        width: 90%;
+        left: 5%;
+        top: 50px;
+        transform: translateX(-50%);
+    }
+    
+    .achievements-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .game-footer {
+        padding: 20px;
+    }
+    
+    .authors-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .footer-title {
+        font-size: 1.5rem;
+    }
+    
+    /* Ajuste para os modais em telas pequenas */
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+    }
+    
+    .modal-body {
+        max-height: 60vh;
+    }
+}

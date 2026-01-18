@@ -1,0 +1,35 @@
+/* ARQUIVO PRINCIPAL QUE IMPORTA TODOS OS OUTROS */
+
+/* 1. Variáveis e Reset */
+@import url('variables.css');
+@import url('reset.css');
+
+/* 2. Layout e Estrutura */
+@import url('layout.css');
+
+/* 3. Componentes do Jogo */
+@import url('game-status.css');
+@import url('themes.css');
+@import url('questions.css');
+@import url('powerups.css');
+@import url('buttons.css');
+@import url('calculator.css');
+@import url('achievements.css');
+@import url('results.css');
+
+/* 4. Componentes Especiais */
+@import url('modals.css');
+@import url('footer.css');
+
+/* 5. Animações e Responsividade */
+@import url('animations.css');
+@import url('responsive.css');
+
+/* OU, se preferir mais simples: */
+
+/* Você pode simplesmente colocar todos os imports em ordem no HTML:
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/layout.css">
+... etc
+*/

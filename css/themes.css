@@ -1,0 +1,68 @@
+/* SELEÇÃO DE TEMAS */
+.theme-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.theme-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+.theme-card:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 152, 0, 0.3);
+}
+
+.theme-card.selected {
+    background: rgba(255, 152, 0, 0.2);
+    border: 2px solid #ff9800;
+    box-shadow: 0 10px 25px rgba(255, 152, 0, 0.3);
+}
+
+.theme-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+    color: #ffeb3b;
+}
+
+.theme-card h3 {
+    margin-bottom: 10px;
+    color: #ffeb3b;
+    font-size: 1.5rem;
+}
+
+.theme-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #90caf9;
+}
+
+/* BOTÕES DE ESCOLHA DE TEMA (para modais) */
+.theme-choice-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 25px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.theme-choice-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ff9800;
+    transform: translateY(-5px);
+}

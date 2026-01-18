@@ -1,0 +1,60 @@
+/* POWER-UPS */
+.power-ups {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alinha verticalmente */
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap; /* Permite quebra de linha em telas pequenas */
+}
+
+.power-up {
+    background: rgba(156, 39, 176, 0.3);
+    border: 2px solid #9c27b0;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.power-up:hover:not(:disabled) {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(156, 39, 176, 0.5);
+}
+
+.power-up:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.power-up.disabled {
+    opacity: 0.3;               /* Bem transparente */
+    filter: grayscale(100%);    /* Tira toda a cor (fica cinza) */
+    cursor: not-allowed;        /* Cursor de bloqueio */
+    pointer-events: none;       /* Impede cliques */
+    box-shadow: none !important;/* Remove o brilho */
+    border-color: #555 !important; /* Borda escura */
+    transform: none !important; /* Remove animação de movimento */
+}
+
+.power-up-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f44336;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}

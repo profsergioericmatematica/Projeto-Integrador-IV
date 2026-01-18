@@ -1,0 +1,21 @@
+/* VARIÁVEIS GLOBAIS E SISTEMA DE CAMADAS */
+:root {
+    /* --- SISTEMA DE CAMADAS (Z-INDEX) --- */
+    --z-back: -1;          /* Fundo */
+    --z-base: 1;           /* Conteúdo normal */
+    --z-content: 10;       /* Container principal */
+    --z-controls: 100;     /* Botões flutuantes (Conquista, Calc Btn) */
+    --z-floating: 500;     /* Calculadora aberta */
+    --z-overlay: 900;      /* Fundo escuro do modal */
+    --z-modal: 1000;       /* Janelas (Conquistas, Config) */
+    --z-notification: 2000;/* Avisos (Level Up, Pontos) */
+    --z-effects: 9999;     /* Fogos de artifício (Sempre no topo) */
+}
+
+/* CORES PRINCIPAIS (adicione se quiser) */
+:root {
+    --primary-blue: #1a237e;
+    --secondary-blue: #283593;
+    --accent-yellow: #ffeb3b;
+    --accent-orange: #ff9800;
+}

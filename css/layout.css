@@ -1,0 +1,37 @@
+/* LAYOUT PRINCIPAL E CONTAINERS */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: var(--z-content); /* Era 10 */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* TÍTULO PRINCIPAL */
+h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffeb3b;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    font-size: 2.5rem;
+    background: linear-gradient(90deg, #ffeb3b, #ff9800);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 235, 59, 0.3);
+}
+
+/* GERENCIAMENTO DE TELAS */
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}

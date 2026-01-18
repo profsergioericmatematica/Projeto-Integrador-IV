@@ -1,0 +1,833 @@
+<!-- versão 78 -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano</title>
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS Separado -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/game-status.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/questions.css">
+    <link rel="stylesheet" href="css/powerups.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/calculator.css">
+    <link rel="stylesheet" href="css/achievements.css">
+    <link rel="stylesheet" href="css/results.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <script>
+    window.MathJax = {
+        tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']], // Permite usar $fórmula$ no meio do texto
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] // Permite usar $$fórmula$$ em linha separada
+        },
+        svg: {
+        fontCache: 'global'
+        }
+    };
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+
+</head>
+<body>
+    <div id="a11y-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div class="container"> <!-- INÍCIO DO CONTAINER -->
+        
+        
+        <h1>🎮 LIAM - Laboratório Interativo de Alfabetização Matemática - 9º Ano 🎮</h1>
+        
+<div style="text-align: center;">
+    <button class="btn" onclick="openTutorialModal()" style="background: linear-gradient(90deg, #2196f3, #1976d2); margin-top: 10px;">
+        🎓 Tutorial Inicial
+    </button>
+    <button class="btn" id="theory-btn" style="background: linear-gradient(90deg, #9c27b0, #673ab7); margin-top: 10px;">
+        📚 Revisão Teórica
+    </button>
+    <button class="btn btn-secondary" onclick="showStats()">📊 Ver Estatísticas</button>
+    <button class="btn test-fireworks-btn" onclick="testFireworks()" style="margin-top: 10px;">🎆 Testar Fogos de Artifício</button>
+    <button class="btn" onclick="testAudio()" style="background: linear-gradient(90deg, #5cda2a, #1ead25); margin-top: 10px;">🔊 Testar Som</button>
+    
+    <!-- Novo botão de conquistas -->
+    <button class="btn" onclick="toggleAchievements()" style="background: linear-gradient(90deg, #ff9800, #ff5722); margin-top: 10px;">
+        🏆 Conquistas
+    </button>
+
+</div>
+
+<!-- Botão de conquistas -->
+        <div class="achievement-badge" id="achievement-btn" role="button" tabindex="0" aria-label="Abrir Conquistas">
+    🏆      <span class="achievement-count" id="achievement-count">0</span>
+        </div>
+        <!-- Status do jogo -->
+        <div class="game-status">
+            <div class="status-item">
+                <div class="status-label">Tema</div>
+                <div class="status-value" id="current-theme">-</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">Pontuação</div>
+                <div class="status-value" id="score">0</div>
+                <div class="status-subtext" id="streak">Streak: 0</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">Questão</div>
+                <div class="status-value" id="question-counter">0/20</div>
+                <div class="status-subtext">Tempo: 60s</div>
+            </div>
+            <div class="status-item">
+                <div class="status-label">Nível</div>
+                <div class="status-value" id="level">1</div>
+                <div class="status-subtext" id="xp">0/100 XP</div>
+            </div>
+        </div>
+        
+        <!-- Barra de progresso do nível -->
+        <div class="level-progress">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                <span>Progresso do Nível</span>
+                <span id="level-percentage">0%</span>
+            </div>
+            <div class="level-bar">
+                <div class="level-fill" id="level-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Streak indicator -->
+        <div class="streak-indicator" id="streak-indicator">
+            🔥 Streak: <span id="current-streak">0</span>
+        </div>
+        
+       
+        <div class="calculator" id="calculator">
+            <div class="calc-header" id="calc-header">
+                <div class="calc-title">Calculadora</div>
+                <div class="calc-controls">
+                    <button id="minimize-calc">−</button>
+                    <button id="close-calc">×</button>
+                </div>
+            </div>
+            <div class="calc-display">
+                <div class="calc-expression" id="calc-expression">0</div>
+                <div class="calc-result" id="calc-result">0</div>
+            </div>
+            <div class="calc-buttons">
+                <button class="calc-button clear" onclick="calcClear()">C</button>
+                <button class="calc-button clear" onclick="calcClearEntry()">CE</button>
+                <button class="calc-button" onclick="calcBackspace()">⌫</button>
+                <button class="calc-button operator" onclick="calcOperator('/')">÷</button>
+                <button class="calc-button operator" onclick="calcSqrt()">√</button>
+                
+                <button class="calc-button" onclick="calcNumber(7)">7</button>
+                <button class="calc-button" onclick="calcNumber(8)">8</button>
+                <button class="calc-button" onclick="calcNumber(9)">9</button>
+                <button class="calc-button operator" onclick="calcOperator('*')">×</button>
+                <button class="calc-button operator" onclick="calcPower()">x²</button>
+                
+                <button class="calc-button" onclick="calcNumber(4)">4</button>
+                <button class="calc-button" onclick="calcNumber(5)">5</button>
+                <button class="calc-button" onclick="calcNumber(6)">6</button>
+                <button class="calc-button operator" onclick="calcOperator('-')">−</button>
+                <button class="calc-button operator" onclick="calcPercent()">%</button>
+                
+                <button class="calc-button" onclick="calcNumber(1)">1</button>
+                <button class="calc-button" onclick="calcNumber(2)">2</button>
+                <button class="calc-button" onclick="calcNumber(3)">3</button>
+                <button class="calc-button operator" onclick="calcOperator('+')">+</button>
+                <button class="calc-button" onclick="calcPi()">π</button>
+                
+                <button class="calc-button" onclick="calcPlusMinus()">±</button>
+                <button class="calc-button" onclick="calcNumber(0)">0</button>
+                <button class="calc-button" onclick="calcDecimal()">.</button>
+                <button class="calc-button equals" onclick="calcEquals()">=</button>
+            </div>
+        </div>
+        
+        <!-- Timer circular -->
+        <div class="timer-container" id="timer-container" style="display: none;">
+            <svg width="100" height="100" viewBox="0 0 100 100" class="timer-circle">
+                <circle cx="50" cy="50" r="45" class="timer-bg"></circle>
+                <circle cx="50" cy="50" r="45" class="timer-progress" id="timer-progress"></circle>
+            </svg>
+            <div class="timer-text" id="timer-text">60</div>
+        </div>
+        
+        <!-- Tela inicial -->
+        <div class="screen" id="start-screen" style="display: block;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <div style="font-size: 60px; margin-bottom: 20px;">🧮</div>
+                <h2>Escolha o Tema</h2>
+                <p style="color: #bbdefb; max-width: 600px; margin: 0 auto;">Teste seus conhecimentos em Matemática do 9º ano. Use a calculadora para ajudar nos cálculos!</p>
+            </div>
+            
+            <div class="theme-selection">
+                <div class="theme-card" data-theme="probabilidade">
+                    <div class="theme-icon">📊</div>
+                    <h3>Probabilidade</h3>
+                    <p>Eventos dependentes e independentes, cálculo de probabilidades</p>
+                    <div class="theme-stats">
+                        <span>🔓 Concluído: <span id="probabilidade-progress">0%</span></span>
+                        <span>🏆 Recorde: <span id="probabilidade-record">0</span></span>
+                    </div>
+                </div>
+                
+                <div class="theme-card" data-theme="estatistica">
+                    <div class="theme-icon">📈</div>
+                    <h3>Estatística</h3>
+                    <p>Gráficos, média, mediana, moda, análise de dados</p>
+                    <div class="theme-stats">
+                        <span>🔓 Concluído: <span id="estatistica-progress">0%</span></span>
+                        <span>🏆 Recorde: <span id="estatistica-record">0</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOTÃO INICIAR JOGO ABAIXO DA SELEÇÃO DE TEMA -->
+<div style="text-align: center; margin: 40px 0;">
+    <button class="btn" id="start-btn" style="padding: 20px 50px; font-size: 1.2em;">
+        🎮 Iniciar Jogo
+    </button>
+</div>
+         
+ <!-- Power-ups disponíveis -->
+            <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="color: #ffeb3b; margin-bottom: 15px;">✨ Power-ups e Calculadora</h3>
+                <div class="power-ups" style="justify-content: center;">
+                    <div class="power-up" data-power="hint" title="Dica extra (3 disponíveis)">
+                        💡
+                        <div class="power-up-count" id="hint-count">3</div>
+                    </div>
+                    <div class="power-up" data-power="skip" title="Pular questão (2 disponíveis)">
+                        ⏭️
+                        <div class="power-up-count" id="skip-count">2</div>
+                    </div>
+                    <div class="power-up" data-power="time" title="+10 segundos (1 disponível)">
+                        ⏱️
+                        <div class="power-up-count" id="time-count">1</div>
+                    </div>
+                    <div class="power-up" data-power="double" title="Pontos em dobro (1 disponível)">
+                        ✨
+                        <div class="power-up-count" id="double-count">1</div>
+                    </div>
+                    <button class="calc-btn open-calc-btn" id="open-calc" aria-label="Abrir Calculadora" title="Calculadora">
+    🔢
+</button>
+                </div>
+            </div>
+
+
+            <!-- Configurações simplificadas -->
+           
+
+<div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="color: #ffeb3b; margin-bottom: 15px;">⚙️ Configurações</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr; gap: 15px; max-width: 300px; margin: 0 auto;">
+                    
+                    <div>
+                        <label for="sound-toggle">Sons e Efeitos:</label>
+                        <select id="sound-toggle">
+                            <option value="true">Ligado 🔊</option>
+                            <option value="false">Desligado 🔇</option>
+                        </select>
+                    </div>
+
+                    <div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                        <button id="reset-progress-btn" class="btn" style="background: linear-gradient(90deg, #d32f2f, #b71c1c); width: 100%; font-size: 14px; padding: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                            🗑️ Apagar Todo o Progresso
+                        </button>
+                    </div>
+                    </div>
+
+                <div style="text-align: center; margin-top: 15px; color: #bbdefb; font-size: 14px;">
+                    <p>📝 Cada tema tem 20 questões</p>
+                    <p>⏱️ Tempo: 60 segundos por questão</p>
+                    <p>🎯 Dificuldade: Mista (Fácil, Médio e Difícil)</p>
+                </div>
+            </div>
+
+
+
+            
+           
+            
+            
+        </div>
+        
+        <!-- Tela de perguntas -->
+        <div class="screen" id="question-screen" style="display: none;">
+            <div class="question-header">
+                <div class="question-number" id="question-number">1</div>
+                <div class="question-difficulty" id="question-difficulty">Médio</div>
+            </div>
+            
+            <div class="question-card">
+                <div class="question-text" id="question-text">
+                    Carregando pergunta...
+                </div>
+                
+                <div class="options-grid" id="options-container">
+                    <!-- Opções serão inseridas aqui -->
+                </div>
+            </div>
+            
+            <!-- Power-ups durante o jogo -->
+            <div class="power-ups" id="game-power-ups">
+                <div class="power-up" data-power="hint" title="Dica extra" onclick="usePowerUp('hint')">
+                    💡
+                    <div class="power-up-count" id="game-hint-count">3</div>
+                </div>
+                <div class="power-up" data-power="skip" title="Pular questão" onclick="usePowerUp('skip')">
+                    ⏭️
+                    <div class="power-up-count" id="game-skip-count">2</div>
+                </div>
+                <div class="power-up" data-power="time" title="+10 segundos" onclick="usePowerUp('time')">
+                    ⏱️
+                    <div class="power-up-count" id="game-time-count">2</div>
+                </div>
+                <div class="power-up" data-power="double" title="Pontos em dobro" onclick="usePowerUp('double')">
+                    ✨
+                    <div class="power-up-count" id="game-double-count">3</div>
+                </div>
+                
+                <!-- Botão da calculadora para as questões -->
+                <button class="calc-btn open-calc-btn" id="open-calc-game" aria-label="Abrir Calculadora" title="Calculadora">
+                    🔢
+                </button>
+                </div>
+            </div>
+            
+            <!-- Feedback -->
+            <div class="feedback-card correct" id="correct-feedback">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="font-size: 30px;">✅</div>
+                    <div>
+                        <h3 style="color: #4caf50; margin-bottom: 5px;">Resposta Correta!</h3>
+                        <p>Você ganhou <span id="points-earned">0</span> pontos!</p>
+                        <p id="bonus-info" style="font-size: 12px; color: #90caf9;"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feedback-card incorrect" id="incorrect-feedback">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div style="font-size: 30px;">❌</div>
+                    <div>
+                        <h3 style="color: #f44336; margin-bottom: 5px;">Resposta Incorreta</h3>
+                        <p>A resposta correta é: <span id="correct-answer"></span></p>
+                        <p id="explanation" style="font-size: 14px; margin-top: 10px;"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-controls" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+                <button class="btn" id="next-btn" disabled>Próxima Questão</button>
+               <!-- <button class="btn btn-secondary" id="hint-btn" onclick="showHint()">💡 Pedir Dica</button> -->
+            </div>
+        </div>
+        
+        <!-- Tela de resultados -->
+        <div class="screen" id="results-screen" style="display: none;">
+            <div class="results-container">
+                <div class="trophy" id="trophy">🏆</div>
+                
+                <h2 style="margin-bottom: 20px;">Desafio Concluído!</h2>
+                
+                <div class="score-display" id="final-score">0%</div>
+                <div style="color: #bbdefb; font-size: 18px; margin-bottom: 30px;">Sua pontuação final</div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="status-label">Acertos</div>
+                        <div class="status-value" id="final-correct">0</div>
+                        <div class="status-subtext" id="accuracy">0% de precisão</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="status-label">Pontos</div>
+                        <div class="status-value" id="final-points">0</div>
+                        <div class="status-subtext" id="bonus-points">+0 bônus</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="status-label">Tempo Médio</div>
+                        <div class="status-value" id="avg-time">0s</div>
+                        <div class="status-subtext" id="time-saved">-0s com power-ups</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="status-label">Streak Máxima</div>
+                        <div class="status-value" id="max-streak">0</div>
+                        <div class="status-subtext" id="streak-bonus">+0 pontos</div>
+                    </div>
+                </div>
+                
+                <!-- Novas conquistas desbloqueadas -->
+                <div id="new-achievements" style="display: none; background: rgba(255, 235, 59, 0.1); padding: 20px; border-radius: 15px; margin: 30px 0; border: 2px solid #ffeb3b;">
+                    <h3 style="color: #ffeb3b; margin-bottom: 15px;">🎉 Novas Conquistas!</h3>
+                    <div id="achievements-unlocked"></div>
+                </div>
+                
+                <!-- Resumo das respostas -->
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
+                    <h3 style="color: #ffeb3b; margin-bottom: 15px;">📋 Resumo das Respostas</h3>
+                    <div id="answers-summary" style="max-height: 300px; overflow-y: auto; padding-right: 10px;">
+                        <!-- Resumo será inserido aqui -->
+                    </div>
+                </div>
+                
+                <!-- Gráfico de desempenho -->
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin: 30px 0;">
+                    <h3 style="color: #ffeb3b; margin-bottom: 15px;">📊 Seu Desempenho</h3>
+                    <canvas id="performance-chart" width="400" height="200" style="width: 100%; max-width: 600px; margin: 0 auto;"></canvas>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" id="restart-btn">🔄 Jogar Novamente</button>
+                    <button class="btn btn-secondary" id="change-theme-btn">🎯 Mudar Tema</button>
+                    <button class="btn" onclick="shareResults()" style="background: linear-gradient(90deg, #2196f3, #1976d2);">📤 Compartilhar</button>
+                    <button class="btn" id="download-stats-btn" style="background: linear-gradient(90deg, #4caf50, #2e7d32);">📥 Baixar Estatísticas</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FOOTER APRIMORADO -->
+        <footer class="game-footer">
+            <div class="footer-content">
+                <h2 class="footer-title"><i class="fas fa-graduation-cap"></i> Projeto Integrador IV</h2>
+                
+                <div class="math-formulas">
+                    <div class="math-formula">π</div>
+                    <div class="math-formula">∑</div>
+                    <div class="math-formula">∫</div>
+                    <div class="math-formula">√</div>
+                    <div class="math-formula">∞</div>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-university"></i>
+                        <span>UNIVESP</span>
+                    </a>
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-book"></i>
+                        <span>BNCC Matemática</span>
+                    </a>
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Licenciatura em Matemática</span>
+                    </a>
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Estatística</span>
+                    </a>
+                    <a href="#" class="footer-link">
+                        <i class="fas fa-percentage"></i>
+                        <span>Probabilidade</span>
+                    </a>
+                </div>
+                
+                <a href="https://github.com/profsergioericmatematica/Projeto-Integrador-IV" class="github-link" target="_blank">
+                    <i class="fab fa-github"></i>
+                    <span>Código disponível no GitHub</span>
+                </a>
+                
+                <div class="copyright">
+                    <p>© 2026 Antonio Antunes Junior, Flávio Rabelo Barros, Giovani Machado de Lima, Mariane Mendes Coutinho, Priscilla Santiago Zamorra, Rodrigo Aires de Medeiros Correa, Sergio Eric Reis de Oliveira e Vitor Correa Uberti</p>
+                    <p>Projeto Integrador IV - Licenciatura em Matemática - UNIVESP</p>
+                    <p>Licenciado sob MIT License | Código disponível em GitHub</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+<!-- Modal de Conquistas FORA DO CONTAINER (CORRETO!) -->
+<div class="achievements-modal" id="achievements-modal">
+    <div class="modal-overlay" onclick="closeAchievements()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">🏆 Conquistas</h3>
+            <button class="modal-close" onclick="closeAchievements()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div id="achievements-list">
+                <!-- Conquistas serão adicionadas aqui -->
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button class="btn" onclick="closeAchievements()" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de escolha de revisão -->
+<div class="theory-modal" id="theory-modal">
+    <div class="modal-overlay" onclick="closeTheoryModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">📚 Escolha o Tema da Revisão</h3>
+            <button class="modal-close" onclick="closeTheoryModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 20px;">
+                <button class="theme-choice-btn" data-theory="probabilidade">
+                    <div style="font-size: 40px;">📊</div>
+                    <h4>Probabilidade</h4>
+                    <p>Revise conceitos de probabilidade para ajudar nas questões.</p>
+                </button>
+                <button class="theme-choice-btn" data-theory="estatistica">
+                    <div style="font-size: 40px;">📈</div>
+                    <h4>Estatística</h4>
+                    <p>Revise conceitos de estatística para ajudar nas questões.</p>
+                </button>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTheoryModal()" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Revisão de Probabilidade -->
+<div class="theory-content-modal" id="probabilidade-modal">
+    <div class="modal-overlay" onclick="closeTheoryContentModal('probabilidade')"></div>
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">📊 Revisão de Probabilidade</h3>
+            <button class="modal-close" onclick="closeTheoryContentModal('probabilidade')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                <h4>Conceitos Básicos</h4>
+                <p><strong>Probabilidade</strong> é a chance de um evento ocorrer.</p>
+                <p>Espaço amostral (S) é o conjunto de todos os resultados possíveis de um experimento aleatório.</p>
+                <p>Evento (E) é um subconjunto do espaço amostral.</p>
+                
+                <h4>Cálculo de Probabilidade</h4>
+                <p>A probabilidade de um evento E ocorrer é dada por:</p>
+                <p style="text-align: center; font-size: 1.2em;">P(E) = número de casos favoráveis / número de casos possíveis</p>
+                
+                <h4>Exemplo</h4>
+                <p>Jogar um dado: espaço amostral S = {1,2,3,4,5,6}</p>
+                <p>Evento "sair um número par": E = {2,4,6}</p>
+                <p>P(E) = 3/6 = 1/2 = 50%</p>
+                
+                <h4>Eventos Independentes</h4>
+                <p>Dois eventos são independentes quando a ocorrência de um não afeta a probabilidade do outro.</p>
+                <p>Exemplo: jogar uma moeda duas vezes. O resultado da primeira jogada não afeta a segunda.</p>
+                
+                <h4>Eventos Dependentes</h4>
+                <p>Dois eventos são dependentes quando a ocorrência de um afeta a probabilidade do outro.</p>
+                <p>Exemplo: tirar duas cartas de um baralho sem reposição. A segunda carta depende da primeira.</p>
+                
+                <h4>Probabilidade Condicional</h4>
+                <p>É a probabilidade de um evento ocorrer dado que outro evento já ocorreu.</p>
+                <p>Notação: P(A|B) - probabilidade de A dado B.</p>
+                
+                <h4>Dicas para as Questões</h4>
+                <ul>
+                    <li>Identifique sempre o espaço amostral (total de possibilidades)</li>
+                    <li>Conte cuidadosamente os casos favoráveis</li>
+                    <li>Para moedas e dados, lembre que todos os lados têm igual chance</li>
+                    <li>Probabilidade varia de 0 (impossível) a 1 (certo), ou 0% a 100%</li>
+                    <li>A soma das probabilidades de todos os resultados possíveis é sempre 1</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTheoryContentModal('probabilidade')" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Revisão de Estatística -->
+<div class="theory-content-modal" id="estatistica-modal">
+    <div class="modal-overlay" onclick="closeTheoryContentModal('estatistica')"></div>
+    <div class="modal-content" style="max-width: 800px;">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">📈 Revisão de Estatística</h3>
+            <button class="modal-close" onclick="closeTheoryContentModal('estatistica')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
+                <h4>Conceitos Básicos</h4>
+                <p><strong>Estatística</strong> é a ciência que coleta, organiza, analisa e interpreta dados.</p>
+                
+                <h4>Medidas de Tendência Central</h4>
+                <p><strong>Média Aritmética:</strong> Soma de todos os valores dividida pelo número de valores.</p>
+                <p>Fórmula: Média = (x₁ + x₂ + ... + xₙ) / n</p>
+                <p>Exemplo: notas 5, 6, 7 → média = (5+6+7)/3 = 6</p>
+                
+                <p><strong>Mediana:</strong> Valor que divide o conjunto de dados ordenados ao meio.</p>
+                <p>Como calcular: 1) Ordene os dados; 2) Encontre o valor do meio.</p>
+                <p>Exemplo: 1, 3, 3, 6, 7, 8, 9 → mediana = 6</p>
+                <p>Se houver número par de valores, mediana é a média dos dois centrais.</p>
+                <p>Exemplo: 1, 2, 3, 4 → mediana = (2+3)/2 = 2,5</p>
+                
+                <p><strong>Moda:</strong> Valor que aparece com maior frequência.</p>
+                <p>Exemplo: 1, 2, 2, 3, 4 → moda = 2</p>
+                
+                <h4>Gráficos</h4>
+                <p><strong>Gráfico de Barras:</strong> Usado para comparar quantidades entre categorias.</p>
+                <p><strong>Gráfico de Linhas:</strong> Usado para mostrar tendências ao longo do tempo.</p>
+                <p><strong>Gráfico de Setores (Pizza):</strong> Usado para mostrar partes de um todo.</p>
+                <p><strong>Histograma:</strong> Gráfico de barras para dados agrupados em intervalos.</p>
+                
+                <h4>Medidas de Dispersão</h4>
+                <p><strong>Amplitude:</strong> Diferença entre o maior e o menor valor.</p>
+                <p>Fórmula: Amplitude = valor máximo - valor mínimo</p>
+                <p>Exemplo: no conjunto {2, 5, 8, 10}, amplitude = 10 - 2 = 8</p>
+                
+                <h4>População e Amostra</h4>
+                <p><strong>População:</strong> Conjunto completo de elementos a ser estudado.</p>
+                <p><strong>Amostra:</strong> Subconjunto da população (parte selecionada para estudo).</p>
+                <p>Exemplo: Pesquisa eleitoral: população = todos os eleitores, amostra = parte dos eleitores entrevistados.</p>
+                
+                <h4>Dicas para as Questões</h4>
+                <ul>
+                    <li>Média: some todos e divida pela quantidade</li>
+                    <li>Mediana: primeiro ORDENE os dados, depois ache o meio</li>
+                    <li>Moda: é o valor que mais se repete</li>
+                    <li>Para gráficos de pizza: o círculo inteiro = 100%</li>
+                    <li>Dados qualitativos (cores, nomes) só têm moda, não média</li>
+                    <li>Amplitude mostra a variação dos dados</li>
+                </ul>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTheoryContentModal('estatistica')" style="width: 100%;">Fechar</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal do Tutorial -->
+<div class="tutorial-modal" id="tutorial-modal">
+    <div class="modal-overlay" onclick="closeTutorialModal()"></div>
+    <div class="modal-content" style="max-width: 900px;">
+        <div class="modal-header">
+            <h3 style="color: #ffeb3b;">🎓 Tutorial - LIAM - Laboratório Interativo de Alfabetização Matemática</h3>
+            <button class="modal-close" onclick="closeTutorialModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div style="max-height: 70vh; overflow-y: auto; padding-right: 10px;">
+                
+                <!-- Seção: Sobre o Projeto -->
+                <div style="background: rgba(33, 150, 243, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #2196f3;">
+                    <h4 style="color: #2196f3; margin-bottom: 15px;">📋 Sobre o Projeto</h4>
+                    <p><strong>LIAM - Laboratório Interativo de Alfabetização Matemática</strong> é um jogo educativo desenvolvido como parte do <strong>Projeto Integrador IV</strong> da Licenciatura em Matemática da UNIVESP.</p>
+                    <p><strong>Objetivo:</strong> Auxiliar estudantes do 9º ano do Ensino Fundamental no aprendizado de Probabilidade e Estatística, tornando o estudo mais interativo, divertido e eficaz.</p>
+                    <p><strong>Público-alvo:</strong> Alunos do 9º ano, professores de matemática e qualquer pessoa interessada em reforçar seus conhecimentos matemáticos.</p>
+                </div>
+                
+                <!-- Seção: Desenvolvedores -->
+                <div style="background: rgba(76, 175, 80, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #4caf50;">
+                    <h4 style="color: #4caf50; margin-bottom: 15px;">👥 Equipe de Desenvolvimento</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Antonio Antunes Junior</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Flávio Rabelo Barros</strong>
+                        </div>
+                        
+                                            
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Giovani Machado de Lima</strong>
+                        </div>
+
+
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Mariane Mendes Coutinho</strong>
+                        </div>
+
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👩‍💻</div>
+                            <strong>Priscilla Santiago Zamorra</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Rodrigo Aires de Medeiros Correa</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍🏫</div>
+                            <strong>Sergio Eric Reis de Oliveira</strong>
+                        </div>
+                        <div style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;">
+                            <div style="font-size: 24px; margin-bottom: 10px;">👨‍💻</div>
+                            <strong>Vitor Correa Uberti</strong>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 14px; color: #bbdefb;">Projeto Integrador IV - Licenciatura em Matemática - UNIVESP - 2026</p>
+                </div>
+                
+                <!-- Seção: Como Jogar -->
+                <div style="background: rgba(255, 152, 0, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #ff9800;">
+                    <h4 style="color: #ff9800; margin-bottom: 15px;">🎮 Como Jogar</h4>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">1️⃣</div>
+                            <h5 style="color: #ffeb3b;">Escolha o Tema</h5>
+                            <p style="font-size: 14px;">Selecione entre <strong>Probabilidade</strong> ou <strong>Estatística</strong>. Cada tema tem 20 questões.</p>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">2️⃣</div>
+                            <h5 style="color: #ffeb3b;">Responda as Questões</h5>
+                            <p style="font-size: 14px;">Você tem <strong>60 segundos</strong> por questão. Selecione a alternativa correta.</p>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">3️⃣</div>
+                            <h5 style="color: #ffeb3b;">Use Power-ups</h5>
+                            <p style="font-size: 14px;">Utilize dicas, pule questões, ganhe tempo extra ou ative pontos em dobro!</p>
+                        </div>
+                        
+                        <div style="background: rgba(0,0,0,0.2); padding: 20px; border-radius: 10px; text-align: center;">
+                            <div style="font-size: 40px; margin-bottom: 15px;">4️⃣</div>
+                            <h5 style="color: #ffeb3b;">Acompanhe Seu Progresso</h5>
+                            <p style="font-size: 14px;">Ganhe XP, suba de nível e desbloqueie conquistas!</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Seção: Sistema de Pontuação -->
+                <div style="background: rgba(156, 39, 176, 0.1); padding: 20px; border-radius: 10px; margin-bottom: 25px; border-left: 5px solid #9c27b0;">
+                    <h4 style="color: #9c27b0; margin-bottom: 15px;">🏅 Sistema de Pontuação</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #4caf50;">10</div>
+                            <p style="font-size: 14px;"><strong>Questões Fáceis</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #ff9800;">15</div>
+                            <p style="font-size: 14px;"><strong>Questões Médias</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #f44336;">20</div>
+                            <p style="font-size: 14px;"><strong>Questões Difíceis</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px; color: #ffeb3b;">+5</div>
+                            <p style="font-size: 14px;"><strong>Bônus por Velocidade</strong><br>(resposta em <10s)</p>
+                        </div>
+                    </div>
+                    <p style="margin-top: 15px; font-size: 14px;"><strong>Streak Bonus:</strong> A cada 3 acertos consecutivos, ganhe +5 pontos adicionais!</p>
+                </div>
+                
+                <!-- Seção: Recursos Disponíveis -->
+                <div style="background: rgba(0, 150, 136, 0.1); padding: 20px; border-radius: 10px; border-left: 5px solid #009688;">
+                    <h4 style="color: #009688; margin-bottom: 15px;">🛠️ Recursos Disponíveis</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">🧮</div>
+                            <p><strong>Calculadora</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">📚</div>
+                            <p><strong>Revisão Teórica</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">💡</div>
+                            <p><strong>Dicas</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">🏆</div>
+                            <p><strong>Conquistas</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">📊</div>
+                            <p><strong>Estatísticas</strong></p>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 30px;">🎆</div>
+                            <p><strong>Efeitos Visuais</strong></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Seção: Dicas Importantes -->
+                <div style="background: rgba(244, 67, 54, 0.1); padding: 20px; border-radius: 10px; margin-top: 25px; border-left: 5px solid #f44336;">
+                    <h4 style="color: #f44336; margin-bottom: 15px;">💡 Dicas Importantes</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>Use a <strong>calculadora</strong> para ajudar nos cálculos complexos</li>
+                        <li>Consulte a <strong>revisão teórica</strong> se tiver dúvidas sobre os conceitos</li>
+                        <li>Administre bem seus <strong>power-ups</strong> - use-os estrategicamente</li>
+                        <li>Pratique ambos os temas para dominar Probabilidade e Estatística</li>
+                        <li>Preste atenção ao <strong>tempo</strong> - cada questão tem 60 segundos</li>
+                        <li>Quanto mais rápido responder corretamente, mais pontos ganha!</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" onclick="closeTutorialModal()" style="width: 100%; background: linear-gradient(90deg, #2196f3, #1976d2);">Fechar Tutorial</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Áudio para efeitos sonoros - URLs alternativas -->
+    <audio id="correct-sound" preload="auto">
+        <source src="https://actions.google.com/sounds/v1/foley/firecrackers_exploding.ogg" type="audio/ogg">
+
+        <!-- <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_12b0c7443c.mp3" type="audio/mpeg">   -->  
+    </audio>
+    
+    <audio id="incorrect-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="level-up-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="achievement-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-trumpet-2018.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="powerup-sound" preload="auto">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-magic-sparkles-300.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Som de fogos de artifício - URLs alternativas -->
+    <audio id="firework-sound" preload="auto">
+       <!--  <source src="https://assets.mixkit.co/sfx/preview/mixkit-fireworks-show-audio-3065.mp3" type="audio/mpeg"> -->
+        <!-- <source src="https://cdn.pixabay.com/download/audio/2022/01/18/audio_82173f40f0.mp3" type="audio/mpeg"> -->
+
+       <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_5b6623642d.mp3"  type="audio/mpeg">
+    </audio>
+
+    <!-- Biblioteca Chart.js para gráficos -->
+    <!-- Bibliotecas externas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Nossos arquivos JavaScript -->
+    <script src="js/questions.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/fireworks.js"></script>
+    <script src="js/main.js"></script>
+
+</body>
+</html>

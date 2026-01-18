@@ -1,0 +1,14 @@
+/* ESTILOS ESPECÍFICOS DO JOGO */
+.game-status {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    /* ... resto dos estilos do jogo ... */
+}
+
+.question-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    /* ... etc ... */
+}
