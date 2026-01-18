@@ -177,16 +177,14 @@ Para adicionar novas questões:
 
 **Projeto Integrador IV - Licenciatura em Matemática - UNIVESP**
 
-| Nome | Contribuição |
-|------|--------------|
-| **Antonio Antunes Junior** | Desenvolvimento e testes |
-| **Giovani Machado de Lima** | Desenvolvimento e lógica do jogo |
-| **Priscilla Santiago Zamorra** | Design e conteúdo educacional |
-| **Rodrigo Aires de Medeiros Correa** | Sistema de gamificação |
-| **Sergio Eric Reis de Oliveira** | Arquitetura e integração |
-| **Vitor Correa Uberti** | Efeitos visuais e otimização |
-
-**Orientação:** Professores da UNIVESP
+| Nome | 
+|------|
+| **Antonio Antunes Junior** |
+| **Giovani Machado de Lima** | 
+| **Priscilla Santiago Zamorra** |
+| **Rodrigo Aires de Medeiros Correa** | 
+| **Sergio Eric Reis de Oliveira** | 
+| **Vitor Correa Uberti** |
 
 ---
 
